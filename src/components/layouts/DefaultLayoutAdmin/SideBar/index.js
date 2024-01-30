@@ -11,8 +11,11 @@ import {
     faChartSimple,
     faUser
 } from '@fortawesome/free-solid-svg-icons';
+import classNames from 'classnames/bind';
+import styles from './SideBar.scss';
 
 
+const cx = classNames.bind(styles);
 function SideBar() {
 
     const links = [
@@ -55,13 +58,6 @@ function SideBar() {
 
     ]
 
-    const navlink = 'flex h-14 border hover:bg-[#3a57e8] hover:text-white items-center ps-6 transition-all rounded-md mb-1 text-wrap'
-    const active = 'flex h-14 border bg-[#3a57e8] text-white items-center ps-6 transition-all rounded-md mb-1 text-wrap'
-
-    const path = useLocation()
-
-
-
     return (
         <div className='w-full h-full'>
             <div className='pt-6 flex justify-center items-center h-20'>
@@ -77,7 +73,9 @@ function SideBar() {
                         <NavLink
                             key={index}
                             to={e.path}
-                            className={path.pathname === e.path ? active : navlink}
+                            className={({ isActive }) =>
+                                isActive ? cx('navlink', 'active') : cx('navlink')
+                            }
                         >
                             <div >
                                 <div >{e.icon}</div>

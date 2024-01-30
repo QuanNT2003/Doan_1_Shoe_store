@@ -98,6 +98,7 @@ function Header({ title, back }) {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                className='transition-all'
             >
                 <Box className='h-screen w-[35vh] bg-white border-none transition-all'>
                     <SideBar />
