@@ -3,6 +3,8 @@ import Input from '~/components/Input';
 import SearchBar from '~/components/SearchBar';
 import List from '~/components/List';
 import { SampleItem } from '~/components/Item';
+import Filter from '~/components/Filter';
+import MultiSelectComp from '~/components/MultiSelectComp';
 
 function ProductList() {
     const [search, setSearch] = useState('')
@@ -29,6 +31,26 @@ function ProductList() {
         // },
     ]
 
+    const [selectedTT, setSelectedTT] = useState([]);
+    const [openFilter, setOpenFilter] = useState(false);
+    const handleOpenFilter = () => setOpenFilter(true);
+    const handleCloseFilter = () => setOpenFilter(false);
+    const handleClearFilter = () => {
+
+    };
+
+
+
+    const handleFilter = async () => {
+
+        handleCloseFilter();
+    };
+
+    const optionsTT = [
+        { label: 'Đang giao dịch', value: true },
+        { label: 'Ngừng giao dịch', value: false },
+    ];
+
     const totalRows = 5
     return (
         <div className='text-3xl font-bold w-full'>
@@ -41,7 +63,24 @@ function ProductList() {
                     search={search}
                     handleSearch={handleSearch}
                     // handleKeyDown={handleKeyDown}
-
+                    filterComponent={
+                        <Filter
+                            open={openFilter}
+                            handleClose={handleCloseFilter}
+                            handleOpen={handleOpenFilter}
+                            handleClearFilter={handleClearFilter}
+                            handleFilter={handleFilter}
+                        >
+                            <MultiSelectComp
+                                className=''
+                                options={optionsTT}
+                                placeholder={'Trạng thái'}
+                                selected={selectedTT}
+                                setSelected={setSelectedTT}
+                                hasSelectAll={true}
+                            />
+                        </Filter>
+                    }
                     // TABLE
                     pagination
                     // onRowClicked={onRowClicked}
