@@ -5,6 +5,7 @@ import List from '~/components/List';
 import { SampleItem } from '~/components/Item';
 import Filter from '~/components/Filter';
 import MultiSelectComp from '~/components/MultiSelectComp';
+import SubHeader from '~/components/SubHeader';
 
 function ProductList() {
     const [search, setSearch] = useState('')
@@ -14,21 +15,21 @@ function ProductList() {
     };
 
     const rows = [
-        // {
-        //     id: 1,
-        //     name: 'a',
-        //     sex: 'a'
-        // },
-        // {
-        //     id: 2,
-        //     name: 'a',
-        //     sex: 'a'
-        // },
-        // {
-        //     id: 3,
-        //     name: 'a',
-        //     sex: 'a'
-        // },
+        {
+            id: 1,
+            name: 'a',
+            sex: 'a'
+        },
+        {
+            id: 2,
+            name: 'a',
+            sex: 'a'
+        },
+        {
+            id: 3,
+            name: 'a',
+            sex: 'a'
+        },
     ]
 
     const [selectedTT, setSelectedTT] = useState([]);
@@ -86,7 +87,19 @@ function ProductList() {
                     // onRowClicked={onRowClicked}
                     // showSubHeader={showSubHeader}
                     itemComponent={SampleItem}
+                    selectableRows
                     data={rows}
+                    showSubHeader
+                    subHeaderComponent={
+                        <SubHeader
+                            // count={}
+                            itemName={'sản phẩm'}
+                            // onClickAction={}
+                            items={[
+                                'Xóa sản phẩm',
+                            ]}
+                        />
+                    }
                     // pending={pending}
                     // handleSelectedItems={handleSelectedProducts}
 
