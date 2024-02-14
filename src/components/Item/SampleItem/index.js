@@ -14,7 +14,7 @@ export const SampleItem = [
         minWidth: '180px',
         center: true,
         cell: (row) => (
-            <div className="sm:hidden">
+            <div>
                 {row.name}
             </div>
         ),

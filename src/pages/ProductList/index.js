@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Input from '~/components/Input';
-import SearchBar from '~/components/SearchBar';
 import List from '~/components/List';
 import { SampleItem } from '~/components/Item';
 import Filter from '~/components/Filter';
@@ -58,7 +56,6 @@ function ProductList() {
             <div className='frame'>
                 List Product
                 <List
-
                     searchVisibility={true}
                     placeholderSearch={'Tìm kiếm theo mã, tên khuyến mãi'}
                     search={search}

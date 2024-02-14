@@ -29,7 +29,7 @@ function ActionDropdown({ items, onClickAction }) {
                                 {items?.map((item, index) => (
                                     <li
                                         key={index}
-                                        className='list-none cursor-pointer rounded-[3px] py-[7px] px-[15px] hover:bg-slate-100'
+                                        className='list-none cursor-pointer rounded-[3px] py-[7px] px-[15px] hover:bg-slate-100 w-[160px]'
                                         onClick={() => onClickAction(item)}
                                     >
                                         {item}

@@ -27,7 +27,7 @@ function SideBar() {
         },
         {
             title: 'Khuyến mãi',
-            path: '/',
+            path: '/promotion',
             icon: <FontAwesomeIcon icon={faPercent} className='me-4 ' />,
 
         },
@@ -67,7 +67,7 @@ function SideBar() {
             <hr className=' mt-4 mx-3' />
 
 
-            <div className='mt-5 me-2 pe-3 ms-1 text-base'>
+            <div className='mt-5 me-2 pe-3 ms-2 text-base'>
                 {
                     links.map((e, index) => (
                         <NavLink
@@ -78,7 +78,7 @@ function SideBar() {
                             }
                         >
                             <div >
-                                <div >{e.icon}</div>
+                                {e.icon}
                             </div>
                             <div >{e.title}</div>
                         </NavLink>

@@ -13,8 +13,8 @@ function MultiSelectComp({
 
 
     return (
-        <div className='text-sm bg-white'>
-            <div className='font-medium mb-[2px] text-sm'>{placeholder}</div>
+        <div className='text-sm bg-white mb-5'>
+            <div className='font-medium mb-[6px] text-sm'>{placeholder}</div>
 
             <MultiSelect
                 options={options}
