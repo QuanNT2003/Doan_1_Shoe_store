@@ -7,9 +7,9 @@ export const DiscountItem = [
     {
         name: 'Mã khuyến mãi',
         minWidth: '180px',
-        center: true,
+        center: 'true',
         cell: (row) => (
-            <div className=' font-medium text-sm text-[--primary]' data-tag="allowRowEvents">
+            <div key={row.promotionId} className=' font-medium text-sm text-[--primary]' data-tag="allowRowEvents">
                 {row.promotionId}
             </div>
         ),
@@ -17,7 +17,7 @@ export const DiscountItem = [
     {
         name: 'Tên khuyến mãi',
         minWidth: '180px',
-        center: true,
+        center: 'true',
         cell: (row) => (
             <div className=' font-medium text-sm ' tag="allowRowEvents">
                 {row.name}
@@ -29,7 +29,7 @@ export const DiscountItem = [
         sortable: true,
         text: 'remainQuantity',
         minWidth: '180px',
-        center: true,
+        center: 'true',
         cell: (row) => (
             <div className=' font-medium text-sm ' tag="allowRowEvents">
                 {addCommas(row.remainQuantity)}
@@ -41,7 +41,7 @@ export const DiscountItem = [
         sortable: true,
         text: 'startAt',
         minWidth: '180px',
-        center: true,
+        center: 'true',
         cell: (row) => (
             <div className=' font-medium text-sm ' tag="allowRowEvents">
                 {format(new Date(row.startAt), 'dd/MM/yyyy')}
@@ -54,7 +54,7 @@ export const DiscountItem = [
         sortable: true,
         text: 'closeAt',
         minWidth: '180px',
-        center: true,
+        center: 'true',
         cell: (row) => (
             <div className=' font-medium text-sm ' tag="allowRowEvents">
                 {format(new Date(row.closeAt), 'dd/MM/yyyy')}
@@ -64,7 +64,7 @@ export const DiscountItem = [
     {
         name: 'Trạng thái',
         minWidth: '180px',
-        center: true,
+        center: 'true',
         cell: (row) => (
             <div
                 className={row.status === 'running' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#ecfdf3] text-[#027948] '

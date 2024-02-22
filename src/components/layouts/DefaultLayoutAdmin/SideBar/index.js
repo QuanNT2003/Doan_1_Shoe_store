@@ -33,7 +33,7 @@ function SideBar() {
         },
         {
             title: 'Đơn hàng',
-            path: '/',
+            path: '/order',
             icon: <FontAwesomeIcon icon={faReceipt} className='me-4 ' />,
 
         },

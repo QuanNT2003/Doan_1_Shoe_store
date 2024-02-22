@@ -2,9 +2,9 @@ export const SampleItem = [
     {
         name: 'STT',
         minWidth: '180px',
-        center: true,
+        center: 'true',
         cell: (row) => (
-            <div >
+            <div key={row.id}>
                 {row.id}
             </div>
         ),
@@ -12,7 +12,7 @@ export const SampleItem = [
     {
         name: 'Tên',
         minWidth: '180px',
-        center: true,
+        center: 'true',
         cell: (row) => (
             <div>
                 {row.name}
@@ -22,7 +22,7 @@ export const SampleItem = [
     {
         name: 'Giới tính',
         minWidth: '180px',
-        center: true,
+        center: 'true',
         cell: (row) => (
             <div >
                 {row.sex}
@@ -30,4 +30,4 @@ export const SampleItem = [
         ),
     }
 
-]
+];

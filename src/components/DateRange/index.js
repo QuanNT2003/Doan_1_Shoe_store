@@ -44,7 +44,7 @@ function DateRange({ title, dateString, setDateString, bottom, future }) {
 
     return (
 
-        <div className='w-[85%] mt-[5%]'>
+        <div className='w-[85%] mt-[5px] mb-5'>
             <div className='font-medium text-[14px] mb-[2px]'>{title}</div>
             <Tippy
                 visible={visible}

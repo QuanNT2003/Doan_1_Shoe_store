@@ -5,11 +5,11 @@ import Header from './Header';
 
 function defaultLayoutAdmin({ children, title, back }) {
     return (
-        <div className='flex flex-row w-screen min-h-[100vh] '>
-            <div className='hidden sm:block w-[35vh] transition-all'>
+        <div className='flex h-screen'>
+            <div className='hidden sm:block min-w-[30vh] transition-all'>
                 <SideBar />
             </div>
-            <div className='bg-[#e9ecef] w-screen'>
+            <div className='bg-[#e9ecef] flex-1 w-[100%] h-[100vh]'>
                 <Header back={back} title={title} />
                 <div >{children}</div>
             </div>
