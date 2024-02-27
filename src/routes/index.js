@@ -2,6 +2,7 @@ import HomePage from "~/pages/HomePage";
 import ProductList from "~/pages/ProductList";
 import PromotionList from "~/pages/PromotionList";
 import OrderList from "~/pages/OrderList";
+import CustomerList from "~/pages/CustomerList";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -22,6 +23,12 @@ const publicRoutes = [
         component: OrderList,
         layout: DefaultLayoutAdmin,
         title: 'Danh sách đơn hàng',
+    },
+    {
+        path: '/customer',
+        component: CustomerList,
+        layout: DefaultLayoutAdmin,
+        title: 'Danh sách khách hàng',
     },
 ];
 

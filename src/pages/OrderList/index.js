@@ -40,7 +40,12 @@ const rows = [
         status: 'cancelled'
     },
 ]
-
+const optionsTT = [
+    { label: 'Đang tiếp nhận', value: 'receiving' },
+    { label: 'Đang giao', value: 'delivering' },
+    { label: 'Đã giao', value: 'delivered' },
+    { label: 'Đã hủy', value: 'canceled' },
+];
 const optionsCustomer = [
 
 ]
@@ -72,8 +77,9 @@ function OrderList(props) {
     }
 
     const [selectedCustomer, setSelectedCustomer] = useState([]);
+    const [selectedTT, setSelectedTT] = useState([]);
     return (
-        <div className='text-3xl font-bold w-full'>
+        <div className='text-3xl font-bold'>
             <div className='frame'>
                 <List
                     searchVisibility={true}
@@ -100,6 +106,14 @@ function OrderList(props) {
                                 placeholder={'Khách hàng'}
                                 selected={selectedCustomer}
                                 setSelected={setSelectedCustomer}
+                                hasSelectAll={true}
+                            />
+                            <MultiSelectComp
+
+                                options={optionsTT}
+                                placeholder={'Tình trạng'}
+                                selected={selectedTT}
+                                setSelected={setSelectedTT}
                                 hasSelectAll={true}
                             />
                         </Filter>

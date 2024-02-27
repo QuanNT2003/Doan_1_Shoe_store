@@ -52,7 +52,7 @@ function ProductList() {
 
     const totalRows = 5
     return (
-        <div className='text-3xl font-bold w-full'>
+        <div className='text-3xl font-bold'>
             <div className='frame'>
                 List Product
                 <List

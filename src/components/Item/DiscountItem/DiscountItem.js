@@ -9,7 +9,7 @@ export const DiscountItem = [
         minWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div key={row.promotionId} className=' font-medium text-sm text-[--primary]' data-tag="allowRowEvents">
+            <div key={row.promotionId} className='font-medium text-sm text-[--primary]' data-tag="allowRowEvents">
                 {row.promotionId}
             </div>
         ),
@@ -19,7 +19,7 @@ export const DiscountItem = [
         minWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div className=' font-medium text-sm ' tag="allowRowEvents">
+            <div className='font-medium text-sm' tag="allowRowEvents">
                 {row.name}
             </div>
         ),
@@ -31,33 +31,30 @@ export const DiscountItem = [
         minWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div className=' font-medium text-sm ' tag="allowRowEvents">
+            <div className='font-medium text-sm' tag="allowRowEvents">
                 {addCommas(row.remainQuantity)}
             </div>
         ),
     },
     {
-        name: 'Ngày bắt đầu',
-        sortable: true,
-        text: 'startAt',
+        name: 'Loại khuyến mãi',
         minWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div className=' font-medium text-sm ' tag="allowRowEvents">
-                {format(new Date(row.startAt), 'dd/MM/yyyy')}
-
-            </div>
-        ),
-    },
-    {
-        name: 'Ngày kết thúc',
-        sortable: true,
-        text: 'closeAt',
-        minWidth: '180px',
-        center: 'true',
-        cell: (row) => (
-            <div className=' font-medium text-sm ' tag="allowRowEvents">
-                {format(new Date(row.closeAt), 'dd/MM/yyyy')}
+            <div
+                className={row.style === 'ship' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#ecfdee] text-[#0e7902] '
+                    : row.style === 'sale' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#fef3f2] text-[#b32318]'
+                        : 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#f2f2fe] text-[#1822b3]'
+                }
+                data-tag="allowRowEvents"
+            >
+                <div className='font-medium text-center' data-tag="allowRowEvents">
+                    {row.style === 'ship'
+                        ? 'Mã vận chuyển'
+                        : row.style === 'sale' ? 'Sale off'
+                            : 'Giảm giá thanh toán'
+                    }
+                </div>
             </div>
         ),
     },

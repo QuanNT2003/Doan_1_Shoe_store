@@ -2,72 +2,63 @@ import React, { useState } from 'react';
 import List from '~/components/List';
 import Filter from '~/components/Filter';
 import MultiSelectComp from '~/components/MultiSelectComp';
-import { DiscountItem } from '~/components/Item';
+import { CustomerItem } from '~/components/Item';
 import LinkButton from '~/components/LinkButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
-const optionsHL = [
-    { label: 'Còn hiệu lực', value: false },
-    { label: 'Hết hiệu lực', value: true },
-];
-
-const optionsTT = [
-    { label: 'Đang chạy', value: 'running' },
-    { label: 'Tạm ngừng', value: 'paused' },
-    { label: 'Đã hủy', value: 'stopped' },
-];
-
-const optionsLM = [
-    { label: 'Mã vận chuyển', value: 'ship' },
-    { label: 'Sale off', value: 'sale' },
-    { label: 'Giảm gía thanh toán', value: 'pay' },
-];
-
+import DateRange from '~/components/DateRange';
 const rows = [
     {
-        promotionId: '1',
-        name: '123',
-        remainQuantity: 12,
-        style: 'pay',
-        status: 'running',
+        customerId: '123',
+        name: 'NTQ',
+        phoneNumber: '0328632492',
+        isActive: true,
+        purchasedOrder: 12,
     },
     {
-        promotionId: '2',
-        name: '123',
-        remainQuantity: 12,
-        style: 'ship',
-        status: 'running',
+        customerId: '123',
+        name: 'NTQ',
+        phoneNumber: '0328632492',
+        isActive: true,
+        purchasedOrder: 12,
     },
     {
-        promotionId: '3',
-        name: '123',
-        remainQuantity: 12,
-        style: 'sale',
-        status: 'running',
+        customerId: '123',
+        name: 'NTQ',
+        phoneNumber: '0328632492',
+        isActive: false,
+        purchasedOrder: 12,
     },
     {
-        promotionId: '4',
-        name: '123',
-        remainQuantity: 12,
-        style: 'ship',
-        status: 'paused',
+        customerId: '123',
+        name: 'NTQ',
+        phoneNumber: '0328632492',
+        isActive: true,
+        purchasedOrder: 12,
+    },
+    {
+        customerId: '123',
+        name: 'NTQ',
+        phoneNumber: '0328632492',
+        isActive: false,
+        purchasedOrder: 12,
     },
 ]
-function PromotionList() {
+
+const optionsTT = [
+    { label: 'Đang hoạt động', value: true },
+    { label: 'Bị khóa', value: false },
+];
+function CustomerList(props) {
+
     const [search, setSearch] = useState('')
     const handleSearch = (e) => {
         setSearch(e.target.value);
     };
 
     const [pending, setPending] = useState(false);
-
-
-
-
-    const [selectedTT, setSelectedTT] = useState([]);
-    const [selectedLM, setSelectedLM] = useState([]);
 
     const [openFilter, setOpenFilter] = useState(false);
     const handleOpenFilter = () => setOpenFilter(true);
@@ -79,12 +70,11 @@ function PromotionList() {
     const handleFilter = async () => {
 
         handleCloseFilter();
-    };
+    }
+
+    const [selectedTT, setSelectedTT] = useState([]);
     return (
-        <div className='text-3xl font-bold'>
-            <div className='frame'>
-                <LinkButton path='/adddiscount' placeholder='Thêm khuyến mãi' icon={<FontAwesomeIcon icon={faPlus} className='me-2' />} />
-            </div>
+        <div>
             <div className='frame'>
                 <List
                     searchVisibility={true}
@@ -102,14 +92,6 @@ function PromotionList() {
                         >
                             <MultiSelectComp
 
-                                options={optionsLM}
-                                placeholder={'Loại mã'}
-                                selected={selectedLM}
-                                setSelected={setSelectedLM}
-                                hasSelectAll={true}
-                            />
-                            <MultiSelectComp
-
                                 options={optionsTT}
                                 placeholder={'Tình trạng'}
                                 selected={selectedTT}
@@ -121,7 +103,7 @@ function PromotionList() {
                     // TABLE
                     pagination
                     // onRowClicked={onRowClicked}
-                    itemComponent={DiscountItem}
+                    itemComponent={CustomerItem}
                     data={rows}
                     pending={pending}
 
@@ -138,4 +120,4 @@ function PromotionList() {
     );
 }
 
-export default PromotionList;
+export default CustomerList;

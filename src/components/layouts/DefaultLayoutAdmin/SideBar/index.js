@@ -39,7 +39,7 @@ function SideBar() {
         },
         {
             title: 'Khách hàng',
-            path: '/',
+            path: '/customer',
             icon: <FontAwesomeIcon icon={faUser} className='me-4 ' />,
 
         },
