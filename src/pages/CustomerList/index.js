@@ -74,7 +74,7 @@ function CustomerList(props) {
 
     const [selectedTT, setSelectedTT] = useState([]);
     return (
-        <div>
+        <div className='container'>
             <div className='frame'>
                 <List
                     searchVisibility={true}

@@ -80,7 +80,7 @@ function SideBar() {
                             <div >
                                 {e.icon}
                             </div>
-                            <div >{e.title}</div>
+                            <div className='pe-2'>{e.title}</div>
                         </NavLink>
                     ))
                 }

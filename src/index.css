@@ -5,3 +5,19 @@
 .frame {
     @apply my-6 mx-auto py-4 px-8 text-wrap w-[90%] min-h-20 rounded-lg bg-white;
 }
+
+.border-custom{
+    border: 1px solid var(--border-color);
+}
+
+.number-nospin{
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
+.container{
+    @apply text-3xl font-bold bg-[#e9ecef]
+}

@@ -3,6 +3,7 @@ import ProductList from "~/pages/ProductList";
 import PromotionList from "~/pages/PromotionList";
 import OrderList from "~/pages/OrderList";
 import CustomerList from "~/pages/CustomerList";
+import AddPromotion from "~/pages/AddPromotion";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -29,6 +30,13 @@ const publicRoutes = [
         component: CustomerList,
         layout: DefaultLayoutAdmin,
         title: 'Danh sách khách hàng',
+    },
+    {
+        path: '/promotion/add',
+        component: AddPromotion,
+        layout: DefaultLayoutAdmin,
+        title: 'Thêm khuyến mãi',
+        back: true
     },
 ];
 

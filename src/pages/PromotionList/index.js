@@ -81,9 +81,9 @@ function PromotionList() {
         handleCloseFilter();
     };
     return (
-        <div className='text-3xl font-bold'>
+        <div className='container'>
             <div className='frame'>
-                <LinkButton path='/adddiscount' placeholder='Thêm khuyến mãi' icon={<FontAwesomeIcon icon={faPlus} className='me-2' />} />
+                <LinkButton path='/promotion/add' placeholder='Thêm khuyến mãi' icon={<FontAwesomeIcon icon={faPlus} className='me-2' />} />
             </div>
             <div className='frame'>
                 <List

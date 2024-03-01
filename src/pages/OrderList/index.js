@@ -79,7 +79,7 @@ function OrderList(props) {
     const [selectedCustomer, setSelectedCustomer] = useState([]);
     const [selectedTT, setSelectedTT] = useState([]);
     return (
-        <div className='text-3xl font-bold'>
+        <div className='container'>
             <div className='frame'>
                 <List
                     searchVisibility={true}
