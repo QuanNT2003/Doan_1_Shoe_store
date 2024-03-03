@@ -5,14 +5,16 @@ import TextField from '@mui/material/TextField';
 
 function SelectAutocomplete({
     onChange,
-    options
+    options,
+    value
 }) {
     return (
         <Autocomplete
             disablePortal
             options={options}
+            value={value}
             onChange={(event, newValue) => {
-                onChange(newValue?.value);
+                onChange(newValue);
             }}
             renderInput={(params) => <TextField {...params} />}
         />

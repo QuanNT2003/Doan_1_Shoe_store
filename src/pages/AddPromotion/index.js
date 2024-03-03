@@ -9,20 +9,7 @@ const addCommas = (num) => {
 };
 const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, '');
 
-const options = [
-    {
-        label: 'Sale off',
-        value: 'sale'
-    },
-    {
-        label: 'Giảm phí vận chuyển',
-        value: 'ship'
-    },
-    {
-        label: 'Thanh toán',
-        value: 'pay'
-    }
-]
+const options = ['Sale off', 'Giảm phí vận chuyển', 'Thanh toán']
 
 function AddPromotion() {
 
@@ -33,7 +20,15 @@ function AddPromotion() {
     const [discount, setDiscount] = useState(0)
     const [apply, setApply] = useState(0)
     const [stype, setStype] = useState('')
+    const [stypelabel, setStypelabel] = useState(null)
     const [dateString, setDateString] = useState('');
+
+    const changeStype = (e) => {
+        setStypelabel(e)
+        if (e === 'Sale off') setStype('sale')
+        else if (e === 'Thanh toán') setStype('pay')
+        else setStype('ship')
+    }
     return (
         <div className='container'>
             <div className='mt-6 md:grid md:grid-cols-2'>
@@ -65,7 +60,7 @@ function AddPromotion() {
                     Loại khuyến mãi
                     <hr />
                     <div className='mt-6 mb-7'>
-                        <SelectAutocomplete onChange={setStype} options={options} />
+                        <SelectAutocomplete onChange={changeStype} options={options} value={stypelabel} />
                     </div>
                     Thời gian áp dụng
                     <hr />
@@ -91,22 +86,24 @@ function AddPromotion() {
                             setType(false)
                             setDiscount(0)
                         }}>Giá trị</button>
-                        <input className='border-custom number-nospin rounded w-[85%] ms-3 me-5 py-2 px-[10px] text-end' value={discount} onChange={(e) => {
-                            let value = removeNonNumeric(e.target.value);
-                            if (typediscount === true) {
-                                if (value > 100) e.target.value = 100;
-                                else if (value < 0) e.target.value = 0;
-                            }
+                        <input className='border-custom number-nospin rounded w-[85%] ms-3 me-5 py-2 px-[10px] text-end'
+                            value={typediscount ? discount : addCommas(removeNonNumeric(discount))}
+                            onChange={(e) => {
+                                let value = removeNonNumeric(e.target.value);
+                                if (typediscount === true) {
+                                    if (value > 100) e.target.value = 100;
+                                    else if (value < 0) e.target.value = 0;
+                                }
 
-                            if (e.target.value === '') e.target.value = 0;
-                            if (typediscount === false) e.target.value = addCommas(
-                                removeNonNumeric(
-                                    e.target.value,
-                                ),
-                            )
+                                if (e.target.value === '') e.target.value = 0;
+                                if (typediscount === false) e.target.value = addCommas(
+                                    removeNonNumeric(
+                                        e.target.value,
+                                    ),
+                                )
 
-                            setDiscount(e.target.value);
-                        }} inputMode='numeric' />
+                                setDiscount(e.target.value);
+                            }} inputMode='numeric' />
                         <div className=' min-w-[30px]'>
                             {
                                 typediscount === true ? '%' : 'VND'
