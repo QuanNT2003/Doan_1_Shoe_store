@@ -8,6 +8,7 @@ import LinkButton from '~/components/LinkButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faPlus,
+    faList
 } from '@fortawesome/free-solid-svg-icons';
 const rows = [
     {
@@ -113,8 +114,9 @@ function ProductList() {
     const totalRows = 5
     return (
         <div className='container'>
-            <div className='frame'>
-                <LinkButton path='/product/add' placeholder='Thêm sản phẩm' icon={<FontAwesomeIcon icon={faPlus} className='me-2' />} />
+            <div className='frame flex'>
+                <LinkButton path='/product/add' placeholder='Thêm sản phẩm' icon={<FontAwesomeIcon icon={faPlus} />} />
+                <LinkButton path='/colors' placeholder='Danh sách mẫu màu' icon={<FontAwesomeIcon icon={faList} />} />
             </div>
             <div className='frame'>
                 <List

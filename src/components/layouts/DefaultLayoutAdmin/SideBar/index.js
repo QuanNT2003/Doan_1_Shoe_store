@@ -4,7 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faMessage,
-    faGear,
+    faStore,
     faPercent,
     faBox,
     faReceipt,
@@ -27,20 +27,26 @@ function SideBar() {
         },
         {
             title: 'Khuyến mãi',
-            path: '/promotion',
+            path: '/promotions',
             icon: <FontAwesomeIcon icon={faPercent} className='me-4 ' />,
 
         },
         {
             title: 'Đơn hàng',
-            path: '/order',
+            path: '/orders',
             icon: <FontAwesomeIcon icon={faReceipt} className='me-4 ' />,
 
         },
         {
             title: 'Khách hàng',
-            path: '/customer',
+            path: '/customers',
             icon: <FontAwesomeIcon icon={faUser} className='me-4 ' />,
+
+        },
+        {
+            title: 'Thương hiệu',
+            path: '/brands',
+            icon: <FontAwesomeIcon icon={faStore} className='me-4 ' />,
 
         },
         {

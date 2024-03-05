@@ -7,8 +7,8 @@ function LinkButton({ path, placeholder, icon }) {
     }
     return (
         <div>
-            <button className='bg-blue-500 py-4 px-3 flex rounded-lg min-w-[100px] text-white hover:bg-[#3a57e8] cursor-pointer text-sm' onClick={onclick}>
-                <div> {icon} </div>
+            <button className='bg-blue-500 py-4 px-3 flex rounded-lg min-w-[100px] text-white hover:bg-[#3a57e8] cursor-pointer text-sm me-4' onClick={onclick}>
+                <div className='me-2'> {icon} </div>
                 {placeholder}
             </button>
         </div>

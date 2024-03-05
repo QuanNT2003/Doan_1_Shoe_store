@@ -4,6 +4,8 @@ import PromotionList from "~/pages/PromotionList";
 import OrderList from "~/pages/OrderList";
 import CustomerList from "~/pages/CustomerList";
 import AddPromotion from "~/pages/AddPromotion";
+import BrandList from "~/pages/BrandList";
+import ColorList from "~/pages/ColorList";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -14,22 +16,34 @@ const publicRoutes = [
         title: 'Danh sách sản phẩm',
     },
     {
-        path: '/promotion',
+        path: '/promotions',
         component: PromotionList,
         layout: DefaultLayoutAdmin,
         title: 'Danh sách khuyến mãi',
     },
     {
-        path: '/order',
+        path: '/orders',
         component: OrderList,
         layout: DefaultLayoutAdmin,
         title: 'Danh sách đơn hàng',
     },
     {
-        path: '/customer',
+        path: '/customers',
         component: CustomerList,
         layout: DefaultLayoutAdmin,
         title: 'Danh sách khách hàng',
+    },
+    {
+        path: '/brands',
+        component: BrandList,
+        layout: DefaultLayoutAdmin,
+        title: 'Danh sách thương hiệu',
+    },
+    {
+        path: '/colors',
+        component: ColorList,
+        layout: DefaultLayoutAdmin,
+        title: 'Các mẫu màu sắt',
     },
     {
         path: '/promotion/add',
