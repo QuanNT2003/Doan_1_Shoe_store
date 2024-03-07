@@ -10,7 +10,7 @@ const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, '');
 
 const options = ['Sale off', 'Giảm phí vận chuyển', 'Thanh toán']
 
-function AddPromotion() {
+function UpdatePromotion(props) {
 
     const [name, setName] = useState('');
     const [note, setNote] = useState('');
@@ -51,6 +51,7 @@ function AddPromotion() {
                             textarea={true}
                             onChange={(value) => setNote(value)}
                             className='mb-[20px]'
+                            error={errorName}
                             rows={8}
                         ></Input>
                     </div>
@@ -137,4 +138,4 @@ function AddPromotion() {
     );
 }
 
-export default AddPromotion;
+export default UpdatePromotion;

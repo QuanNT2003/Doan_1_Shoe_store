@@ -4,6 +4,7 @@ export const BrandItem = [
     {
         name: 'Mã thương hiệu',
         minWidth: '250px',
+        center: 'true',
         cell: (row) => (
             <div
                 key={row.productId}

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import List from '~/components/List';
 import Filter from '~/components/Filter';
 import MultiSelectComp from '~/components/MultiSelectComp';
@@ -8,11 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
-const optionsHL = [
-    { label: 'Còn hiệu lực', value: false },
-    { label: 'Hết hiệu lực', value: true },
-];
-
 const optionsTT = [
     { label: 'Đang chạy', value: 'running' },
     { label: 'Tạm ngừng', value: 'paused' },
@@ -56,6 +52,9 @@ const rows = [
     },
 ]
 function PromotionList() {
+    const navigate = useNavigate();
+
+
     const [search, setSearch] = useState('')
     const handleSearch = (e) => {
         setSearch(e.target.value);
@@ -80,10 +79,15 @@ function PromotionList() {
 
         handleCloseFilter();
     };
+
+    const onRowClicked = useCallback((row) => {
+        navigate('/promotions/details/' + row.promotionId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <div className='container'>
             <div className='frame'>
-                <LinkButton path='/promotion/add' placeholder='Thêm khuyến mãi' icon={<FontAwesomeIcon icon={faPlus} className='me-2' />} />
+                <LinkButton path='/promotions/add' placeholder='Thêm khuyến mãi' icon={<FontAwesomeIcon icon={faPlus} className='me-2' />} />
             </div>
             <div className='frame'>
                 <List
@@ -120,7 +124,7 @@ function PromotionList() {
                     }
                     // TABLE
                     pagination
-                    // onRowClicked={onRowClicked}
+                    onRowClicked={onRowClicked}
                     itemComponent={DiscountItem}
                     data={rows}
                     pending={pending}

@@ -11,6 +11,7 @@ export const ProductItem = [
         name: 'Mã sản phẩm',
         grow: 2,
         minWidth: '250px',
+        centet: 'true',
         cell: (row) => (
             <div
                 key={row.productId}

@@ -17,7 +17,3 @@
         margin: 0;
     }
 }
-
-.container{
-    @apply text-3xl font-bold bg-[#e9ecef]
-}

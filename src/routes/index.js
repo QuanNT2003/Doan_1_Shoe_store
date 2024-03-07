@@ -6,6 +6,7 @@ import CustomerList from "~/pages/CustomerList";
 import AddPromotion from "~/pages/AddPromotion";
 import BrandList from "~/pages/BrandList";
 import ColorList from "~/pages/ColorList";
+import InfoPromotion from "~/pages/InfoPromotion";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -40,16 +41,23 @@ const publicRoutes = [
         title: 'Danh sách thương hiệu',
     },
     {
-        path: '/colors',
+        path: '/products/colors',
         component: ColorList,
         layout: DefaultLayoutAdmin,
         title: 'Các mẫu màu sắt',
     },
     {
-        path: '/promotion/add',
+        path: '/promotions/add',
         component: AddPromotion,
         layout: DefaultLayoutAdmin,
         title: 'Thêm khuyến mãi',
+        back: true
+    },
+    {
+        path: '/promotions/details/:id',
+        component: InfoPromotion,
+        layout: DefaultLayoutAdmin,
+        title: 'Thông tin khuyến mãi',
         back: true
     },
 ];

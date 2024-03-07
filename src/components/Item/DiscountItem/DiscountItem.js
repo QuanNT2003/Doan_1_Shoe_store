@@ -25,7 +25,7 @@ export const DiscountItem = [
         ),
     },
     {
-        name: 'Số phiếu còn lại',
+        name: 'Mức áp dụng',
         sortable: true,
         text: 'remainQuantity',
         minWidth: '180px',

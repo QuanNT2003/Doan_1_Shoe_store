@@ -9,9 +9,12 @@ function defaultLayoutAdmin({ children, title, back }) {
             <div className='hidden bg-white sm:block w-[15%] min-w-[25vh] transition-all'>
                 <SideBar />
             </div>
-            <div className='flex flex-[1] flex-col w-[100%] h-[100vh]'>
+            <div className='flex flex-[1] flex-col w-[100%] h-[100vh] bg-[#e9ecef]'>
                 <Header back={back} title={title} />
-                {children}
+                <div className='flex-[1] bg-[#e9ecef]'>
+                    {children}
+                </div>
+
             </div>
 
         </div>
