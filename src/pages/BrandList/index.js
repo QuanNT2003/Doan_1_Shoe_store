@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import List from '~/components/List';
 import Filter from '~/components/Filter';
 import MultiSelectComp from '~/components/MultiSelectComp';
@@ -59,6 +60,7 @@ const optionsNation = [
 
 ];
 function BrandList() {
+    const navigate = useNavigate();
     const [search, setSearch] = useState('')
     const handleSearch = (e) => {
         setSearch(e.target.value);
@@ -84,6 +86,9 @@ function BrandList() {
 
         handleCloseFilter();
     };
+    const onRowClicked = useCallback((row) => {
+        navigate('/brands/details/' + row.brandId);
+    }, []);
     return (
         <div className='container'>
             <div className='frame'>
@@ -124,7 +129,7 @@ function BrandList() {
                     }
                     // TABLE
                     pagination
-                    // onRowClicked={onRowClicked}
+                    onRowClicked={onRowClicked}
                     itemComponent={BrandItem}
                     data={rows}
                     pending={pending}

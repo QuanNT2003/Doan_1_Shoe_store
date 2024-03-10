@@ -3,12 +3,14 @@ import ProductList from "~/pages/ProductList";
 import PromotionList from "~/pages/PromotionList";
 import OrderList from "~/pages/OrderList";
 import CustomerList from "~/pages/CustomerList";
-import AddPromotion from "~/pages/AddPromotion";
 import BrandList from "~/pages/BrandList";
 import ColorList from "~/pages/ColorList";
+import AddPromotion from "~/pages/AddPromotion";
 import InfoPromotion from "~/pages/InfoPromotion";
-import AddBrand from "~/pages/AddBrand";
 import UpdatePromotion from "~/pages/UpdatePromotion";
+import AddBrand from "~/pages/AddBrand";
+import InfoBrand from "~/pages/InfoBrand";
+import UpdateBrand from "~/pages/UpdateBrand";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -75,6 +77,20 @@ const publicRoutes = [
         component: AddBrand,
         layout: DefaultLayoutAdmin,
         title: 'Thêm thương hiệu',
+        back: true
+    },
+    {
+        path: '/brands/details/:id',
+        component: InfoBrand,
+        layout: DefaultLayoutAdmin,
+        title: 'Thông tin thương hiệu',
+        back: true
+    },
+    {
+        path: '/brands/update/:id',
+        component: UpdateBrand,
+        layout: DefaultLayoutAdmin,
+        title: 'Cập nhật thương hiệu',
         back: true
     },
 ];

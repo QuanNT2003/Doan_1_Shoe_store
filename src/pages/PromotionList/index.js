@@ -82,7 +82,6 @@ function PromotionList() {
 
     const onRowClicked = useCallback((row) => {
         navigate('/promotions/details/' + row.promotionId);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (
         <div className='container'>
