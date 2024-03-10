@@ -5,7 +5,7 @@ import Input from '~/components/Input';
 function UpdateBrand() {
 
     const [name, setName] = useState('');
-    const [note, setNote] = useState('');
+    const [note, setNote] = useState('123');
     const [phone, setPhone] = useState('');
     const [email, setMail] = useState('');
     const [web, setWeb] = useState('');
