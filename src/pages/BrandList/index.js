@@ -87,7 +87,7 @@ function BrandList() {
     return (
         <div className='container'>
             <div className='frame'>
-                <LinkButton path='/brand/add' placeholder='Thêm thương hiệu' icon={<FontAwesomeIcon icon={faPlus} className='me-2' />} />
+                <LinkButton path='/brands/add' placeholder='Thêm thương hiệu' icon={<FontAwesomeIcon icon={faPlus} className='me-2' />} />
             </div>
             <div className='frame'>
                 <List

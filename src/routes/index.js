@@ -7,6 +7,8 @@ import AddPromotion from "~/pages/AddPromotion";
 import BrandList from "~/pages/BrandList";
 import ColorList from "~/pages/ColorList";
 import InfoPromotion from "~/pages/InfoPromotion";
+import AddBrand from "~/pages/AddBrand";
+import UpdatePromotion from "~/pages/UpdatePromotion";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -45,6 +47,7 @@ const publicRoutes = [
         component: ColorList,
         layout: DefaultLayoutAdmin,
         title: 'Các mẫu màu sắt',
+        back: true,
     },
     {
         path: '/promotions/add',
@@ -58,6 +61,20 @@ const publicRoutes = [
         component: InfoPromotion,
         layout: DefaultLayoutAdmin,
         title: 'Thông tin khuyến mãi',
+        back: true
+    },
+    {
+        path: '/promotions/update/:id',
+        component: UpdatePromotion,
+        layout: DefaultLayoutAdmin,
+        title: 'Chỉnh sửa khuyến mãi',
+        back: true
+    },
+    {
+        path: '/brands/add',
+        component: AddBrand,
+        layout: DefaultLayoutAdmin,
+        title: 'Thêm thương hiệu',
         back: true
     },
 ];

@@ -10,8 +10,7 @@ const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, '');
 
 const options = ['Sale off', 'Giảm phí vận chuyển', 'Thanh toán']
 
-function UpdatePromotion(props) {
-
+function UpdatePromotion() {
     const [name, setName] = useState('');
     const [note, setNote] = useState('');
     const [errorName, setErrorName] = useState('');
@@ -104,7 +103,7 @@ function UpdatePromotion(props) {
 
                                 setDiscount(e.target.value);
                             }} inputMode='numeric' />
-                        <div className=' min-w-[30px]'>
+                        <div className=' min-w-[30px] flex justify-center items-center'>
                             {
                                 typediscount === true ? '%' : 'VND'
                             }
@@ -129,7 +128,7 @@ function UpdatePromotion(props) {
                 </div>
 
             </div>
-            <div className='frame text-end'>
+            <div className='w-[90%] mx-auto text-end'>
                 <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer'>
                     Lưu
                 </button>

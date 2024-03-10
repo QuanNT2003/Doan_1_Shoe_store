@@ -128,7 +128,7 @@ function AddPromotion() {
                 </div>
 
             </div>
-            <div className='frame text-end'>
+            <div className='w-[90%] mx-auto text-end'>
                 <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer'>
                     Lưu
                 </button>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faTruckFast,
@@ -9,7 +10,10 @@ const addCommas = (num) => {
     if (num === null) return;
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
+
 function InfoPromotion() {
+    const navigate = useNavigate();
+    const promotionId = useParams();
     return (
         <div className='container'>
             <div className='my-6 mx-auto min-h-20 lg:flex lg:w-[90%]'>
@@ -87,7 +91,7 @@ function InfoPromotion() {
                 <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer'>
                     Tạm ngưng
                 </button>
-                <button className='bg-white py-4 px-3 rounded-lg min-w-[130px] text-blue-500 hover:bg-[#f8f8f9] cursor-pointer border-blue-500 border-[1px] border-solid'>
+                <button className='bg-white py-4 px-3 rounded-lg min-w-[130px] text-blue-500 hover:bg-[#f8f8f9] cursor-pointer border-blue-500 border-[1px] border-solid' onClick={() => navigate('/promotions/update/' + promotionId.id)}>
                     Sửa
                 </button>
                 <button className='bg-white py-4 px-3 rounded-lg min-w-[130px] text-red-500 hover:bg-[#fef3f2] cursor-pointer border-red-500 border-[1px] border-solid'>
