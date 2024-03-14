@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import List from '~/components/List';
 import Filter from '~/components/Filter';
 import MultiSelectComp from '~/components/MultiSelectComp';
 import { CustomerItem } from '~/components/Item';
-import LinkButton from '~/components/LinkButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faPlus,
-} from '@fortawesome/free-solid-svg-icons';
-import DateRange from '~/components/DateRange';
 const rows = [
     {
         customerId: '123',
@@ -52,6 +47,7 @@ const optionsTT = [
     { label: 'Bị khóa', value: false },
 ];
 function CustomerList(props) {
+    const navigate = useNavigate();
 
     const [search, setSearch] = useState('')
     const handleSearch = (e) => {
@@ -73,6 +69,9 @@ function CustomerList(props) {
     }
 
     const [selectedTT, setSelectedTT] = useState([]);
+    const onRowClicked = useCallback((row) => {
+        navigate('/customers/details/' + row.customerId);
+    }, []);
     return (
         <div className='container'>
             <div className='frame'>
@@ -102,7 +101,7 @@ function CustomerList(props) {
                     }
                     // TABLE
                     pagination
-                    // onRowClicked={onRowClicked}
+                    onRowClicked={onRowClicked}
                     itemComponent={CustomerItem}
                     data={rows}
                     pending={pending}

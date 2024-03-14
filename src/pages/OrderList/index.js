@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import List from '~/components/List';
 import Filter from '~/components/Filter';
 import MultiSelectComp from '~/components/MultiSelectComp';
 import { OrderItem } from '~/components/Item';
-import LinkButton from '~/components/LinkButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faPlus,
-} from '@fortawesome/free-solid-svg-icons';
 import DateRange from '~/components/DateRange';
 
 const rows = [
@@ -50,7 +46,9 @@ const optionsCustomer = [
 
 ]
 
-function OrderList(props) {
+function OrderList() {
+    const navigate = useNavigate();
+
     const [search, setSearch] = useState('')
     const handleSearch = (e) => {
         setSearch(e.target.value);
@@ -78,6 +76,10 @@ function OrderList(props) {
 
     const [selectedCustomer, setSelectedCustomer] = useState([]);
     const [selectedTT, setSelectedTT] = useState([]);
+
+    const onRowClicked = useCallback((row) => {
+        navigate('/orders/details/' + row.salesOrderId);
+    }, []);
     return (
         <div className='container'>
             <div className='frame'>
@@ -120,7 +122,7 @@ function OrderList(props) {
                     }
                     // TABLE
                     pagination
-                    // onRowClicked={onRowClicked}
+                    onRowClicked={onRowClicked}
                     itemComponent={OrderItem}
                     data={rows}
                     pending={pending}

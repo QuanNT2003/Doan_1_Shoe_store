@@ -11,6 +11,8 @@ import UpdatePromotion from "~/pages/UpdatePromotion";
 import AddBrand from "~/pages/AddBrand";
 import InfoBrand from "~/pages/InfoBrand";
 import UpdateBrand from "~/pages/UpdateBrand";
+import Infocustomer from "~/pages/InfoCustomer";
+import InfoOrder from "~/pages/InfoOrder";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -91,6 +93,20 @@ const publicRoutes = [
         component: UpdateBrand,
         layout: DefaultLayoutAdmin,
         title: 'Cập nhật thương hiệu',
+        back: true
+    },
+    {
+        path: '/customers/details/:id',
+        component: Infocustomer,
+        layout: DefaultLayoutAdmin,
+        title: 'Thông tin khách hàng',
+        back: true
+    },
+    {
+        path: '/orders/details/:id',
+        component: InfoOrder,
+        layout: DefaultLayoutAdmin,
+        title: 'Thông tin đơn hàng',
         back: true
     },
 ];
