@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import example from '~/assets/example.jpg'
+import example from '~/assets/images/logo.png'
 import { NavLink, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -66,7 +66,7 @@ function SideBar() {
 
     return (
         <div className='w-full h-full'>
-            <div className='pt-6 flex justify-center items-center h-20'>
+            <div className='pt-6 flex justify-center items-center h-28'>
                 <img src={example} className='h-full w-1/3 rounded-md me-3' />
                 TQStore
             </div>

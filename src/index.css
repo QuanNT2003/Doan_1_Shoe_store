@@ -17,3 +17,15 @@
         margin: 0;
     }
 }
+
+.triangle-up {
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 15px solid white;
+}
+
+.type{
+    @apply px-2 bg-slate-300 rounded-2xl mx-2;
+}

@@ -13,6 +13,9 @@ import InfoBrand from "~/pages/InfoBrand";
 import UpdateBrand from "~/pages/UpdateBrand";
 import Infocustomer from "~/pages/InfoCustomer";
 import InfoOrder from "~/pages/InfoOrder";
+import AddProduct from "~/pages/AddProduct";
+import UpdateProduct from "~/pages/UpdateProduct";
+import InfoProduct from "../pages/InfoProduct";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -107,6 +110,27 @@ const publicRoutes = [
         component: InfoOrder,
         layout: DefaultLayoutAdmin,
         title: 'Thông tin đơn hàng',
+        back: true
+    },
+    {
+        path: '/products/add',
+        component: AddProduct,
+        layout: DefaultLayoutAdmin,
+        title: 'Thêm sản phẩm',
+        back: true
+    },
+    {
+        path: '/products/update/:id',
+        component: UpdateProduct,
+        layout: DefaultLayoutAdmin,
+        title: 'Cập nhật sản phẩm',
+        back: true
+    },
+    {
+        path: '/products/details/:id',
+        component: InfoProduct,
+        layout: DefaultLayoutAdmin,
+        title: 'Thông tin sản phẩm',
         back: true
     },
 ];

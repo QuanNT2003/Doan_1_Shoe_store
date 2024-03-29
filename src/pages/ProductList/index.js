@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import List from '~/components/List';
 import { ProductItem } from '~/components/Item';
 import Filter from '~/components/Filter';
@@ -65,6 +66,8 @@ const optionsPriceRange = [
     { label: '700,000đ - Trở lên', value: '700000-50000000' },
 ];
 function ProductList() {
+    const navigate = useNavigate();
+
     const [search, setSearch] = useState('')
 
     const handleSearch = (e) => {
@@ -109,7 +112,9 @@ function ProductList() {
     };
 
 
-
+    const onRowClicked = useCallback((row) => {
+        navigate('/products/details/' + row.productId);
+    }, []);
 
     const totalRows = 5
     return (
@@ -168,7 +173,7 @@ function ProductList() {
                     }
                     // TABLE
                     pagination
-                    // onRowClicked={onRowClicked}
+                    onRowClicked={onRowClicked}
                     showSubHeader={showSubHeader}
                     itemComponent={ProductItem}
                     selectableRows
