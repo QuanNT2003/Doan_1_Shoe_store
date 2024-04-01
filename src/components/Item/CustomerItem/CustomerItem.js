@@ -7,27 +7,27 @@ const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 export const CustomerItem = [
     {
         name: 'Mã khách hàng',
-        minWidth: '180px',
+        MinWidth: '180px',
         cell: (row) => (
-            <div className='font-medium text-sm text-[--primary]' data-tag="allowRowEvents">
+            <div className='font-medium text-[--primary]' data-tag="allowRowEvents">
                 {row.customerId}
             </div>
         ),
     },
     {
         name: 'Tên khách hàng',
-        minWidth: '180px',
+        MinWidth: '180px',
         cell: (row) => (
-            <div className='font-medium text-sm' data-tag="allowRowEvents">
+            <div className='font-medium' data-tag="allowRowEvents">
                 {row.name}
             </div>
         ),
     },
     {
         name: 'Số điện thoại',
-        minWidth: '180px',
+        MinWidth: '180px',
         cell: (row) => (
-            <div className='font-medium text-sm' data-tag="allowRowEvents">
+            <div className='font-medium' data-tag="allowRowEvents">
                 {row.phoneNumber}
             </div>
         ),
@@ -35,7 +35,7 @@ export const CustomerItem = [
     {
         name: 'Trạng thái',
         center: 'true',
-        minWidth: '180px',
+        MinWidth: '180px',
         cell: (row) => (
             <div
                 className={row.isActive ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] bg-[#ecfdf3] text-[#027948]'
@@ -58,9 +58,9 @@ export const CustomerItem = [
         text: 'purchasedOrder',
         center: 'true',
         sortable: true,
-        minWidth: '180px',
+        MinWidth: '180px',
         cell: (row) => (
-            <div className='font-medium text-sm' data-tag="allowRowEvents">
+            <div className='font-medium' data-tag="allowRowEvents">
                 {addCommas(row.purchasedOrder)}
             </div>
         ),

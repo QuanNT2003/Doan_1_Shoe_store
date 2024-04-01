@@ -10,7 +10,7 @@ export const ProductItem = [
     {
         name: 'Mã sản phẩm',
         grow: 2,
-        minWidth: '250px',
+        MinWidth: '250px',
         centet: 'true',
         cell: (row) => (
             <div
@@ -45,7 +45,7 @@ export const ProductItem = [
     {
         name: 'Trạng thái',
         center: 'true',
-        minWidth: '180px',
+        MinWidth: '180px',
         cell: (row) => (
             <div
                 className={
@@ -68,7 +68,7 @@ export const ProductItem = [
     {
         name: 'Loại sản phẩm',
         center: 'true',
-        minWidth: '180px',
+        MinWidth: '180px',
         cell: (row) => (
             <div
                 className='text-[#101828] bg-[#d0d5f1] rounded-[20px] py-[5px] px-[10px] flex items-center text-[12px]'

@@ -6,20 +6,20 @@ const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 export const DiscountItem = [
     {
         name: 'Mã khuyến mãi',
-        minWidth: '180px',
+        MinWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div key={row.promotionId} className='font-medium text-sm text-[--primary]' data-tag="allowRowEvents">
+            <div key={row.promotionId} className='font-medium text-[--primary]' data-tag="allowRowEvents">
                 {row.promotionId}
             </div>
         ),
     },
     {
         name: 'Tên khuyến mãi',
-        minWidth: '180px',
+        MinWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div className='font-medium text-sm' tag="allowRowEvents">
+            <div className='font-medium' tag="allowRowEvents">
                 {row.name}
             </div>
         ),
@@ -28,17 +28,17 @@ export const DiscountItem = [
         name: 'Mức áp dụng',
         sortable: true,
         text: 'remainQuantity',
-        minWidth: '180px',
+        MinWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div className='font-medium text-sm' tag="allowRowEvents">
+            <div className='font-medium' tag="allowRowEvents">
                 {addCommas(row.remainQuantity)}
             </div>
         ),
     },
     {
         name: 'Loại khuyến mãi',
-        minWidth: '180px',
+        MinWidth: '180px',
         center: 'true',
         cell: (row) => (
             <div
@@ -60,7 +60,7 @@ export const DiscountItem = [
     },
     {
         name: 'Trạng thái',
-        minWidth: '180px',
+        MinWidth: '180px',
         center: 'true',
         cell: (row) => (
             <div

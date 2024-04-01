@@ -8,7 +8,7 @@ export const OrderItem = [
         width: '180px',
         center: 'true',
         cell: (row) => (
-            <div className='font-medium text-sm text-[--primary]' data-tag="allowRowEvents">
+            <div className='font-medium text-[--primary]' data-tag="allowRowEvents">
                 {row.salesOrderId}
             </div>
         ),
@@ -20,33 +20,33 @@ export const OrderItem = [
         center: 'true',
         sortable: true,
         cell: (row) => (
-            <div className='font-medium text-sm' data-tag="allowRowEvents">
+            <div className='font-medium' data-tag="allowRowEvents">
                 {format(new Date(row.createdAt), 'dd/MM/yyyy - HH:mm')}
             </div>
         ),
     },
     {
         name: 'Tên khách hàng',
-        minWidth: '180px',
+        MinWidth: '180px',
         cell: (row) => (
-            <div className='font-medium text-sm' data-tag="allowRowEvents">
+            <div className='font-medium' data-tag="allowRowEvents">
                 {row.customerName}
             </div>
         ),
     },
     {
         name: 'Khách phải trả',
-        minWidth: '180px',
+        MinWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div className='font-medium text-sm' data-tag="allowRowEvents">
+            <div className='font-medium' data-tag="allowRowEvents">
                 {addCommas(row.totalAmount)}
             </div>
         ),
     },
     {
         name: 'Trạng thái',
-        minWidth: '180px',
+        MinWidth: '180px',
         center: 'true',
         cell: (row) => (
             <div

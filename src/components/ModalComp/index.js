@@ -29,7 +29,7 @@ function ModalComp({ open, handleClose, children, actionComponent, title }) {
         <Modal open={open}>
             <Fade in={open}>
                 <Box sx={style}>
-                    <div className='w-[250px] md:w-[700px] overflow-auto'>
+                    <div className='md:w-[700px] overflow-auto'>
                         <div className='flex justify-between items-center my-[5px] mr-[10px] ml-[20px]'>
                             <div className='text-[20px] font-semibold leading-[0]'>{title}</div>
                             <div

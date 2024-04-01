@@ -16,6 +16,7 @@ import InfoOrder from "~/pages/InfoOrder";
 import AddProduct from "~/pages/AddProduct";
 import UpdateProduct from "~/pages/UpdateProduct";
 import InfoProduct from "../pages/InfoProduct";
+import ProductVersion from "../pages/ProductVersion";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -131,6 +132,13 @@ const publicRoutes = [
         component: InfoProduct,
         layout: DefaultLayoutAdmin,
         title: 'Thông tin sản phẩm',
+        back: true
+    },
+    {
+        path: '/products/version/:id',
+        component: ProductVersion,
+        layout: DefaultLayoutAdmin,
+        title: 'Quản lý các phân loại sản phẩm',
         back: true
     },
 ];

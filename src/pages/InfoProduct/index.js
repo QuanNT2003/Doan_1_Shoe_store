@@ -149,7 +149,7 @@ function InfoProduct() {
                 </div>
             </div>
             <div className='frame grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 lg:flex lg:flex-row-reverse'>
-                <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer'>
+                <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => navigate('/products/version/' + productID.id)}>
                     Quản lý phiên bản
                 </button>
                 <button className='bg-white py-4 px-3 rounded-lg min-w-[130px] text-blue-500 hover:bg-[#f8f8f9] cursor-pointer border-blue-500 border-[1px] border-solid' onClick={() => navigate('/products/update/' + productID.id)}>

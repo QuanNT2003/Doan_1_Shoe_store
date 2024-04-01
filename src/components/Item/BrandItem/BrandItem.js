@@ -3,7 +3,7 @@ import noImage from '~/assets/images/no-image.png';
 export const BrandItem = [
     {
         name: 'Mã thương hiệu',
-        minWidth: '250px',
+        MinWidth: '250px',
         center: 'true',
         cell: (row) => (
             <div
@@ -37,40 +37,40 @@ export const BrandItem = [
     },
     {
         name: 'Quốc gia',
-        minWidth: '180px',
+        MinWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div className='font-medium text-sm' tag="allowRowEvents">
+            <div className='font-medium' tag="allowRowEvents">
                 {row.nation}
             </div>
         ),
     },
     {
         name: 'Số mặt hàng đang bán',
-        minWidth: '180px',
+        MinWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div className='font-medium text-sm' tag="allowRowEvents">
+            <div className='font-medium' tag="allowRowEvents">
                 {row.totalProduct}
             </div>
         ),
     },
     {
         name: 'Email',
-        minWidth: '180px',
+        MinWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div className='font-medium text-sm' tag="allowRowEvents">
+            <div className='font-medium' tag="allowRowEvents">
                 {row.email}
             </div>
         ),
     },
     {
         name: 'Website chính thức',
-        minWidth: '180px',
+        MinWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div className='font-medium text-sm' tag="allowRowEvents">
+            <div className='font-medium' tag="allowRowEvents">
                 {row.website}
             </div>
         ),
