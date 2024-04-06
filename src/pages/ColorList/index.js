@@ -7,6 +7,9 @@ import {
 import SubHeader from '~/components/SubHeader';
 import List from '~/components/List';
 import { ColorItem } from '~/components/Item';
+import ModalComp from '~/components/ModalComp';
+import Input from '~/components/Input';
+import ColorPicker from '~/components/ColorPicker';
 
 const rows = [
     {
@@ -65,11 +68,51 @@ function ColorList() {
         setSelectedDelRows(selectedRows);
     };
 
+    // Modal
+    const [titleModal, setTitleModal] = useState('');
+    const [openModal, setOpenModal] = useState(false);
+    const [pending, setPending] = useState(false);
+
+    const handleCloseModal = () => {
+        setOpenModal(false)
+        setErrorName('')
+        setError(false)
+        setErrorColor('')
+        setName('')
+        setColor1('')
+        setColor2('')
+    };
+
+    // Submit Modal
+
+    const handleValidation = () => {
+        if (name === '') setErrorName('Không được để trống')
+        if (color1 === '') {
+            setError(true)
+            setErrorColor('Không được để trống')
+        }
+    }
+
+    // NAME
+    const [name, setName] = useState('');
+    const onChangeName = (value) => {
+        setName(value);
+    };
+    const [errorName, setErrorName] = useState('');
+
+    //Color
+    const [color1, setColor1] = useState('')
+    const [error, setError] = useState(false)
+    const [errorColor, setErrorColor] = useState('')
+    const [color2, setColor2] = useState('')
     const totalRows = 5
     return (
         <div className='container'>
             <div className='frame'>
-                <LinkButton placeholder='Thêm mẫu màu' icon={<FontAwesomeIcon icon={faPlus} />} />
+                <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer flex items-center' onClick={() => setOpenModal(true)}>
+                    <FontAwesomeIcon icon={faPlus} className='mx-2' />
+                    Thêm mẫu màu
+                </button>
             </div>
             <div className='frame'>
                 <List
@@ -107,6 +150,40 @@ function ColorList() {
                 // handleSort={handleSort}
                 />
             </div>
+            <ModalComp
+                open={openModal}
+                handleClose={handleCloseModal}
+                title="Thêm mẫu màu mới"
+                actionComponent={
+                    <div>
+                        <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => handleCloseModal()}>
+                            Quay lại
+                        </button>
+                        <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => handleValidation()}>
+                            Thêm
+                        </button>
+                    </div>
+                }
+            >
+
+                <Input
+                    title={'Tên mẩu màu'}
+                    required
+                    className='my-5'
+                    value={name}
+                    onChange={onChangeName}
+                    error={errorName}
+                />
+                <div className='md:grid md:grid-cols-2'>
+                    <div>
+                        <ColorPicker handleChangeColor={setColor1} title={'Màu sắc chính'} error={error} errorName={errorColor} required={true} />
+                    </div>
+                    <div>
+                        <ColorPicker handleChangeColor={setColor2} title={'Màu phụ'} />
+                    </div>
+
+                </div>
+            </ModalComp>
         </div>
     );
 }

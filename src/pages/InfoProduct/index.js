@@ -83,7 +83,7 @@ function InfoProduct() {
                     <hr />
                     <div className='lg:grid lg:grid-cols-5 mt-5'>
                         <div className='lg:col-span-2 lg:ms-2'>
-                            <ImageCarousel images={images} />
+                            <ImageCarousel images={images} showThumbnails={true} />
                         </div>
                         <div className='lg:col-span-3 lg:ms-10'>
                             <div className='font-bold mb-3'>Giày nam sneaker độn đế 5cm Wataa Phản Quang Đêm cực chất - MinhNhat</div>

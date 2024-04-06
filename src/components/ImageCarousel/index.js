@@ -3,7 +3,10 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 
 
-function ImageCarousel({ images }) {
+function ImageCarousel({
+    images,
+    showThumbnails
+}) {
 
     return (
         <div>
@@ -16,6 +19,7 @@ function ImageCarousel({ images }) {
                 }
                 showNav={false}
                 autoPlay={true}
+                showThumbnails={showThumbnails}
             />
         </div>
     );

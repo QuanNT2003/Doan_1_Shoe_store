@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ColorPicker from '~/components/ColorPicker';
 import ImageCarousel from '~/components/ImageCarousel';
 function HomePage() {
     const images = [
@@ -43,12 +44,14 @@ function HomePage() {
             thumbnail: "https://picsum.photos/id/1019/1000/600/",
         },
     ];
+
     return (
         <div>
             Home Page
             <div className='w-[200px] md:w-[550px]'>
-                <ImageCarousel images={images} />
+                <ImageCarousel images={images} showThumbnails={false} />
             </div>
+
         </div>
     );
 }

@@ -255,7 +255,7 @@ function ProductVersion() {
 
                 </div>
                 <Input
-                    title={'Áp dụng từ'}
+                    title={'Số lượng'}
                     value={quantity}
                     required={true}
                     onChange={(value) => setQuantity(
