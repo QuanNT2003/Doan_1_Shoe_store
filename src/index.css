@@ -29,3 +29,11 @@
 .type{
     @apply px-2 bg-slate-300 rounded-2xl mx-2;
 }
+
+.active{
+    @apply flex h-14 border bg-[#3a57e8] text-white items-center ps-6 transition-all rounded-md mb-1 text-wrap;
+}
+
+.navlink{
+    @apply flex h-14 border hover:bg-[#3a57e8] hover:text-white items-center ps-6 transition-all rounded-md mb-1 text-wrap;
+}

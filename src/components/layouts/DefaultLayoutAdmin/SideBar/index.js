@@ -11,11 +11,9 @@ import {
     faChartSimple,
     faUser
 } from '@fortawesome/free-solid-svg-icons';
-import classNames from 'classnames/bind';
-import styles from './SideBar.module.scss';
 
 
-const cx = classNames.bind(styles);
+
 function SideBar() {
 
     const links = [
@@ -68,7 +66,7 @@ function SideBar() {
         <div className='w-full h-full'>
             <div className='pt-6 flex justify-center items-center h-28'>
                 <img src={example} className='h-full w-1/3 rounded-md me-3' />
-                TQStore
+                TQShop
             </div>
             <hr className=' mt-4 mx-3' />
 
@@ -80,7 +78,7 @@ function SideBar() {
                             key={index}
                             to={e.path}
                             className={({ isActive }) =>
-                                isActive ? cx('navlink', 'active') : cx('navlink')
+                                isActive ? 'active navlink' : 'navlink'
                             }
                         >
                             <div >

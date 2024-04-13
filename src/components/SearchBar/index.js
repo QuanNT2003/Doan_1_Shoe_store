@@ -8,7 +8,7 @@ function SearchBar({ placeholder, value, onChange, onKeyDown }) {
     };
 
     return (
-        <div className=' min-w-[200px] border-[1px] rounded p-[10px] flex-1 flex justify-center items-center bg-white text-black'>
+        <div className='min-w-[200px] border-[1px] rounded p-[10px] flex-1 flex justify-center items-center bg-white text-black'>
             <FontAwesomeIcon
                 className='text-base'
                 icon={faMagnifyingGlass}
