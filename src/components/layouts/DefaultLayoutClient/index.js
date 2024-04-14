@@ -1,11 +1,14 @@
 import React from 'react';
 import Header from './Header';
+import Footer from './Footer';
 
 function defaultLayoutClient({ children }) {
     return (
-        <div className='flex h-screen flex-col bg-[#e9ecef]'>
+        <div className=' bg-[#e9ecef]'>
             <Header />
-            <div className='lg:w-[70%] w-[100%]h-svh mx-auto'>{children}</div>
+            <div className='lg:w-[70%] w-[100%] bg-[#e9ecef] mx-auto' >{children}</div>
+            <Footer />
+
         </div>
     );
 }

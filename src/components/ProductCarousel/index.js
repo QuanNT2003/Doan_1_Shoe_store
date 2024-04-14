@@ -29,13 +29,14 @@ const responsive = {
         items: 3
     },
     mobile: {
-        breakpoint: { max: 600, min: 0 },
-        items: 2
+        breakpoint: { max: 600, min: 400 },
+        items: 3
     },
     mobile_2: {
-        breakpoint: { max: 420, min: 0 },
-        items: 1
-    }
+        breakpoint: { max: 400, min: 0 },
+        items: 2
+    },
+
 };
 
 function ProductCarousel({ title, listProduct, path }) {
@@ -44,7 +45,7 @@ function ProductCarousel({ title, listProduct, path }) {
         navigate(path)
     }
     return (
-        <div className='bg-white m-2 p-3 rounded-lg'>
+        <div className='bg-white m-5 mb-10 p-3 rounded-lg'>
             <div className='mb-2 ms-3 h-[40px] flex items-center justify-between'>
                 <div className='font-bold text-[16px]'>{title}</div>
                 <div className='text-blue-500 me-4 select-none cursor-pointer' onClick={() => onclick()}>

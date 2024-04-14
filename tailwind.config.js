@@ -19,8 +19,11 @@ module.exports = {
       },
       borderColor: {
         gba128: 'rgba(128, 128, 128, 0.7)'
-      }
-
+      },
+      screens: {
+        'ssm': '450px',
+        // => @media (min-width: 992px) { ... }
+      },
     },
   },
   plugins: [],

@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBell,
     faCartShopping,
-    faBars,
     faUser,
     faHome,
     faMale,
@@ -50,18 +49,18 @@ function Header() {
     const handleClose = () => setOpen(false);
     return (
         <div className=' bg-blue-200'>
-            <div className='flex justify-center items-center md:w-[95%] md:mx-auto mt-2'>
+            <div className='flex justify-center py-2 items-center md:w-[95%] md:mx-auto mt-2 h-[120px]'>
                 <div className='flex-1 flex items-center lg:justify-center justify-start ms-4'>
-                    <img src={image} className='md:h-[100px] md:w-[100px] h-[50px] w-[50px] rounded-md me-6' />
+                    <img src={image} className='md:h-[90px] md:w-[90px] h-[50px] w-[50px] rounded-md me-6' />
                 </div>
 
                 <div className='justify-center items-center me-20 flex-[2] hidden lg:flex'>
                     <SearchBar placeholder={'Tim kiếm sản phẩm'} />
                 </div>
                 <div className='flex justify-end items-center flex-1'>
-                    <div onClick={handleOpen} className='sm:hidden cursor-pointer me-5 '>
+                    {/* <div onClick={handleOpen} className='sm:hidden cursor-pointer me-5 '>
                         <FontAwesomeIcon icon={faBars} className='hover:scale-110 me-4 w-[25px] h-[25px]' />
-                    </div>
+                    </div> */}
                     <div className='me-5 hover:cursor-pointer group relative '>
                         <div className='flex justify-center items-center group-hover:scale-110'>
                             <FontAwesomeIcon icon={faBell} className='me-4 w-[25px] h-[25px]' />
@@ -72,9 +71,9 @@ function Header() {
 
                         <div className='scale-y-0 absolute group-hover:scale-y-100 group-hover:block transition-all mt-2 duration-300 origin-top inset-y-7 right-0 z-50 '>
                             <div className='flex justify-end'>
-                                <div className='triangle-up'></div>
+                                <div className='triangle-up border'></div>
                             </div>
-                            <div className='min-w-[300px] min-h-[400px] bg-white rounded-md rounded-tr-[0] p-2  '>
+                            <div className='min-w-[300px] min-h-[400px] bg-white rounded-md rounded-tr-[0] p-2 border '>
                                 123
                             </div>
                         </div>
@@ -89,16 +88,16 @@ function Header() {
 
                         <div className='scale-y-0 absolute group-hover:scale-y-100 group-hover:block transition-all mt-2 duration-300 origin-top inset-y-7 right-0 z-50'>
                             <div className='flex justify-end'>
-                                <div className='triangle-up'></div>
+                                <div className='triangle-up border'></div>
                             </div>
-                            <div className='min-w-[300px] min-h-[400px] bg-white rounded-md rounded-tr-[0] p-2'>
+                            <div className='min-w-[300px] min-h-[400px] bg-white rounded-md rounded-tr-[0] p-2 border'>
                                 123
                             </div>
                         </div>
                     </div>
 
-                    <div className='flex justify-center items-center me-5 hover:cursor-pointer'>
-                        <FontAwesomeIcon icon={faUser} className='me-4 w-[25px] h-[25px]' />
+                    <div className='flex justify-center items-center me-5 hover:cursor-pointer hover:scale-110 transition-all'>
+                        <FontAwesomeIcon icon={faUser} className='me-2 w-[25px] h-[25px]' />
                         <div className='text-[12px] hidden md:block'>
                             Đăng ký | Đăng nhập
                         </div>
@@ -108,7 +107,7 @@ function Header() {
 
                 </div>
             </div>
-            <div className={'md:flex lg:w-[50%] lg:mx-auto my-4 hidden'}>
+            {/* <div className={'md:flex lg:w-[50%] lg:mx-auto my-4 hidden'}>
                 <div className='mx-8 cursor-pointer my-2' >
                     Trang chủ
                 </div>
@@ -127,8 +126,8 @@ function Header() {
                 <div className='mx-8 cursor-pointer my-2'>
                     Giày trẻ em
                 </div>
-            </div>
-            <Modal
+            </div> */}
+            {/* <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -158,7 +157,7 @@ function Header() {
                         ))
                     }
                 </Box>
-            </Modal>
+            </Modal> */}
         </div>
     );
 }

@@ -12,8 +12,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Montserrat", sans-serif;
-    font-size: 15px;
     font-weight: 500;
 }
 
@@ -23,6 +21,7 @@ html {
 body {
     font-family: "Montserrat", sans-serif;
     line-height: 1.5;
+    font-size: 15px;
     text-rendering: optimizeSpeed;
     overflow-x: hidden;
 }
