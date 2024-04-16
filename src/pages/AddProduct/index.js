@@ -173,7 +173,7 @@ function AddProduct() {
         console.log(obj)
     }
     return (
-        <div className='container'>
+        <div>
             <div className='mt-6 lg:grid lg:grid-cols-5'>
                 <div className='frame lg:col-span-3'>
                     Ảnh sản phẩm

@@ -1,26 +1,23 @@
 import React from 'react';
-import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
+import AliceCarousel from 'react-alice-carousel';
+import 'react-alice-carousel/lib/alice-carousel.css';
 
 
 function ImageCarousel({
     images,
     showThumbnails
 }) {
-
+    const handleDragStart = (e) => e.preventDefault();
     return (
         <div>
-            <ImageGallery
-                showFullscreenButton={false}
-                showPlayButton={false}
-                items={images}
-                renderItem={(item) =>
-                    <img src={item.src} className='p-2' />
-                }
-                showNav={false}
-                autoPlay={true}
-                showThumbnails={showThumbnails}
-            />
+            <AliceCarousel mouseTracking>
+                {images.map((item, index) => (
+                    <div className='p-3 flex justify-center items-center' key={index}>
+                        <img src={item.src} className='h-[400px]' onDragStart={handleDragStart} role="presentation" />
+                    </div>
+
+                ))}
+            </AliceCarousel>
         </div>
     );
 }

@@ -107,7 +107,7 @@ function ProductVersion() {
         setOpenModal(true)
     }, []);
     return (
-        <div className='container'>
+        <div>
             <div className='frame'>
                 Thông tin sản phẩm
                 <hr className='my-3' />

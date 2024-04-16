@@ -15,7 +15,7 @@ function InfoPromotion() {
     const navigate = useNavigate();
     const promotionId = useParams();
     return (
-        <div className='container'>
+        <div>
             <div className='my-6 mx-auto min-h-20 lg:flex lg:w-[90%]'>
                 <div className={"my-6 ms-[5%] me-[5%] lg:ms-0 text-wrap min-w-[300px] max-w-[350px] min-h-28 rounded-xl flex " + "bg-green-400"}>
                     <div className='w-[120px] border-r-2 border-white border-dashed flex items-center justify-center flex-col'>

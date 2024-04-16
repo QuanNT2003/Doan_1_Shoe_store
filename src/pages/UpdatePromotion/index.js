@@ -28,7 +28,7 @@ function UpdatePromotion() {
         else setStype('ship')
     }
     return (
-        <div className='container'>
+        <div>
             <div className='mt-6 md:grid md:grid-cols-2'>
                 <div className='frame'>
                     Thông tin chung

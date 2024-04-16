@@ -4,7 +4,7 @@ import example from '~/assets/example.jpg'
 function Infocustomer() {
     const navigate = useNavigate();
     return (
-        <div className='container'>
+        <div>
             <div className='my-6 mx-auto min-h-20 lg:flex lg:w-[90%]'>
                 <div className='min-w-[300px] min-h-[200px] bg-white mt-5 p-5 mx-auto my-6 me-[5%] w-[90%] lg:w-[450px] rounded-lg'>
                     Ảnh đại diện

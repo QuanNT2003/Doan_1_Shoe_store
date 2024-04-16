@@ -40,7 +40,7 @@ function InfoOrder() {
     }
 
     return (
-        <div className='container'>
+        <div>
             <div className='my-6 mx-auto h-10 w-[90%] flex items-center'>
                 <div className='me-5 font-bold text-[18px]'>
                     0rd00001

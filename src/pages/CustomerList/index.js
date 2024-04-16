@@ -73,7 +73,7 @@ function CustomerList(props) {
         navigate('/customers/details/' + row.customerId);
     }, []);
     return (
-        <div className='container'>
+        <div>
             <div className='frame'>
                 <List
                     searchVisibility={true}

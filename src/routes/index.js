@@ -17,6 +17,7 @@ import AddProduct from "~/pages/AddProduct";
 import UpdateProduct from "~/pages/UpdateProduct";
 import InfoProduct from "../pages/InfoProduct";
 import ProductVersion from "../pages/ProductVersion";
+import ProductPage from "~/pages/ProductPage";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -140,6 +141,13 @@ const publicRoutes = [
         layout: DefaultLayoutAdmin,
         title: 'Quản lý các phân loại sản phẩm',
         back: true
+    },
+
+
+    {
+        path: '/product_collection/:id',
+        component: ProductPage,
+        layout: DefaultLayoutClient,
     },
 ];
 

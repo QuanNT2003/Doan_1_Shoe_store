@@ -57,7 +57,7 @@ function AddBrand() {
         setFiles(undefined)
     };
     return (
-        <div className='container'>
+        <div>
             <div className='frame'>
                 Ảnh thương hiệu
                 <hr />

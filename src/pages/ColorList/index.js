@@ -107,7 +107,7 @@ function ColorList() {
     const [color2, setColor2] = useState('')
     const totalRows = 5
     return (
-        <div className='container'>
+        <div>
             <div className='frame'>
                 <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer flex items-center' onClick={() => setOpenModal(true)}>
                     <FontAwesomeIcon icon={faPlus} className='mx-2' />

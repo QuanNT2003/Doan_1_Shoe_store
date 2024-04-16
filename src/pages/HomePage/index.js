@@ -7,7 +7,7 @@ import UtilityBar from '~/components/UtilityBar';
 
 const listProduct = [
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -18,7 +18,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -29,7 +29,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -40,7 +40,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -51,7 +51,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -62,7 +62,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -73,7 +73,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -84,7 +84,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -95,7 +95,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -106,7 +106,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -117,7 +117,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -128,7 +128,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -139,7 +139,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -150,7 +150,7 @@ const listProduct = [
         price: 200000,
     },
     {
-        id: 1,
+        productID: 1,
         name: 'GIÀY BÚP BÊ LOLITA DA BÓNG Rat la dep dep nhat he mat troi',
         images: [
             {
@@ -163,7 +163,7 @@ const listProduct = [
 ]
 const listCategories = [
     {
-        id: 1,
+        productID: 1,
         name: 'Giày sandal',
         images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
     },

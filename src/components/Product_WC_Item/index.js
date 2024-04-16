@@ -7,7 +7,7 @@ const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 function Product_WC_item({ product }) {
     const navigate = useNavigate();
     const onclick = () => {
-        navigate('')
+        navigate('/product_collection/' + product.productID)
     }
     return (
         <div className='max-w-[100px] ssm:max-w-[190px] bg-white shadow-xl rounded-md p-2 hover:shadow-2xl m-2 select-none cursor-pointer' onClick={() => onclick()}>

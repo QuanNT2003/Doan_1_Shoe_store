@@ -84,7 +84,7 @@ function PromotionList() {
         navigate('/promotions/details/' + row.promotionId);
     }, []);
     return (
-        <div className='container'>
+        <div>
             <div className='frame'>
                 <LinkButton path='/promotions/add' placeholder='Thêm khuyến mãi' icon={<FontAwesomeIcon icon={faPlus} className='me-2' />} />
             </div>

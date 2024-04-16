@@ -90,7 +90,7 @@ function BrandList() {
         navigate('/brands/details/' + row.brandId);
     }, []);
     return (
-        <div className='container'>
+        <div>
             <div className='frame'>
                 <LinkButton path='/brands/add' placeholder='Thêm thương hiệu' icon={<FontAwesomeIcon icon={faPlus} className='me-2' />} />
             </div>

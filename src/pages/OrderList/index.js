@@ -81,7 +81,7 @@ function OrderList() {
         navigate('/orders/details/' + row.salesOrderId);
     }, []);
     return (
-        <div className='container'>
+        <div>
             <div className='frame'>
                 <List
                     searchVisibility={true}
