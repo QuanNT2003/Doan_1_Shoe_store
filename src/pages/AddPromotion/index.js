@@ -103,7 +103,7 @@ function AddPromotion() {
 
                                 setDiscount(e.target.value);
                             }} inputMode='numeric' />
-                        <div className=' min-w-[30px]'>
+                        <div className=' min-w-[30px] flex justify-center items-center'>
                             {
                                 typediscount === true ? '%' : 'VND'
                             }

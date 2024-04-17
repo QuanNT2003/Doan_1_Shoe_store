@@ -55,7 +55,7 @@ export const data = {
             totalPrice: 1000000,
         },
         {
-            productId: 5,
+            productId: 6,
             sku: 'SP0002',
             name: 'Đắc nhân tâm',
             featureImageUrl: 'https://inthienhang.com/wp-content/uploads/2020/03/mau-bia-sach-dep.jpg',
@@ -66,7 +66,7 @@ export const data = {
         },
 
         {
-            productId: 5,
+            productId: 7,
             sku: 'SP0002',
             name: 'Đắc nhân tâm',
             featureImageUrl: 'https://inthienhang.com/wp-content/uploads/2020/03/mau-bia-sach-dep.jpg',
@@ -76,7 +76,7 @@ export const data = {
             totalPrice: 1000000,
         },
         {
-            productId: 5,
+            productId: 8,
             sku: 'SP0002',
             name: 'Đắc nhân tâm',
             featureImageUrl: 'https://inthienhang.com/wp-content/uploads/2020/03/mau-bia-sach-dep.jpg',

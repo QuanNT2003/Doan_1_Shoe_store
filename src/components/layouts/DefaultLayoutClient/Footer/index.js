@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 function Footer() {
     return (
-        <div className='bg-slate-800 text-white space-x-10 py-10'>
+        <div className='bg-slate-800 text-white space-x-10 py-10 select-none'>
             <div className='ssm:flex justify-between w-[60%] mx-auto   '>
                 <div className='font-inter py-10 text-[12px] flex-col flex cursor-pointer'>
                     <div className='text-[15px] font-bold mb-3'>Về chúng tôi</div>

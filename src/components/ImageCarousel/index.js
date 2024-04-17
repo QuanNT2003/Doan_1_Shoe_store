@@ -9,11 +9,11 @@ function ImageCarousel({
 }) {
     const handleDragStart = (e) => e.preventDefault();
     return (
-        <div>
+        <div className='mt-5'>
             <AliceCarousel mouseTracking>
                 {images.map((item, index) => (
-                    <div className='p-3 flex justify-center items-center' key={index}>
-                        <img src={item.src} className='h-[400px]' onDragStart={handleDragStart} role="presentation" />
+                    <div className=' flex justify-center items-center ' key={index}>
+                        <img src={item.src} className='h-[250px] ssm:h-[300px] ' onDragStart={handleDragStart} role="presentation" />
                     </div>
 
                 ))}

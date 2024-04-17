@@ -353,7 +353,7 @@ function AddProduct() {
 
 
                                     setDiscount(e.target.value);
-                                }} inputMode='numeric' />
+                                }} type='number' />
                             <span>%</span>
                         </div>
 
