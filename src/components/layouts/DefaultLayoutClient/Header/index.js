@@ -48,23 +48,23 @@ function Header() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     return (
-        <div className=' bg-blue-200'>
-            <div className='flex justify-center py-2 items-center md:w-[95%] md:mx-auto mt-2 h-[120px]'>
+        <div className=' bg-orange-500 text-white'>
+            <div className='flex justify-center py-2 items-center md:w-[95%] md:mx-auto mt-2 h-[130px]'>
                 <div className='flex-1 flex items-center lg:justify-center justify-start ms-4'>
                     <img src={image} className='md:h-[90px] md:w-[90px] h-[50px] w-[50px] rounded-md me-6' />
                 </div>
 
-                <div className='justify-center items-center me-20 flex-[2] hidden lg:flex'>
+                <div className='justify-center items-center me-20 flex-[4] hidden lg:flex'>
                     <SearchBar placeholder={'Tim kiếm sản phẩm'} />
                 </div>
-                <div className='flex justify-end items-center flex-1'>
+                <div className='flex justify-end items-center flex-[2]'>
                     {/* <div onClick={handleOpen} className='sm:hidden cursor-pointer me-5 '>
                         <FontAwesomeIcon icon={faBars} className='hover:scale-110 me-4 w-[25px] h-[25px]' />
                     </div> */}
                     <div className='me-5 hover:cursor-pointer group relative '>
                         <div className='flex justify-center items-center group-hover:scale-110'>
                             <FontAwesomeIcon icon={faBell} className='me-4 w-[25px] h-[25px]' />
-                            <div className='text-[12px] hidden md:block'>
+                            <div className='text-[13px] hidden md:block'>
                                 Thông báo
                             </div>
                         </div>
@@ -81,7 +81,7 @@ function Header() {
                     <div className='me-5 hover:cursor-pointer group relative '>
                         <div className='flex justify-center items-center group-hover:scale-110'>
                             <FontAwesomeIcon icon={faCartShopping} className='me-4 w-[25px] h-[25px] ' />
-                            <div className='text-[12px] hidden md:block'>
+                            <div className='text-[13px] hidden md:block'>
                                 Giỏ hàng
                             </div>
                         </div>
@@ -98,7 +98,7 @@ function Header() {
 
                     <div className='flex justify-center items-center me-5 hover:cursor-pointer hover:scale-110 transition-all'>
                         <FontAwesomeIcon icon={faUser} className='me-2 w-[25px] h-[25px]' />
-                        <div className='text-[12px] hidden md:block'>
+                        <div className='text-[13px] hidden md:block'>
                             Đăng ký | Đăng nhập
                         </div>
 

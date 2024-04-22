@@ -18,6 +18,7 @@ import UpdateProduct from "~/pages/UpdateProduct";
 import InfoProduct from "../pages/InfoProduct";
 import ProductVersion from "../pages/ProductVersion";
 import ProductPage from "~/pages/ProductPage";
+import BrandListPage from "~/pages/BrandListPage";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -147,6 +148,11 @@ const publicRoutes = [
     {
         path: '/product_collection/:id',
         component: ProductPage,
+        layout: DefaultLayoutClient,
+    },
+    {
+        path: '/brand_collection',
+        component: BrandListPage,
         layout: DefaultLayoutClient,
     },
 ];

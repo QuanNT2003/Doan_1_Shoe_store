@@ -47,7 +47,7 @@ function ProductCarousel({ title, listProduct, path }) {
     return (
         <div className='bg-white m-5 mb-10 p-3 rounded-lg'>
             <div className='mb-2 ms-3 h-[40px] flex items-center justify-between'>
-                <div className='font-bold text-[16px]'>{title}</div>
+                <div className='font-bold text-[18px]'>{title}</div>
                 <div className='text-blue-500 me-4 select-none cursor-pointer' onClick={() => onclick()}>
                     Xem tất cả
                 </div>

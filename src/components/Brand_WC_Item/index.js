@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
-import Categories from '~/components/Categories';
-import ProductCarousel from '~/components/ProductCarousel';
-import Product_WC_item from '~/components/Product_WC_Item';
-import UtilityBar from '~/components/UtilityBar';
-
-
+import React from 'react';
+import example from '~/assets/example.jpg'
+import ProductCarousel from '../ProductCarousel';
 const listProduct = [
     {
         productID: 1,
@@ -161,90 +157,47 @@ const listProduct = [
         price: 200000,
     },
 ]
-const listCategories = [
-    {
-        productID: 1,
-        name: 'Giày sandal',
-        images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
-    },
-    {
-        id: 1,
-        name: 'Giày công sở ',
-        images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
-    },
-    {
-        id: 1,
-        name: 'Giày sabo',
-        images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
-    },
-    {
-        id: 1,
-        name: 'Giày mọi',
-        images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
-    },
-    {
-        id: 1,
-        name: 'Giày tăng chiều cao',
-        images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
-    },
-    {
-        id: 1,
-        name: 'Giày bốt',
-        images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
-    },
-    {
-        id: 1,
-        name: 'Giày sneaker',
-        images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
-    },
-    {
-        id: 1,
-        name: 'Giày cao rót',
-        images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
-    },
-    {
-        id: 1,
-        name: 'Giày thể thao',
-        images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
-    },
-    {
-        id: 1,
-        name: 'Giày trẻ em',
-        images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
-    },
-]
-function HomePage() {
+function Brand_WC_Item({
 
-
+}) {
     return (
-        <div className='select-none'>
-            <ProductCarousel title={'Siêu khuyến mãi'} listProduct={listProduct} path='/products' />
-            <ProductCarousel title={'Sản phẩm mới'} listProduct={listProduct} path='/products' />
-            <Categories list={listCategories} />
-            <ProductCarousel title={'Siêu khuyến mãi'} listProduct={listProduct} path='/products' />
-            <div className='bg-white m-5 mb-10 p-3 rounded-lg'>
-                <div className='mb-2 ms-3 h-[40px] flex items-center justify-between'>
-                    <div className='font-bold text-[16px]'>Just for you</div>
+        <div className='my-7 mx-2 bg-white p-3 rounded-lg select-none border'>
+            <div className='flex items-center hover:shadow cursor-pointer'>
+                <div className='flex m-5 ms-8 flex-[2] '>
+                    <div className='me-5'>
+                        <img src={example} className='w-[80px] h-[80px] rounded-full' />
+                    </div>
+                    <div className='flex flex-col'>
+                        <div className='flex-1 font-bold mb-3 text-[20px] mt-2'>
+                            Nike
+                        </div>
+                        <div className='flex-1'>
+                            Hoa kỳ
+                        </div>
+                    </div>
                 </div>
-                <div className='flex flex-wrap mb-7'>
-                    {
-                        listProduct.map((item, index) => (
-                            <div key={index}>
-                                <Product_WC_item product={item} />
+                <div className='flex flex-[4]'>
+                    <div className='mx-10 flex flex-col items-center'>
+                        <div className='font-bold text-[20px]'>5 năm</div>
+                        <div>Thành lập</div>
+                    </div>
+                    <div className='mx-10 flex flex-col items-center'>
+                        <div className='font-bold text-[20px]'>190 </div>
+                        <div>Sản phẩm</div>
+                    </div>
+                    <div className='mx-10 flex flex-col items-center'>
+                        <div className='font-bold text-[20px]'>Có mặt tại hơn 100 </div>
+                        <div>Quốc gia</div>
+                    </div>
+                </div>
 
-                            </div>
-                        ))
-                    }
-                </div>
-                <div className='flex justify-center items-center'>
-                    <button className='bg-blue-500 mx-auto p-3 rounded-lg w-[30%] text-white hover:bg-blue-400 cursor-pointer ' >
-                        Xem Thêm
-                    </button>
-                </div>
             </div>
 
+            <div>
+                <ProductCarousel title={'Sản phẩm của thương hiệu'} listProduct={listProduct} path='/products' />
+            </div>
         </div>
     );
 }
 
-export default HomePage;
+export default Brand_WC_Item;
