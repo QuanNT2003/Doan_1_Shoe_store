@@ -21,7 +21,7 @@ module.exports = {
         gba128: 'rgba(128, 128, 128, 0.7)'
       },
       screens: {
-        'ssm': '450px',
+        'ssm': '500px',
         // => @media (min-width: 992px) { ... }
       },
     },

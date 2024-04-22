@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Brand_WC_Item from '~/components/Brand_WC_Item';
 import MultiSelectComp from '~/components/MultiSelectComp';
+import SearchBar from '~/components/SearchBar';
 const optionsSL = [
     { label: '0 - 30', value: '0-30' },
     { label: '30 - 70', value: '30-70' },
@@ -22,8 +23,8 @@ function BrandListPage() {
                     Danh sách thương hiệu
                 </div>
                 <div className='bg-white p-3 border'>
-                    <div className=' flex'>
-                        <div className='mx-4 w-[250px]'>
+                    <div className=' lg:flex'>
+                        <div className='mx-4 w-[250px] my-3'>
                             <MultiSelectComp
                                 options={optionsSL}
                                 placeholder={'Số lượng sản phẩm'}
@@ -32,7 +33,7 @@ function BrandListPage() {
                                 hasSelectAll={true}
                             />
                         </div>
-                        <div className='mx-4 w-[250px]'>
+                        <div className='mx-4 w-[250px] my-3'>
                             <MultiSelectComp
 
                                 options={optionsNation}
@@ -41,6 +42,9 @@ function BrandListPage() {
                                 setSelected={setSelectedNation}
                                 hasSelectAll={true}
                             />
+                        </div>
+                        <div className='mx-4 ssm:w-[400px] w-[250px] my-3 lg:w-[600px] flex items-center'>
+                            <SearchBar placeholder={'Tim kiếm thương hiệu'} />
                         </div>
                     </div>
 
@@ -51,7 +55,7 @@ function BrandListPage() {
                     <Brand_WC_Item />
                     <Brand_WC_Item />
                 </div>
-                <div className='flex justify-center items-center'>
+                <div className='flex justify-center items-center pb-5'>
                     <button className='bg-blue-500 mx-auto p-3 rounded-lg w-[30%] text-white hover:bg-blue-400 cursor-pointer ' >
                         Xem Thêm
                     </button>

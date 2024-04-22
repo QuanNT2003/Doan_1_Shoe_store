@@ -161,9 +161,9 @@ function Brand_WC_Item({
 
 }) {
     return (
-        <div className='my-7 mx-2 bg-white p-3 rounded-lg select-none border'>
-            <div className='flex items-center hover:shadow cursor-pointer'>
-                <div className='flex m-5 ms-8 flex-[2] '>
+        <div className='my-7 mx-2 bg-white ssm:p-3 rounded-lg select-none border'>
+            <div className='ssm:flex items-center hover:shadow cursor-pointer py-2'>
+                <div className='flex m-5 ms-8 flex-[2] justify-center ssm:justify-normal'>
                     <div className='me-5'>
                         <img src={example} className='w-[80px] h-[80px] rounded-full' />
                     </div>
@@ -176,16 +176,16 @@ function Brand_WC_Item({
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-[4]'>
-                    <div className='mx-10 flex flex-col items-center'>
+                <div className='ssm:flex flex-[4] hidden'>
+                    <div className='mx-10 flex flex-col items-center py-2'>
                         <div className='font-bold text-[20px]'>5 năm</div>
                         <div>Thành lập</div>
                     </div>
-                    <div className='mx-10 flex flex-col items-center'>
+                    <div className='mx-10 flex flex-col items-center py-2'>
                         <div className='font-bold text-[20px]'>190 </div>
                         <div>Sản phẩm</div>
                     </div>
-                    <div className='mx-10 flex flex-col items-center'>
+                    <div className='mx-10 flex flex-col items-center py-2'>
                         <div className='font-bold text-[20px]'>Có mặt tại hơn 100 </div>
                         <div>Quốc gia</div>
                     </div>
