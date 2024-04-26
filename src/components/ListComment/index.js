@@ -163,11 +163,11 @@ function ListComment({ }) {
     };
     return (
         <div >
-            <div className='flex border-t border-b min-h-[70px] items-center mb-4'>
-                <div className='w-[55%] ms-2 border-e-2 h-[100%]'>
+            <div className='md:flex border-t md:border-b min-h-[70px] items-center mb-4 pt-4 md:pt-0'>
+                <div className='md:w-[55%] ms-2 md:border-e-2 h-[100%] md:mb-0 mb-3'>
                     Product Reviews
                 </div>
-                <div className='w-[25%] ms-2 border-e-2 cursor-pointer flex items-center group relative'>
+                <div className='md:w-[25%] ms-2 md:border-e-2 cursor-pointer flex items-center group relative md:mb-0 mb-3' >
                     <FontAwesomeIcon icon={faSort} className='h-[20px] w-[20px] text-gray-500 me-4' />
                     <div className='me-4 text-gray-500'>Sort: </div>
                     <div>{sort}</div>
@@ -179,7 +179,7 @@ function ListComment({ }) {
                         </div>
                     </div>
                 </div>
-                <div className='w-[20%] ms-2 cursor-pointer flex items-center group relative'>
+                <div className='md:w-[20%] ms-2 cursor-pointer flex items-center group relative md:mb-0 mb-3'>
                     <FontAwesomeIcon icon={faFilter} className='h-[20px] w-[20px] text-gray-500 me-4' />
                     <div className='me-4 text-gray-500'>Filter: </div>
                     <div>{star}</div>
