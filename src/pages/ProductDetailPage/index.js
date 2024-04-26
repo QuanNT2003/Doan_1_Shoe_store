@@ -232,7 +232,7 @@ function ProductPage() {
                     Mô tả sản phẩm
                 </div>
                 <div className={showall === true ? 'text-[14px] mb-10 transition-all' : 'transition-all text-[14px] mb-10 line-clamp-4'}>
-                    🥇 Giày thể thao với thiết kế cực đỉnh, cực thoáng khí, thông hơi, kháng khuẩn, với các đường nét, phối chi tiết sắc nét, bền đẹp- chuẩn form lên dáng cực đẹp, cực nhẹ, cực êm, cực cool.
+                    {/* 🥇 Giày thể thao với thiết kế cực đỉnh, cực thoáng khí, thông hơi, kháng khuẩn, với các đường nét, phối chi tiết sắc nét, bền đẹp- chuẩn form lên dáng cực đẹp, cực nhẹ, cực êm, cực cool.
 
                     🥈 Giày thể thao được làm từ chất liệu da cao cấp mềm mại, kết hợp với sợi thoáng khí bền đẹp theo thời gian- Đế được làm từ chất liệu cao su đúc nguyên khối mềm và chắc chắn, có độ ma sát cao, chống trơn trượt.
 
@@ -269,7 +269,7 @@ function ProductPage() {
 
                     👉 LƯU Ý KHÁCH SỈ: Phân loại size Mua sỉ là dành cho khách sỉ mua về bán lại, bán shop, cửa hàng, bán online, offline... bao lời ( shop nhập hàng trực tiếp từ nhà máy bên trung nên bạn sẽ được mua sỉ với giá gốc tận nhà máy, shop bao giá toàn quốc với sp cùng chất lượng cao nhé )
 
-                    🎁 LỜI MUỐN NÓI! Nhận giày xong nếu hài lòng về sản phẩm mong các bạn sẽ có những phản hồi tích cực như Feedback hình ảnh hoặc đánh giá 5 sao. Mọi vấn đề làm bạn chưa hài lòng xin hãy inbox cho shop để được hỗ trợ trước khi đánh giá nhé. Cảm ơn bạn đã đặt giày. Đừng quên nhấn theo dõi nha!
+                    🎁 LỜI MUỐN NÓI! Nhận giày xong nếu hài lòng về sản phẩm mong các bạn sẽ có những phản hồi tích cực như Feedback hình ảnh hoặc đánh giá 5 sao. Mọi vấn đề làm bạn chưa hài lòng xin hãy inbox cho shop để được hỗ trợ trước khi đánh giá nhé. Cảm ơn bạn đã đặt giày. Đừng quên nhấn theo dõi nha! */}
                 </div>
                 <div className={showall === true ? 'hidden' : 'flex justify-center items-center'}>
                     <button className='bg-blue-500 mx-auto p-3 rounded-lg w-[30%] text-white hover:bg-blue-400 cursor-pointer ' onClick={() => setShowAll(true)}>

@@ -17,8 +17,10 @@ import AddProduct from "~/pages/AddProduct";
 import UpdateProduct from "~/pages/UpdateProduct";
 import InfoProduct from "../pages/InfoProduct";
 import ProductVersion from "../pages/ProductVersion";
-import ProductPage from "~/pages/ProductPage";
+import ProductPage from "~/pages/ProductDetailPage";
 import BrandListPage from "~/pages/BrandListPage";
+import BrandDetailPage from "~/pages/BrandDetailPage";
+import CollectionPage from "~/pages/CollectionPage";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -145,6 +147,7 @@ const publicRoutes = [
     },
 
 
+
     {
         path: '/product_collection/:id',
         component: ProductPage,
@@ -155,6 +158,16 @@ const publicRoutes = [
         component: BrandListPage,
         layout: DefaultLayoutClient,
     },
+    {
+        path: '/brand_collection/:id',
+        component: BrandDetailPage,
+        layout: DefaultLayoutClient,
+    },
+    {
+        path: '/collection/:url',
+        component: CollectionPage,
+        layout: DefaultLayoutClient,
+    }
 ];
 
 const privateRoutes = [

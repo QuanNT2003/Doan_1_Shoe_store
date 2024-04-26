@@ -1,6 +1,11 @@
 import React from 'react';
 import noImage from '~/assets/images/no-image.png';
+import { useNavigate } from 'react-router-dom';
 function Categories({ list }) {
+    const navigate = useNavigate();
+    const onclick = (item) => {
+        navigate('/collection/' + item.name)
+    }
     return (
         <div className=' m-5 mb-10 p-3 rounded-lg bg-white'>
             <div className='mb-4'>
@@ -9,7 +14,7 @@ function Categories({ list }) {
             <div className='flex lg:flex-wrap overflow-y-auto'>
                 {
                     list.map((item, index) => (
-                        <div key={index} className='min-h-[90px] min-w-[90px] ssm:min-h-[130px] ssm:min-w-[130px] max-w-[130px] m-2 items-center rounded-lg bg-white hover:shadow-xl cursor-pointer border'>
+                        <div key={index} className='min-h-[90px] min-w-[90px] ssm:min-h-[130px] ssm:min-w-[130px] max-w-[130px] m-2 items-center rounded-lg bg-white hover:shadow-xl cursor-pointer border' onClick={() => onclick(item)}>
                             <div className='flex justify-center items-center my-3'>
                                 <img src={item.images} className='ssm:w-[90px] ssm:h-[90px] h-[60px] w-[60px] ' />
                             </div>

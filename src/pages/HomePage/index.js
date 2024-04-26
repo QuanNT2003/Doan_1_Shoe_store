@@ -163,7 +163,7 @@ const listProduct = [
 ]
 const listCategories = [
     {
-        productID: 1,
+        id: 1,
         name: 'Giày sandal',
         images: 'https://img.muji.net/img/item/4550344414637_1260.jpg',
     },

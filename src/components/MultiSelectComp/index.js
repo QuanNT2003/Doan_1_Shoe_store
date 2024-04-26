@@ -1,7 +1,5 @@
 import { MultiSelect } from 'react-multi-select-component';
 import { memo } from 'react';
-import classNames from 'classnames';
-
 
 
 function MultiSelectComp({
@@ -10,13 +8,13 @@ function MultiSelectComp({
     setSelected,
     hasSelectAll,
     placeholder,
+    notShowTitle
 }) {
 
 
     return (
         <div className='text-sm bg-white mb-5'>
-            <div className='font-medium mb-[6px] text-sm'>{placeholder}</div>
-
+            {notShowTitle ? <div></div> : <div className='font-medium mb-[6px] text-sm'>{placeholder}</div>}
             <MultiSelect
                 options={options}
                 value={selected}

@@ -7,7 +7,7 @@ function defaultLayoutClient({ children }) {
     return (
         <div className=' bg-[#e9ecef]'>
             <Header />
-            <div className='lg:w-[70%] w-[100%] bg-[#e9ecef] mx-auto' >
+            <div className='lg:w-[75%] w-[100%] bg-[#e9ecef] mx-auto' >
                 <UtilityBar />
                 {children}
             </div>
