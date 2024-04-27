@@ -4,14 +4,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from '~/components/GlobalStyles';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { ToastProvider } from '~/components/ToastContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
-    <React.StrictMode>
+    <ToastProvider>
       <GlobalStyles>
         <App />
       </GlobalStyles>
-    </React.StrictMode>
+    </ToastProvider>
   </Router>
 
 );

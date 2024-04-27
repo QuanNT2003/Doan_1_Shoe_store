@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Categories from '~/components/Categories';
 import ProductCarousel from '~/components/ProductCarousel';
 import Product_WC_item from '~/components/Product_WC_Item';
-import UtilityBar from '~/components/UtilityBar';
-
 
 const listProduct = [
     {
@@ -215,7 +213,6 @@ const listCategories = [
 ]
 function HomePage() {
 
-
     return (
         <div className='select-none'>
             <ProductCarousel title={'Siêu khuyến mãi'} listProduct={listProduct} path='/products' />
@@ -237,7 +234,7 @@ function HomePage() {
                     }
                 </div>
                 <div className='flex justify-center items-center'>
-                    <button className='bg-blue-500 mx-auto p-3 rounded-lg w-[30%] text-white hover:bg-blue-400 cursor-pointer ' >
+                    <button className='bg-blue-500 mx-auto p-3 rounded-lg w-[30%] text-white hover:bg-blue-400 cursor-pointer '>
                         Xem Thêm
                     </button>
                 </div>
