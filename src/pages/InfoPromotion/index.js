@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,6 +9,7 @@ import {
 import * as PromotionsServices from '~/apiServices/promotionServices';
 import ModalLoading from '~/components/ModalLoading';
 import format from 'date-fns/format'
+import { ToastContext } from '~/components/ToastContext';
 const addCommas = (num) => {
     if (num === null) return;
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -16,12 +17,13 @@ const addCommas = (num) => {
 
 function InfoPromotion() {
     const navigate = useNavigate();
+    const toastContext = useContext(ToastContext);
     const promotionId = useParams();
 
 
     const [loading, setLoading] = useState(false);
     const [obj, setObj] = useState(null);
-
+    const [updatePage, setUpdatePage] = useState(new Date());
 
     useEffect(() => {
         const fetchApi = async () => {
@@ -40,7 +42,64 @@ function InfoPromotion() {
         fetchApi();
         setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [updatePage]);
+
+    const handleActive = () => {
+        setLoading(true);
+
+        const fetchApi = async () => {
+            let isSuccess = true;
+
+            const newObj = {
+                ...obj,
+                status: true,
+            }
+
+            const result = await PromotionsServices.UpdatePromotion(promotionId.id, newObj)
+                .catch((err) => {
+                    console.log(err);
+                    isSuccess = false;
+                    setLoading(false);
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                });
+
+            if (isSuccess) {
+                setLoading(false);
+                toastContext.notify('success', 'Đã kích hoạt khuyến mãi');
+                setUpdatePage(new Date());
+            }
+        }
+
+        fetchApi();
+    }
+
+    const handleCancel = () => {
+        setLoading(true);
+        const fetchApi = async () => {
+            let isSuccess = true;
+
+            const newObj = {
+                ...obj,
+                status: false,
+            }
+
+            const result = await PromotionsServices.UpdatePromotion(promotionId.id, newObj)
+                .catch((err) => {
+                    console.log(err);
+                    isSuccess = false;
+                    setLoading(false);
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                });
+
+            if (isSuccess) {
+                setLoading(false);
+                toastContext.notify('success', 'Đã hủy khuyến mãi');
+                setUpdatePage(new Date());
+            }
+        }
+
+        fetchApi();
+    }
     return (
         <div>
             {
@@ -102,12 +161,14 @@ function InfoPromotion() {
                                 <hr />
                                 <div className='lg:grid lg:grid-cols-2 mt-8 gap-y-7 '>
                                     <div className='flex mb-5 '>
-                                        <div className='w-[150px] sm:w-[200px] text-[14px]'>Từ ngày</div>
-                                        <div className='text-[14px]'>: {format(new Date(obj.startDay), 'dd/MM/yyyy')}</div>
+                                        <div className='w-[150px] text-[14px]'>Từ ngày</div>
+                                        <div className='w-[10px] sm:w-[20px] text-[15px]'> :</div>
+                                        <div className='text-[14px]'> {format(new Date(obj.startDay), 'dd/MM/yyyy')}</div>
                                     </div>
                                     <div className='flex mb-5'>
-                                        <div className='w-[150px] sm:w-[200px] text-[14px]'>Đến ngày</div>
-                                        <div className='text-[14px]'>: {format(new Date(obj.endDay), 'dd/MM/yyyy')}</div>
+                                        <div className='w-[150px] text-[14px]'>Đến ngày</div>
+                                        <div className='w-[10px] sm:w-[20px] text-[15px]'> :</div>
+                                        <div className='text-[14px]'> {format(new Date(obj.endDay), 'dd/MM/yyyy')}</div>
                                     </div>
                                 </div>
                             </div>
@@ -165,12 +226,22 @@ function InfoPromotion() {
                             </div>
                         </div>
                         <div className='frame flex flex-wrap justify-center ssm:grid ssm:grid-cols-2 gap-x-4 gap-y-2 lg:flex lg:flex-row-reverse lg:justify-start'>
+                            {
+                                obj.status === true ? (
+                                    <button className='bg-white py-4 px-3 me-3 rounded-lg min-w-[130px] text-red-500 hover:bg-[#fef3f2] cursor-pointer border-red-500 border-[1px] border-solid' onClick={() => handleCancel()}>
+                                        Hủy
+                                    </button>
+                                ) : (
+                                    <button className='bg-white py-4 px-3 me-3 rounded-lg min-w-[130px] text-green-500 hover:bg-[#f8f8f9] cursor-pointer border-green-500 border-[1px] border-solid' onClick={() => handleActive()}>
+                                        Kích hoạt
+                                    </button>
+                                )
+                            }
                             <button className='bg-white py-4 px-3 me-3 rounded-lg min-w-[130px] text-blue-500 hover:bg-[#f8f8f9] cursor-pointer border-blue-500 border-[1px] border-solid' onClick={() => navigate('/promotions/update/' + promotionId.id)}>
                                 Sửa
                             </button>
-                            <button className='bg-white py-4 px-3 me-3 rounded-lg min-w-[130px] text-red-500 hover:bg-[#fef3f2] cursor-pointer border-red-500 border-[1px] border-solid'>
-                                Hủy
-                            </button>
+
+
                         </div>
                         <ModalLoading open={loading} title={'Đang tải'} />
                     </div>)

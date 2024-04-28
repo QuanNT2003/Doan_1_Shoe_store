@@ -77,7 +77,7 @@ function AddPromotion() {
                 if (result) {
                     setLoading(false);
                     toastContext.notify('success', 'Tạo khuyến mãi thành công');
-                    // navigate('/discounts/detail/' + result.promotionId);
+                    navigate('/promotions/details/' + result.data.discountId);
                 }
             }
 
