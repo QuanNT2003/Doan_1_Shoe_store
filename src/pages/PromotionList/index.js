@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import List from '~/components/List';
 import Filter from '~/components/Filter';
@@ -9,10 +9,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
+import * as PromotionServices from '~/apiServices/promotionServices';
+import { ToastContext } from '~/components/ToastContext';
+
 const optionsTT = [
-    { label: 'Đang chạy', value: 'running' },
-    { label: 'Tạm ngừng', value: 'paused' },
-    { label: 'Đã hủy', value: 'stopped' },
+    { label: 'Đang chạy', value: true },
+    { label: 'Đã hủy', value: false },
 ];
 
 const optionsLM = [
@@ -21,50 +23,64 @@ const optionsLM = [
     { label: 'Giảm gía thanh toán', value: 'pay' },
 ];
 
-const rows = [
-    {
-        promotionId: '1',
-        name: '123',
-        remainQuantity: 12,
-        style: 'pay',
-        status: 'running',
-    },
-    {
-        promotionId: '2',
-        name: '123',
-        remainQuantity: 12,
-        style: 'ship',
-        status: 'running',
-    },
-    {
-        promotionId: '3',
-        name: '123',
-        remainQuantity: 12,
-        style: 'sale',
-        status: 'running',
-    },
-    {
-        promotionId: '4',
-        name: '123',
-        remainQuantity: 12,
-        style: 'ship',
-        status: 'paused',
-    },
-]
+
 function PromotionList() {
     const navigate = useNavigate();
+    const toastContext = useContext(ToastContext);
+
+    const returnArray = (arr) => {
+        return arr.map((obj) => obj.value);
+    }
 
 
+    // API PROPS
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(12);
+    const [totalRows, setTotalRows] = useState(0);
+    const [sortBy, setSortBy] = useState('');
+    const [orderBy, setOrderBy] = useState('');
+
+
+    const createObjectQuery = async (
+        pageNumber,
+        pageSize,
+        sortBy,
+        orderBy,
+        statuses,
+        isOutdated,
+        query,
+    ) => {
+
+        let arr = [];
+        if (isOutdated) {
+            if (isOutdated.length < 2) {
+                arr = [...isOutdated];
+            }
+        }
+
+        return {
+            pageNumber,
+            pageSize,
+            ...(orderBy && { orderBy }),
+            ...(sortBy && { sortBy }),
+            ...(statuses && { statuses }),
+            ...(isOutdated && { isOutdated: arr }),
+            ...(query && { query }),
+        };
+    }
     const [search, setSearch] = useState('')
     const handleSearch = (e) => {
         setSearch(e.target.value);
     };
 
+    //table
     const [pending, setPending] = useState(false);
+    const [rows, setRows] = useState([]);
+    const [showSubHeader, setShowSubHeader] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(0);
 
 
-
-
+    //fliter
     const [selectedTT, setSelectedTT] = useState([]);
     const [selectedLM, setSelectedLM] = useState([]);
 
@@ -80,8 +96,52 @@ function PromotionList() {
         handleCloseFilter();
     };
 
+
+
+    // GET DATA
+    const getList = async (obj) => {
+        setPending(true);
+
+        const response = await PromotionServices.getAllPromotions(obj)
+            .catch((error) => {
+                setPending(false);
+
+                if (error?.response?.status === 404) {
+                    setRows([]);
+                    setTotalRows(0);
+                } else {
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                }
+            });
+
+        if (response) {
+            console.log(response.data);
+            setPending(false);
+            setRows(response.data);
+            setTotalRows(response.data.length);
+        }
+    }
+    useEffect(() => {
+        const fetch = async () => {
+
+
+            getList(
+                await createObjectQuery(
+                    pageNumber,
+                    pageSize,
+                    sortBy,
+                    orderBy,
+                    selectedTT.length > 0 && returnArray(selectedTT),
+                    selectedLM.length > 0 && returnArray(selectedLM),
+                    search,
+                ));
+        }
+
+        fetch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const onRowClicked = useCallback((row) => {
-        navigate('/promotions/details/' + row.promotionId);
+        navigate('/promotions/details/' + row.discountId);
     }, []);
     return (
         <div>
@@ -130,7 +190,7 @@ function PromotionList() {
 
 
                     // PAGINATION
-                    totalRows={12}
+                    totalRows={totalRows}
                 // handlePerRowsChange={handlePerRowsChange}
                 // handlePageChange={handlePageChange}
                 // SORT

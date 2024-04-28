@@ -9,8 +9,8 @@ export const DiscountItem = [
         MinWidth: '180px',
         center: 'true',
         cell: (row) => (
-            <div key={row.promotionId} className='font-medium text-[--primary]' data-tag="allowRowEvents">
-                {row.promotionId}
+            <div key={row.discountId} className='font-medium text-[--primary]' data-tag="allowRowEvents">
+                {row.discountId}
             </div>
         ),
     },
@@ -27,12 +27,12 @@ export const DiscountItem = [
     {
         name: 'Mức áp dụng',
         sortable: true,
-        text: 'remainQuantity',
+        text: 'apply',
         MinWidth: '180px',
         center: 'true',
         cell: (row) => (
             <div className='font-medium' tag="allowRowEvents">
-                {addCommas(row.remainQuantity)}
+                {addCommas(row.apply)}
             </div>
         ),
     },
@@ -42,16 +42,16 @@ export const DiscountItem = [
         center: 'true',
         cell: (row) => (
             <div
-                className={row.style === 'ship' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#ecfdee] text-[#0e7902] '
-                    : row.style === 'sale' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#fef3f2] text-[#b32318]'
+                className={row.classify === 'ship' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#ecfdee] text-[#0e7902] '
+                    : row.classify === 'sale' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#fef3f2] text-[#b32318]'
                         : 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#f2f2fe] text-[#1822b3]'
                 }
                 data-tag="allowRowEvents"
             >
                 <div className='font-medium text-center' data-tag="allowRowEvents">
-                    {row.style === 'ship'
+                    {row.classify === 'ship'
                         ? 'Mã vận chuyển'
-                        : row.style === 'sale' ? 'Sale off'
+                        : row.classify === 'sale' ? 'Sale off'
                             : 'Giảm giá thanh toán'
                     }
                 </div>
@@ -64,17 +64,14 @@ export const DiscountItem = [
         center: 'true',
         cell: (row) => (
             <div
-                className={row.status === 'running' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#ecfdf3] text-[#027948] '
-                    : row.status === 'paused' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#fff7e7] text-[#e4a482]'
-                        : 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#fef3f2] text-[#b32318]'}
+                className={row.status === true ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#ecfdf3] text-[#027948] '
+                    : 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#fef3f2] text-[#b32318]'}
                 data-tag="allowRowEvents"
             >
                 <div className='font-medium text-center' data-tag="allowRowEvents">
-                    {row.status === 'running'
+                    {row.status === true
                         ? 'Đang chạy'
-                        : row.status === 'paused'
-                            ? 'Tạm ngừng'
-                            : 'Đã hủy'}
+                        : 'Đã hủy'}
                 </div>
             </div>
         ),

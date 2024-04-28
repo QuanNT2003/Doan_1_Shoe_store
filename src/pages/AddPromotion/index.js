@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useState, useContext } from 'react';
 import Input from '~/components/Input';
 import SelectAutocomplete from '~/components/Autocomplete';
 import DateRange from '~/components/DateRange';
+import { ToastContext } from '~/components/ToastContext';
+import ModalLoading from '~/components/ModalLoading';
+import { useNavigate } from 'react-router-dom';
+import { ConvertISO } from '~/components/ConvertISO';
+import * as PromotionsServices from '~/apiServices/promotionServices';
 const addCommas = (num) => {
     if (num === null) return;
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -11,6 +17,10 @@ const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, '');
 const options = ['Sale off', 'Giảm phí vận chuyển', 'Thanh toán']
 
 function AddPromotion() {
+    const navigate = useNavigate();
+    const toastContext = useContext(ToastContext);
+    const [loading, setLoading] = useState(false);
+
 
     const [name, setName] = useState('');
     const [note, setNote] = useState('');
@@ -27,6 +37,52 @@ function AddPromotion() {
         if (e === 'Sale off') setStype('sale')
         else if (e === 'Thanh toán') setStype('pay')
         else setStype('ship')
+    }
+
+    const submit = () => {
+        if (name === '') {
+            setLoading(false);
+            toastContext.notify('error', 'Chưa nhập tên');
+        } else if (dateString === '') {
+            setLoading(false);
+            toastContext.notify('error', 'Chưa chọn ngày');
+        } else if (parseInt(discount) === 0) {
+            setLoading(false);
+            toastContext.notify('error', 'Chưa chọn phần trăm chiết khấu');
+        } else {
+            setLoading(true);
+            const fetchApi = async () => {
+
+                const obj = {
+                    name: name,
+                    classify: stype,
+                    typeDiscount: typediscount,
+                    value: removeNonNumeric(discount),
+                    apply: removeNonNumeric(apply),
+                    status: true,
+                    note: note,
+                    startDay: ConvertISO(dateString).startDate,
+                    endDay: ConvertISO(dateString).endDate,
+                }
+
+                console.log(obj);
+
+                const result = await PromotionsServices.CreatePromotion(obj)
+                    .catch((error) => {
+                        console.log(error);
+                        setLoading(false);
+                        toastContext.notify('error', 'Có lỗi xảy ra');
+                    });
+
+                if (result) {
+                    setLoading(false);
+                    toastContext.notify('success', 'Tạo khuyến mãi thành công');
+                    // navigate('/discounts/detail/' + result.promotionId);
+                }
+            }
+
+            fetchApi();
+        }
     }
     return (
         <div>
@@ -129,10 +185,11 @@ function AddPromotion() {
 
             </div>
             <div className='w-[90%] mx-auto text-end'>
-                <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer'>
+                <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => submit()}>
                     Lưu
                 </button>
             </div>
+            <ModalLoading open={loading} title={'Đang tải'} />
         </div >
     );
 }
