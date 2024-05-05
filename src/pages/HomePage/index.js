@@ -234,7 +234,7 @@ function HomePage() {
                     }
                 </div>
                 <div className='flex justify-center items-center'>
-                    <button className='bg-blue-500 mx-auto p-3 rounded-lg w-[30%] text-white hover:bg-blue-400 cursor-pointer '>
+                    <button className='bg-blue-500 mx-auto p-3 rounded-lg w-[40%] text-white hover:bg-blue-400 cursor-pointer '>
                         Xem Thêm
                     </button>
                 </div>

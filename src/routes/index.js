@@ -21,6 +21,7 @@ import ProductPage from "~/pages/ProductDetailPage";
 import BrandListPage from "~/pages/BrandListPage";
 import BrandDetailPage from "~/pages/BrandDetailPage";
 import CollectionPage from "~/pages/CollectionPage";
+import DiscountPage from "../pages/DiscountPage";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -167,7 +168,12 @@ const publicRoutes = [
         path: '/collection/:url',
         component: CollectionPage,
         layout: DefaultLayoutClient,
-    }
+    },
+    {
+        path: '/discount_collection',
+        component: DiscountPage,
+        layout: DefaultLayoutClient,
+    },
 ];
 
 const privateRoutes = [

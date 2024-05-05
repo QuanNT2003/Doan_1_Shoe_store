@@ -32,7 +32,7 @@ function UtilityBar() {
                         Thương hiệu
                     </div>
                 </div>
-                <div className='ssm:min-w-[110px] ssm:min-h-[110px] min-w-[80px] min-h-[80px] bg-red-50 rounded-xl cursor-pointer select-none me-4 hover:scale-110 transition-all'>
+                <div className='ssm:min-w-[110px] ssm:min-h-[110px] min-w-[80px] min-h-[80px] bg-red-50 rounded-xl cursor-pointer select-none me-4 hover:scale-110 transition-all' onClick={() => navigate('/discount_collection')}>
                     <div className='ssm:h-[80px] h-[50px] flex justify-center items-center'>
                         <FontAwesomeIcon icon={faPercent} className=' text-red-400 ssm:w-[45px] ssm:h-[45px] w-[30px] h-[30px]' />
                     </div>

@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { faCircleXmark, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Input from '~/components/Input';
+import * as ImageServices from '~/apiServices/imageServices';
+import { ToastContext } from '~/components/ToastContext';
+import ModalLoading from '~/components/ModalLoading';
 function AddBrand() {
+    const toastContext = useContext(ToastContext);
+    const [loading, setLoading] = useState(false);
 
     const [name, setName] = useState('');
     const [note, setNote] = useState('');
@@ -19,43 +24,79 @@ function AddBrand() {
     const [fileRemove, setFileRemove] = useState();
     const [filesError, setFilesError] = useState(false);
     const uploadImages = async (files) => {
+        // try {
+        //     let formData = new FormData();
+        //     files.map((file) => {
+        //         formData.append('image', file);
+        //     });
+        //     console.log(formData.getAll('image'))
 
-    }
+        //     const res = await fetch(`http://localhost:3001/api/uploadImages/upload`, {
+        //         method: "POST",
+        //         body: formData,
+        //     });
+        //     if (res.ok) {
+
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        //     setLoading(false);
+        //     toastContext.notify('error', 'Có lỗi xảy ra');
+        // }
+    };
 
     const deleteImages = async (blobName) => {
 
     }
-    const handleAddImages = (e) => {
-        // if (e.target.files.length + files.length < 6) {
-        //     const arr = Array.from(e.target.files).map((file) => {
-        //         file.preview = URL.createObjectURL(file);
-        //         return file;
-        //     });
 
-        //     setFiles((prev) => {
-
-        //         uploadImages([...arr, ...prev]);
-
-        //         return [...arr, ...prev];
-        //     });
-
-        // } else {
-        //     setFilesError(true);
-        // }
+    const handleAddImages = async (e) => {
+        // let formData = new FormData();
+        // Array.from(e.target.files).forEach((file) => {
+        //     formData.append("image", file);
+        // });
         // const arr = Array.from(e.target.files).map((file) => {
         //     file.preview = URL.createObjectURL(file);
         //     return file;
         // });
+        // console.log(arr)
+        let formData = new FormData();
+        formData.append("image", e.target.files[0]);
+        console.log(formData.getAll('image'))
+        const fetchApi = async () => {
 
-        let file = e.target.files[0]
-        file.preview = URL.createObjectURL(file);
-        setFiles(file)
+            // formData.append('image', e.target.files[0]);
+            // console.log(formData.getAll('image'))
+            // const result = await fetch("http://localhost:3001/api/uploadImages/upload", {
+            //     method: 'POST',
+            //     body: formData,
+            //     headers: {
+            //         "Content-Type": "multipart/form-data"
+            //     }
+            // })
+            //     .then((res) => console.log(res))
+            //     .catch((err) => {
+            //         console.log(err);
+            //         setLoading(false);
+            //         toastContext.notify('error', 'Có lỗi xảy ra');
+            //     });
+            const result = await ImageServices.AddImages(formData)
+                .catch((error) => {
+                    console.log(error);
+                    setLoading(false);
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                });
+            console.log(result)
 
-        e.target.value = null;
-    };
+            e.target.value = null;
+        }
+
+        fetchApi();
+    }
+
     const handleRemoveImage = (index) => {
         setFiles(undefined)
     };
+
     return (
         <div>
             <div className='frame'>
@@ -169,6 +210,7 @@ function AddBrand() {
                     Lưu
                 </button>
             </div>
+            <ModalLoading open={loading} title={'Đang tải'} />
         </div>
     );
 }
