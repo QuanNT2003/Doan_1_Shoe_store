@@ -22,6 +22,7 @@ import BrandListPage from "~/pages/BrandListPage";
 import BrandDetailPage from "~/pages/BrandDetailPage";
 import CollectionPage from "~/pages/CollectionPage";
 import DiscountPage from "../pages/DiscountPage";
+import ShoppingCart from "../pages/ShoppingCart";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -172,6 +173,11 @@ const publicRoutes = [
     {
         path: '/discount_collection',
         component: DiscountPage,
+        layout: DefaultLayoutClient,
+    },
+    {
+        path: '/shopping_cart',
+        component: ShoppingCart,
         layout: DefaultLayoutClient,
     },
 ];

@@ -143,7 +143,7 @@ function Header() {
                         }
                     >
 
-                        <div className='text-[18px]'>Giở hàng</div>
+                        <div className='text-[18px]'>Giỏ hàng</div>
                     </NavLink>
                     <NavLink
                         to='/order_colection'

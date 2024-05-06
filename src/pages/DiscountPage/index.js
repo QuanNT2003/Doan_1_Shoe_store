@@ -69,7 +69,7 @@ const list = [
 ]
 function DiscountPage() {
     return (
-        <div className='m-5 mb-10 p-3 rounded-lg'>
+        <div className='m-5 mb-10 p-3 rounded-lg min-h-[600px]'>
             <div className='mb-4 font-bold text-[18px]'>
                 Khuyến mãi hôm nay
                 <div className='flex flex-wrap gap-[5%] mt-4 justify-center md:justify-start'>
