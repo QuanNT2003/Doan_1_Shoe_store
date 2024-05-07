@@ -9,22 +9,31 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, '');
 const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-function ShoppingCartItem({ cartItem, deleteList }) {
-    const [quantity, setQuantity] = useState(cartItem.number)
-    const [choose, setChoose] = useState(cartItem.choose)
+function ShoppingCartItem({
+    cartItem,
+    deleteList,
+    index
+}) {
+    const [quantity, setQuantity] = useState(0)
+    const [choose, setChoose] = useState(false)
     const [obj, setObj] = useState();
+
     useEffect(() => {
         setObj(cartItem)
-    }, [obj]);
+        setChoose(cartItem.choose)
+        setQuantity(cartItem.quantity)
+    }, [obj, cartItem]);
 
     const ChangreNums = (value) => {
         let newObj = obj;
-        newObj['number'] = value;
+        setQuantity(value)
+        newObj['quantity'] = value;
         setObj(newObj)
     }
 
     const ChangreChoose = (value) => {
         let newObj = obj;
+        setChoose(value)
         newObj['choose'] = value;
         setObj(newObj)
     }
@@ -32,7 +41,6 @@ function ShoppingCartItem({ cartItem, deleteList }) {
         <div className='bg-white m-5 mb-2 p-3 rounded-lg flex select-none'>
             <div className='flex items-center'>
                 <Checkbox className='md:w-[40px] md:h-[40px] w-[10px] h-[10px]' value={choose} onChange={(e) => {
-                    setChoose(e.target.checked)
                     ChangreChoose(e.target.checked)
                 }} />
             </div>
@@ -55,7 +63,6 @@ function ShoppingCartItem({ cartItem, deleteList }) {
                     <div className='md:w-[30px] md:h-[30px] w-[25px] h-[20px] flex justify-center items-center bg-stone-300 text-gray-500 rounded ssm:mx-3 cursor-pointer'
                         onClick={() => {
                             if (quantity > 1) {
-                                setQuantity(quantity - 1)
                                 ChangreNums(quantity - 1)
                             }
                         }}>
@@ -73,12 +80,10 @@ function ShoppingCartItem({ cartItem, deleteList }) {
                             if (value === '') e.target.value = 1;
 
                             ChangreNums(e.target.value)
-                            setQuantity(e.target.value);
                         }} type='number' />
                     <div className='md:w-[30px] md:h-[30px] w-[25px] h-[20px] flex justify-center items-center bg-stone-300 text-gray-500 rounded ssm:mx-3 cursor-pointer'
                         onClick={() => {
                             if (quantity < 10) {
-                                setQuantity(quantity + 1)
                                 ChangreNums(quantity + 1)
                             }
                         }}>
@@ -88,7 +93,7 @@ function ShoppingCartItem({ cartItem, deleteList }) {
                     </div>
                 </div>
                 <div>
-                    <FontAwesomeIcon icon={faTrash} className='md:h-[20px] h-[14px] cursor-pointer hover:scale-125 transition-all' onClick={() => deleteList(obj.cartId)} />
+                    <FontAwesomeIcon icon={faTrash} className='md:h-[20px] h-[14px] cursor-pointer hover:scale-125 transition-all' onClick={() => deleteList(index)} />
                 </div>
 
             </div>
@@ -96,7 +101,6 @@ function ShoppingCartItem({ cartItem, deleteList }) {
                 <div className='md:w-[30px] md:h-[30px] w-[25px] h-[20px] flex justify-center items-center bg-stone-300 text-gray-500 rounded mx-3 cursor-pointer'
                     onClick={() => {
                         if (quantity > 1) {
-                            setQuantity(quantity - 1)
                             ChangreNums(quantity - 1)
                         }
                     }}>
@@ -114,12 +118,10 @@ function ShoppingCartItem({ cartItem, deleteList }) {
                         if (value === '') e.target.value = 1;
 
                         ChangreNums(e.target.value)
-                        setQuantity(e.target.value);
                     }} type='number' />
                 <div className='md:w-[30px] md:h-[30px] w-[25px] h-[20px] flex justify-center items-center bg-stone-300 text-gray-500 rounded mx-3 cursor-pointer'
                     onClick={() => {
                         if (quantity < 10) {
-                            setQuantity(quantity + 1)
                             ChangreNums(quantity + 1)
                         }
                     }}>

@@ -3,7 +3,7 @@ export const data = [
         cartId: '1',
         product: {
             _id: "6630ff5e53d233907bf4a13c",
-            name: "Giày test",
+            name: "Giày 1",
             productId: "pr00000002",
             cost: 120000,
             price: 170000,
@@ -11,7 +11,7 @@ export const data = [
             classify: "Male",
             discount: 2,
         },
-        number: 2,
+        quantity: 2,
         size: {
             _id: "6630e5a66d143fa314743793",
             name: "46",
@@ -36,7 +36,7 @@ export const data = [
         cartId: '2',
         product: {
             _id: "6630ff5e53d233907bf4a13c",
-            name: "Giày test",
+            name: "Giày 2",
             productId: "pr00000002",
             cost: 120000,
             price: 170000,
@@ -44,7 +44,7 @@ export const data = [
             classify: "Male",
             discount: 2,
         },
-        number: 5,
+        quantity: 5,
         size: {
             _id: "6630e5a66d143fa314743793",
             name: "46",
@@ -69,7 +69,7 @@ export const data = [
         cartId: '3',
         product: {
             _id: "6630ff5e53d233907bf4a13c",
-            name: "Giày test",
+            name: "Giày 3",
             productId: "pr00000002",
             cost: 120000,
             price: 170000,
@@ -77,7 +77,7 @@ export const data = [
             classify: "Male",
             discount: 2,
         },
-        number: 1,
+        quantity: 1,
         size: {
             _id: "6630e5a66d143fa314743793",
             name: "46",

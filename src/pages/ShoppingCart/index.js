@@ -5,8 +5,13 @@ import { data } from './data';
 function ShoppingCart() {
     const [list, setList] = useState([])
     const [loading, setLoading] = useState(true)
+
+
+    const [rerender, setRerender] = useState(new Date())
+
     const onClick = () => {
-        console.log(list)
+        const newlist = list.filter(item => item.choose === true)
+        console.log(newlist)
     }
 
     useEffect(() => {
@@ -16,7 +21,7 @@ function ShoppingCart() {
                 const obj = {
                     cartId: item.cartId,
                     product: item.product,
-                    number: item.number,
+                    quantity: item.quantity,
                     size: item.size,
                     color: item.color,
                     choose: false
@@ -26,11 +31,20 @@ function ShoppingCart() {
         }
         fetchApi();
         setLoading(false)
-    }, []);
+    }, [])
 
-    const deleteList = (cartId) => {
-        setList(prelist => prelist.filter(items => items.cartId !== cartId));
+    const deleteList = (index) => {
+        console.log(index)
+        list.splice(index, 1)
+
+        // setList(list.filter(items => items.cartId !== cartId))
+        setRerender(new Date())
+        console.log(list)
     }
+
+
+
+
     return (
         <div className=' min-h-[600px]'>
             {
@@ -52,7 +66,7 @@ function ShoppingCart() {
                             {
                                 list.map((item, index) => (
                                     <div key={index}>
-                                        <ShoppingCartItem cartItem={item} deleteList={deleteList} />
+                                        <ShoppingCartItem cartItem={item} index={index} deleteList={deleteList} />
                                     </div>
                                 ))
                             }

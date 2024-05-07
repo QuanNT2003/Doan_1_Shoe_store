@@ -48,16 +48,16 @@ function Header() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     return (
-        <div className=' bg-orange-500 text-white transition-all'>
-            <div className='flex justify-center py-2 items-center md:w-[95%] md:mx-auto mt-2 h-[130px]'>
-                <div className='flex-1 flex items-center lg:justify-center justify-start ms-4'>
-                    <img src={image} className='md:h-[90px] md:w-[90px] h-[50px] w-[50px] rounded-md me-6' />
+        <div className=' bg-cyan-600 text-white transition-all'>
+            <div className='flex justify-around py-2 items-center md:w-[85%] md:mx-auto mt-2 h-[130px]'>
+                <div className=' flex items-center lg:justify-center justify-start ssm:mx-5'>
+                    <img src={image} className='md:h-[90px] md:w-[90px] h-[60px] w-[60px] rounded-md' />
                 </div>
 
-                <div className='justify-center items-center me-20 flex-[4] flex '>
+                <div className='justify-center items-center flex ssm:flex-[2] ssm:mx-5'>
                     <SearchBar placeholder={'Tim kiếm sản phẩm'} />
                 </div>
-                <div className='justify-end items-center flex-[2] hidden lg:flex'>
+                <div className='justify-end items-center hidden lg:flex flex-1'>
                     {/* <div onClick={handleOpen} className='sm:hidden cursor-pointer me-5 '>
                         <FontAwesomeIcon icon={faBars} className='hover:scale-110 me-4 w-[25px] h-[25px]' />
                     </div> */}
