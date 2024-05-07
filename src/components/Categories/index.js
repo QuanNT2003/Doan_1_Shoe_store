@@ -11,7 +11,7 @@ function Categories({ list }) {
             <div className='mb-4'>
                 Danh mục sản phẩm
             </div>
-            <div className='flex lg:flex-wrap overflow-y-auto'>
+            <div className='flex overflow-y-auto'>
                 {
                     list.map((item, index) => (
                         <div key={index} className='min-h-[90px] min-w-[90px] ssm:min-h-[130px] ssm:min-w-[130px] max-w-[130px] m-2 items-center rounded-lg bg-white hover:shadow-xl cursor-pointer border' onClick={() => onclick(item)}>

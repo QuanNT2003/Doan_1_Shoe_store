@@ -63,22 +63,6 @@ function AddBrand() {
         formData.append("image", e.target.files[0]);
         console.log(formData.getAll('image'))
         const fetchApi = async () => {
-
-            // formData.append('image', e.target.files[0]);
-            // console.log(formData.getAll('image'))
-            // const result = await fetch("http://localhost:3001/api/uploadImages/upload", {
-            //     method: 'POST',
-            //     body: formData,
-            //     headers: {
-            //         "Content-Type": "multipart/form-data"
-            //     }
-            // })
-            //     .then((res) => console.log(res))
-            //     .catch((err) => {
-            //         console.log(err);
-            //         setLoading(false);
-            //         toastContext.notify('error', 'Có lỗi xảy ra');
-            //     });
             const result = await ImageServices.AddImages(formData)
                 .catch((error) => {
                     console.log(error);

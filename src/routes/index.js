@@ -23,6 +23,7 @@ import BrandDetailPage from "~/pages/BrandDetailPage";
 import CollectionPage from "~/pages/CollectionPage";
 import DiscountPage from "../pages/DiscountPage";
 import ShoppingCart from "../pages/ShoppingCart";
+import OrderCollection from "~/pages/OrderCollection";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -178,6 +179,11 @@ const publicRoutes = [
     {
         path: '/shopping_cart',
         component: ShoppingCart,
+        layout: DefaultLayoutClient,
+    },
+    {
+        path: '/order_colection',
+        component: OrderCollection,
         layout: DefaultLayoutClient,
     },
 ];

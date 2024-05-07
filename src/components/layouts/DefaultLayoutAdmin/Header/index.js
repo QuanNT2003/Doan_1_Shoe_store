@@ -48,7 +48,7 @@ function Header({ title, back }) {
                         <FontAwesomeIcon icon={faAngleLeft} />
                     </div>
                 )}
-                <div className=''>{title}</div>
+                <div className='font-bold text-[18px]'>{title}</div>
             </div>
 
 
