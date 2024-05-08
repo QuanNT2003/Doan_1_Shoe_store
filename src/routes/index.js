@@ -24,6 +24,7 @@ import CollectionPage from "~/pages/CollectionPage";
 import DiscountPage from "../pages/DiscountPage";
 import ShoppingCart from "../pages/ShoppingCart";
 import OrderCollection from "~/pages/OrderCollection";
+import OrderDetail from "~/pages/OrderDetail";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -184,6 +185,11 @@ const publicRoutes = [
     {
         path: '/order_colection',
         component: OrderCollection,
+        layout: DefaultLayoutClient,
+    },
+    {
+        path: '/order_colection/detail/:id',
+        component: OrderDetail,
         layout: DefaultLayoutClient,
     },
 ];

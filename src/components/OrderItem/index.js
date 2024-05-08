@@ -5,11 +5,13 @@ import {
     faAngleRight
 } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/images/logo.png'
+import { useNavigate } from 'react-router-dom';
 function OrderItem({
 
 }) {
+    const navigate = useNavigate();
     return (
-        <div className='bg-white ssm:m-5 mb-4 p-3 rounded-lg select-none border cursor-pointer'>
+        <div className='bg-white ssm:m-5 mb-4 p-3 rounded-lg select-none border cursor-pointer' onClick={() => navigate('/order_colection/detail/' + 123)}>
             <div className='flex items-center text-[17px] font-medium'> Đơn hàng đã được giao</div>
             <div className=' bg-slate-200 flex items-center p-3 my-3 rounded-md justify-between'>
                 <div className='flex items-center me-4'>
