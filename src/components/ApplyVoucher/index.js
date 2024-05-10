@@ -59,8 +59,17 @@ function ApplyVoucher({
             </div>
             <div className='flex items-center'>
                 {
-                    text === 'Không có' ? <FontAwesomeIcon icon={faAngleRight} className='ssm:me-4 h-[20px] cursor-pointer' onClick={() => setOpen(true)} /> :
-                        <FontAwesomeIcon icon={faCircleXmark} className='ssm:me-4 h-[20px] cursor-pointer' onClick={() => deleteVoucher()} />
+                    text === 'Không có' ?
+                        <div className='flex items-center cursor-pointer group' onClick={() => setOpen(true)}>
+                            <div className='me-3'>Chọn voucher </div>
+                            <FontAwesomeIcon icon={faAngleRight} className='ssm:me-4 h-[20px] group-hover:scale-125' />
+                        </div>
+                        :
+                        <div className='flex items-center  cursor-pointer group' onClick={() => deleteVoucher()}>
+                            <div className='me-3'>Hủy voucher </div>
+                            <FontAwesomeIcon icon={faCircleXmark} className='ssm:me-4 h-[20px] group-hover:scale-125' />
+                        </div>
+
                 }
 
 

@@ -181,6 +181,11 @@ function Order({
     const [costSale, setCostSale] = useState(0)
     const [costPay, setCostPay] = useState(0)
     const [total, setTotal] = useState(0)
+
+    // Payment Type 
+    const [paymentType, setPaymentType] = useState('123')
+
+
     useEffect(() => {
         let newSubTotal = 0
         listBuy.map(item => {
@@ -310,7 +315,13 @@ function Order({
             <div className='p-3 mt-3'>
                 <div className='mt-4 font-semibold'>Voucher áp dụng</div>
                 <ApplyVoucher title={'Voucher vận chuyển'} listVoucher={list} setVoucher={editVoucherShip} text={voucherShipText} deleteVoucher={deleteVoucherShip} />
-                <ApplyVoucher title={'Voucher thanh toán'} listVoucher={list} setVoucher={editVoucherPay} text={voucherPaymentText} deleteVoucher={deleteVoucherPay} />
+
+                {
+                    paymentType !== '123' ? <ApplyVoucher title={'Voucher thanh toán'} listVoucher={list} setVoucher={editVoucherPay} text={voucherPaymentText} deleteVoucher={deleteVoucherPay} />
+                        : (<div> </div>)
+                }
+
+
             </div>
             <div className='p-3 mt-3'>
                 <div className='mt-4 font-semibold'>Phương thức thanh toán</div>
@@ -320,13 +331,23 @@ function Order({
                         defaultValue="female"
                         name="radio-buttons-group"
                         className='p-2'
+                        onChange={(e) => {
+                            setPaymentType(e.target.value)
 
+                        }}
                     >
-                        <FormControlLabel value='' control={<Radio />} label='Than toán khi nhận hàng' />
-                        <FormControlLabel value='' control={<Radio />} label='Thanh toán chuyển khoản' />
+                        <FormControlLabel value='123' control={<Radio />} label='Than toán khi nhận hàng' />
+                        <FormControlLabel value='234' control={<Radio />} label='Thanh toán chuyển khoản' />
 
                     </RadioGroup>
                 </FormControl>
+            </div>
+            <hr className='mt-4' />
+            <div className='p-3 mt-3 flex justify-end '>
+
+                <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' >
+                    Đặt hàng
+                </button>
             </div>
         </div>
     );
