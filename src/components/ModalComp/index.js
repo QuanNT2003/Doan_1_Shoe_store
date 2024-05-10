@@ -2,17 +2,13 @@ import { Modal, Box, Fade } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-
-
-
-
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     maxWidth: 700,
-    minWidth: 300,
+    minWidth: 360,
     maxHeight: '90vh',
     bgcolor: 'white',
     border: 'none',

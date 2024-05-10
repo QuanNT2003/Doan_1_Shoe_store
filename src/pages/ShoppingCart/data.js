@@ -72,10 +72,10 @@ export const data = [
             name: "Giày 3",
             productId: "pr00000002",
             cost: 120000,
-            price: 170000,
+            price: 100000,
             star: 5,
             classify: "Male",
-            discount: 2,
+            discount: 0,
         },
         quantity: 1,
         size: {

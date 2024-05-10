@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import ShoppingCartItem from '~/components/ShoppingCartItem';
 import ModalLoading from '~/components/ModalLoading';
+import ModalComp from '~/components/ModalComp';
 import { data } from './data';
+import Order from '~/components/Order';
 function ShoppingCart() {
     const [list, setList] = useState([])
     const [loading, setLoading] = useState(true)
 
+    const [listBuy, setListBuy] = useState([])
 
     const [rerender, setRerender] = useState(new Date())
 
     const onClick = () => {
         const newlist = list.filter(item => item.choose === true)
-        console.log(newlist)
+        setListBuy(newlist)
+        setOpenModal(true)
     }
 
     useEffect(() => {
@@ -42,7 +46,15 @@ function ShoppingCart() {
         console.log(list)
     }
 
+    // Modal
+    const [titleModal, setTitleModal] = useState('');
+    const [openModal, setOpenModal] = useState(false);
+    const [pending, setPending] = useState(false);
 
+    const handleCloseModal = () => {
+        setOpenModal(false)
+
+    };
 
 
     return (
@@ -72,6 +84,24 @@ function ShoppingCart() {
                             }
                         </div>
                         <ModalLoading open={loading} title={'Đang tải'} />
+                        <ModalComp
+                            open={openModal}
+                            handleClose={handleCloseModal}
+                            title="Đặt hàng"
+                            actionComponent={
+                                <div>
+                                    <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => handleCloseModal()}>
+                                        Quay lại
+                                    </button>
+                                    <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' >
+                                        Thêm
+                                    </button>
+                                </div>
+                            }
+                        >
+                            <Order listBuy={listBuy} />
+
+                        </ModalComp>
                     </div>)
             }
 

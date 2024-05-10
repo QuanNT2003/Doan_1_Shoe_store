@@ -8,6 +8,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Select_Rating from '~/components/Select_Rating';
 import ProductCarousel from '~/components/ProductCarousel';
+import ModalComp from '~/components/ModalComp';
+import Order from '~/components/Order';
 const images = [
     {
         src: "https://cdn.giayhongthanh.com.vn/public/uploads/site/10179/wordpress/2023/04/IMG_4329.jpg",
@@ -154,6 +156,16 @@ function ProductPage() {
 
     // Content
     const [showall, setShowAll] = useState(false)
+
+    // Modal
+    const [titleModal, setTitleModal] = useState('');
+    const [openModal, setOpenModal] = useState(false);
+    const [pending, setPending] = useState(false);
+
+    const handleCloseModal = () => {
+        setOpenModal(false)
+
+    };
     return (
         <div className='select-none'>
             <div className='bg-white m-5 mb-10 p-5 rounded-lg lg:grid lg:grid-cols-5'>
@@ -213,7 +225,7 @@ function ProductPage() {
                     </div>
                     <div className='mt-7 ssm:flex ssm:flex-row'>
                         <div className='ssm:w-[50%] mb-2 ssm:mb-0 flex justify-center items-center'>
-                            <button className='bg-amber-500 py-5 px-3 rounded-lg w-[80%] text-white hover:bg-amber-400 cursor-pointer '>
+                            <button className='bg-amber-500 py-5 px-3 rounded-lg w-[80%] text-white hover:bg-amber-400 cursor-pointer ' onClick={() => setOpenModal(true)}>
                                 Mua Ngay
                             </button>
                         </div>
@@ -288,7 +300,24 @@ function ProductPage() {
                 <Select_Rating />
             </div>
             <ProductCarousel title={'Sản phẩm tương tự'} listProduct={listProduct} path='/products' />
+            <ModalComp
+                open={openModal}
+                handleClose={handleCloseModal}
+                title="Đặt hàng"
+                actionComponent={
+                    <div>
+                        <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => handleCloseModal()}>
+                            Quay lại
+                        </button>
+                        <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' >
+                            Thêm
+                        </button>
+                    </div>
+                }
+            >
+                <Order />
 
+            </ModalComp>
         </div>
     );
 }
