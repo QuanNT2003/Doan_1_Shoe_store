@@ -9,3 +9,12 @@ export const AddImages = async (obj) => {
         return Promise.reject(error);
     }
 }
+
+export const DeleteImage = async (obj) => {
+    try {
+        const res = await request.postMethod('api/uploadImages/remove', obj);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}

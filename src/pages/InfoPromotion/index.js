@@ -100,6 +100,31 @@ function InfoPromotion() {
 
         fetchApi();
     }
+
+    const handleDelete = () => {
+        setLoading(true);
+        const fetchApi = async () => {
+            let isSuccess = true;
+
+
+            const result = await PromotionsServices.deletePromotion(promotionId.id)
+                .catch((err) => {
+                    console.log(err);
+                    isSuccess = false;
+                    setLoading(false);
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                });
+
+            if (isSuccess) {
+                setLoading(false);
+                toastContext.notify('success', 'Đã xóa khuyến mãi');
+                setUpdatePage(new Date());
+                navigate('/promotions')
+            }
+        }
+
+        fetchApi();
+    }
     return (
         <div>
             {
@@ -240,7 +265,9 @@ function InfoPromotion() {
                             <button className='bg-white py-4 px-3 me-3 rounded-lg min-w-[130px] text-blue-500 hover:bg-[#f8f8f9] cursor-pointer border-blue-500 border-[1px] border-solid' onClick={() => navigate('/promotions/update/' + promotionId.id)}>
                                 Sửa
                             </button>
-
+                            <button className='bg-white py-4 px-3 me-3 rounded-lg min-w-[130px] text-red-500 hover:bg-[#fef3f2] cursor-pointer border-red-500 border-[1px] border-solid' onClick={() => handleDelete()}>
+                                Xóa
+                            </button>
 
                         </div>
                         <ModalLoading open={loading} title={'Đang tải'} />

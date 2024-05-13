@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { faCircleXmark, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as BrandServices from '~/apiServices/brandServices';
+import * as ImagesService from '~/apiServices/imageServices';
+import ModalLoading from '~/components/ModalLoading';
+import { ToastContext } from '~/components/ToastContext';
 import Input from '~/components/Input';
 function UpdateBrand() {
+    const navigate = useNavigate();
+    const brand = useParams();
+    const toastContext = useContext(ToastContext);
+    const [loading, setLoading] = useState(false);
 
+    const [obj, setObj] = useState(null);
     const [name, setName] = useState('');
-    const [note, setNote] = useState('123');
+    const [note, setNote] = useState('');
     const [phone, setPhone] = useState('');
-    const [email, setMail] = useState('');
+    const [email, setEmail] = useState('');
     const [web, setWeb] = useState('');
     const [nation, setNation] = useState('');
     const [errorName, setErrorName] = useState('');
@@ -16,46 +26,125 @@ function UpdateBrand() {
 
     // IMAGES
     const [files, setFiles] = useState();
-    const [fileRemove, setFileRemove] = useState();
-    const [filesError, setFilesError] = useState(false);
-    const uploadImages = async (files) => {
 
-    }
-
-    const deleteImages = async (blobName) => {
-
-    }
     const handleAddImages = (e) => {
-        // if (e.target.files.length + files.length < 6) {
-        //     const arr = Array.from(e.target.files).map((file) => {
-        //         file.preview = URL.createObjectURL(file);
-        //         return file;
-        //     });
+        const file = e.target.files[0]
 
-        //     setFiles((prev) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file)
 
-        //         uploadImages([...arr, ...prev]);
+        reader.onloadend = () => {
+            setFiles(reader.result)
+            // addImages(reader.result)
+            const fetchApi = async () => {
+                const image = {
+                    images: reader.result
+                }
+                const resultImage = await ImagesService.AddImages(image)
+                    .catch((error) => {
+                        console.log(error);
+                        toastContext.notify('error', 'Có lỗi xảy ra');
+                    });
+                if (resultImage) {
+                    setImages(resultImage.data)
+                }
+            }
 
-        //         return [...arr, ...prev];
-        //     });
+            fetchApi()
 
-        // } else {
-        //     setFilesError(true);
-        // }
-        // const arr = Array.from(e.target.files).map((file) => {
-        //     file.preview = URL.createObjectURL(file);
-        //     return file;
-        // });
-
-        let file = e.target.files[0]
-        file.preview = URL.createObjectURL(file);
-        setFiles(file)
-
-        e.target.value = null;
+        }
     };
     const handleRemoveImage = (index) => {
+        const fetchApi = async () => {
+            const obj = {
+                publicId: images.publicId
+            }
+
+
+            const result = await ImagesService.DeleteImage(obj)
+                .catch((err) => {
+                    console.log(err);
+                });
+            if (result) console.log(result)
+
+
+        }
+
+
+        fetchApi()
         setFiles(undefined)
+        setImages(undefined)
     };
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            setLoading(true)
+            const result = await BrandServices.getBrand(brand.id)
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            if (result) {
+                console.log(result)
+                setObj(result.data)
+                setName(result.data.name)
+                setNote(result.data.note)
+                setWeb(result.data.email)
+                setEmail(result.data.email)
+                setPhone(result.data.phone)
+                setNation(result.data.nation)
+                setImages(result.data.image)
+                setFiles(result.data.image)
+            }
+        }
+
+        fetchApi();
+        setLoading(false)
+
+    }, []);
+
+    const submit = () => {
+        if (name === '') {
+            setLoading(false);
+            toastContext.notify('error', 'Chưa nhập tên');
+        } else {
+            setLoading(true);
+
+            let isSuccess = true;
+
+            const fetchApi = async () => {
+
+                const newObj = {
+                    ...obj,
+                    name: name,
+                    note: note,
+                    phone: phone,
+                    web: web,
+                    email: email,
+                    nation: nation,
+                    image: images
+                }
+
+                console.log(newObj);
+
+                const result = await BrandServices.UpdateBrand(brand.id, newObj)
+                    .catch((err) => {
+                        console.log(err);
+                        isSuccess = false;
+                        setLoading(false);
+                        toastContext.notify('error', 'Có lỗi xảy ra');
+                    });
+
+                if (isSuccess) {
+                    setLoading(false);
+                    toastContext.notify('success', 'Cập nhật thương hiệu thành công');
+                    navigate('/brands/details/' + result.data.brandId);
+                }
+            }
+
+            fetchApi();
+        }
+    }
     return (
         <div>
             <div className='frame'>
@@ -92,8 +181,8 @@ function UpdateBrand() {
                                     />
                                 </div>
                                 <img
-                                    className='w-[inherit] h-[inherit] rounded-[3px]'
-                                    src={files?.preview}
+                                    className='w-fit h-fit rounded-[3px] max-w-[90px] max-h-[80px]'
+                                    src={images?.url}
                                     alt=""
                                 />
                             </div>
@@ -130,7 +219,7 @@ function UpdateBrand() {
                         <Input
                             title={'Email'}
                             value={email}
-                            onChange={(value) => setMail(value)}
+                            onChange={(value) => setEmail(value)}
                             className='mb-[20px]'
                         ></Input>
                     </div>
@@ -165,10 +254,11 @@ function UpdateBrand() {
                 </div>
             </div>
             <div className='w-[90%] mx-auto text-end'>
-                <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => console.log(files)}>
+                <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => submit()}>
                     Lưu
                 </button>
             </div>
+            <ModalLoading open={loading} title={'Đang tải'} />
         </div>
     );
 }

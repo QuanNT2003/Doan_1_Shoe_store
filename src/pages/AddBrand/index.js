@@ -1,11 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { faCircleXmark, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Input from '~/components/Input';
-import * as ImageServices from '~/apiServices/imageServices';
 import { ToastContext } from '~/components/ToastContext';
 import ModalLoading from '~/components/ModalLoading';
+import * as ImageServices from '~/apiServices/imageServices';
+import * as BrandService from '~/apiServices/brandServices'
+import { useNavigate } from 'react-router-dom';
+
 function AddBrand() {
+    const navigate = useNavigate();
     const toastContext = useContext(ToastContext);
     const [loading, setLoading] = useState(false);
 
@@ -17,70 +21,102 @@ function AddBrand() {
     const [nation, setNation] = useState('');
     const [errorName, setErrorName] = useState('');
     // URL IMAGE
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState();
 
     // IMAGES
     const [files, setFiles] = useState();
-    const [fileRemove, setFileRemove] = useState();
-    const [filesError, setFilesError] = useState(false);
-    const uploadImages = async (files) => {
-        // try {
-        //     let formData = new FormData();
-        //     files.map((file) => {
-        //         formData.append('image', file);
-        //     });
-        //     console.log(formData.getAll('image'))
 
-        //     const res = await fetch(`http://localhost:3001/api/uploadImages/upload`, {
-        //         method: "POST",
-        //         body: formData,
-        //     });
-        //     if (res.ok) {
 
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        //     setLoading(false);
-        //     toastContext.notify('error', 'Có lỗi xảy ra');
-        // }
-    };
+    //Date
+    const [day, setDay] = useState(new Date())
+    // const addImages = async (file) => {
+    //     const obj = {
+    //         images: file
+    //     }
+    //     const fetchApi = async () => {
+    //         const result = await ImageServices.AddImages(obj)
+    //             .catch((error) => {
+    //                 console.log(error);
+    //                 toastContext.notify('error', 'Có lỗi xảy ra');
+    //             });
+    //         if (result) {
+    //             setImages(result.data)
+    //         }
+    //     }
 
-    const deleteImages = async (blobName) => {
+    //     fetchApi();
+    // }
+    const submit = () => {
 
+        if (name === '') {
+            setLoading(false);
+            toastContext.notify('error', 'Chưa nhập tên');
+        } else {
+            setLoading(true);
+            console.log(images)
+            const fetchApi = async () => {
+                const image = {
+                    images: files
+                }
+                const resultImage = await ImageServices.AddImages(image)
+                    .catch((error) => {
+                        console.log(error);
+                        toastContext.notify('error', 'Có lỗi xảy ra');
+                    });
+                if (resultImage) {
+                    const obj = {
+                        name: name,
+                        note: note,
+                        phone: phone,
+                        web: web,
+                        email: email,
+                        nation: nation,
+                        image: resultImage.data
+                    }
+
+                    console.log(obj)
+                    const result = await BrandService.CreateBrand(obj)
+                        .catch((error) => {
+                            console.log(error);
+                            setLoading(false);
+                            toastContext.notify('error', 'Có lỗi xảy ra');
+                        });
+
+                    if (result) {
+                        setLoading(false);
+                        console.log(result)
+                        toastContext.notify('success', 'Tạo thương hiệu thành công');
+                        navigate('/brands/details/' + result.data.brandId);
+                    }
+                }
+
+            }
+
+            fetchApi();
+        }
     }
-
     const handleAddImages = async (e) => {
-        // let formData = new FormData();
-        // Array.from(e.target.files).forEach((file) => {
-        //     formData.append("image", file);
-        // });
-        // const arr = Array.from(e.target.files).map((file) => {
-        //     file.preview = URL.createObjectURL(file);
-        //     return file;
-        // });
-        // console.log(arr)
-        let formData = new FormData();
-        formData.append("image", e.target.files[0]);
-        console.log(formData.getAll('image'))
-        const fetchApi = async () => {
-            const result = await ImageServices.AddImages(formData)
-                .catch((error) => {
-                    console.log(error);
-                    setLoading(false);
-                    toastContext.notify('error', 'Có lỗi xảy ra');
-                });
-            console.log(result)
+        const file = e.target.files[0]
 
-            e.target.value = null;
+        const reader = new FileReader();
+        reader.readAsDataURL(file)
+
+        reader.onloadend = () => {
+            setDay(new Date())
+            setFiles(reader.result)
+            // addImages(reader.result)
+
         }
 
-        fetchApi();
     }
 
-    const handleRemoveImage = (index) => {
+    const handleRemoveImage = () => {
         setFiles(undefined)
-    };
 
+    };
+    useEffect(() => {
+        // console.log(files)
+    }, [day]);
     return (
         <div>
             <div className='frame'>
@@ -117,11 +153,14 @@ function AddBrand() {
                                     />
                                 </div>
                                 <img
-                                    className='w-[inherit] h-[inherit] rounded-[3px]'
-                                    src={files?.preview}
+                                    className='w-fit h-fit rounded-[3px] max-w-[90px] max-h-[80px]'
+                                    src={files}
                                     alt=""
                                 />
                             </div>
+
+
+
                     }
 
 
@@ -190,7 +229,7 @@ function AddBrand() {
                 </div>
             </div>
             <div className='w-[90%] mx-auto text-end'>
-                <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => console.log(files)}>
+                <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => submit()}>
                     Lưu
                 </button>
             </div>
