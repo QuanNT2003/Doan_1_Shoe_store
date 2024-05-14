@@ -25,6 +25,8 @@ import DiscountPage from "../pages/DiscountPage";
 import ShoppingCart from "../pages/ShoppingCart";
 import OrderCollection from "~/pages/OrderCollection";
 import OrderDetail from "~/pages/OrderDetail";
+import Login_Client from "~/pages/Login_Client";
+import Register from "~/pages/Register";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -192,6 +194,7 @@ const publicRoutes = [
         component: OrderDetail,
         layout: DefaultLayoutClient,
     },
+
 ];
 
 const privateRoutes = [
@@ -200,6 +203,18 @@ const privateRoutes = [
         component: HomePage,
         layout: DefaultLayoutClient
     },
+    {
+        path: '/login',
+        component: Login_Client,
+        layout: null
+    },
+    {
+        path: '/register',
+        component: Register,
+        layout: null
+    },
+
+
 ];
 
 export { publicRoutes, privateRoutes };

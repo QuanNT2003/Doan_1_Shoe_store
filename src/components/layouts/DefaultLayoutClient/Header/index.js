@@ -7,10 +7,10 @@ import {
     faCartShopping,
     faUser,
     faHome,
-    faMale,
-    faFemale,
-    faChild,
-    faPercent
+    faPercent,
+    faBars,
+    faStore,
+    faReceipt
 } from '@fortawesome/free-solid-svg-icons';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -22,24 +22,24 @@ const links = [
         icon: <FontAwesomeIcon icon={faHome} className='me-4 ' />,
     },
     {
+        title: 'Thương hiệu',
+        path: '/brand_collection',
+        icon: <FontAwesomeIcon icon={faStore} className='me-4 ' />,
+    },
+    {
         title: 'Deal giá hời',
-        path: '/1',
+        path: '/discount_collection',
         icon: <FontAwesomeIcon icon={faPercent} className='me-4 ' />,
     },
     {
-        title: 'Giày dép nam',
-        path: '/2',
-        icon: <FontAwesomeIcon icon={faMale} className='me-4 ' />,
+        title: 'Giỏ hàng',
+        path: '/shopping_cart',
+        icon: <FontAwesomeIcon icon={faCartShopping} className='me-4 ' />,
     },
     {
-        title: 'Giày dép nữ',
-        path: '/3',
-        icon: <FontAwesomeIcon icon={faFemale} className='me-4 ' />,
-    },
-    {
-        title: 'Giày trẻ em',
-        path: '/4',
-        icon: <FontAwesomeIcon icon={faChild} className='me-4 ' />,
+        title: 'Đơn hàng',
+        path: '/order_colection',
+        icon: <FontAwesomeIcon icon={faReceipt} className='me-4 ' />,
     },
 
 ]
@@ -57,10 +57,11 @@ function Header() {
                 <div className='justify-center items-center flex ssm:flex-[2] ssm:mx-5'>
                     <SearchBar placeholder={'Tim kiếm sản phẩm'} />
                 </div>
+                <div onClick={handleOpen} className='lg:hidden cursor-pointer me-2 '>
+                    <FontAwesomeIcon icon={faBars} className='hover:scale-110 me-4 w-[25px] h-[25px]' />
+                </div>
                 <div className='justify-end items-center hidden lg:flex flex-1'>
-                    {/* <div onClick={handleOpen} className='sm:hidden cursor-pointer me-5 '>
-                        <FontAwesomeIcon icon={faBars} className='hover:scale-110 me-4 w-[25px] h-[25px]' />
-                    </div> */}
+
                     <div className='me-5 hover:cursor-pointer group relative'>
                         <div className='flex justify-center items-center group-hover:scale-110'>
                             <FontAwesomeIcon icon={faBell} className='me-4 w-[25px] h-[25px]' />
@@ -158,18 +159,41 @@ function Header() {
                 </div>
             </div>
 
-            {/* <Modal
+            <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 className=''
             >
-                <Box className='h-screen p-5 w-[30vh] bg-white border-none transition-all'>
+                <Box className='h-screen p-5 ssm:w-[40vh] w-[35vh] bg-white border-none transition-all'>
                     <div className='pt-6 flex justify-center items-center h-28'>
                         <img src={image} className='h-full w-1/3 rounded-md me-3' />
                         TQShop
                     </div>
+                    <hr className=' my-4 mx-3' />
+                    <NavLink
+                        to='/234'
+                        className={({ isActive }) =>
+                            isActive ? 'active navlink' : 'navlink'
+                        }
+                    >
+                        <div >
+                            <FontAwesomeIcon icon={faBell} className='me-4 w-[25px] h-[25px]' />
+                        </div>
+                        <div className='pe-2 text-[18px]'>Thông báo</div>
+                    </NavLink>
+                    <NavLink
+                        to='/123'
+                        className={({ isActive }) =>
+                            isActive ? 'active navlink' : 'navlink'
+                        }
+                    >
+                        <div >
+                            <FontAwesomeIcon icon={faUser} className='me-4 w-[25px] h-[25px]' />
+                        </div>
+                        <div className='pe-2 text-[18px]'>Đăng ký | Đăng nhập</div>
+                    </NavLink>
                     <hr className=' my-4 mx-3' />
                     {
                         links.map((e, index) => (
@@ -188,7 +212,7 @@ function Header() {
                         ))
                     }
                 </Box>
-            </Modal> */}
+            </Modal>
         </div>
     );
 }
