@@ -51,7 +51,8 @@ function OrderDetail() {
                             </div>
                         </div>
                         <div className='flex justify-center mt-3'>
-                            <button className='border p-4 w-[50%] border-solid border-slate-400 rounded-md '>Viết đánh giá</button>
+                            <button className='border p-4 w-[30%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100'>Viết đánh giá</button>
+                            <button className='border p-4 w-[30%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100 '>Đổi /Trả hàng</button>
                         </div>
 
                     </div>
@@ -80,7 +81,8 @@ function OrderDetail() {
                             </div>
                         </div>
                         <div className='flex justify-center mt-3'>
-                            <button className='border p-4 w-[50%] border-solid border-slate-400 rounded-md '>Viết đánh giá</button>
+                            <button className='border p-4 w-[30%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100'>Viết đánh giá</button>
+                            <button className='border p-4 w-[30%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100 '>Đổi /Trả hàng</button>
                         </div>
 
                     </div>

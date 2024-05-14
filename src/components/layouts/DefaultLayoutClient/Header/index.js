@@ -15,6 +15,7 @@ import {
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const links = [
     {
         title: 'Trang chủ',
@@ -45,6 +46,7 @@ const links = [
 ]
 function Header() {
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     return (
@@ -97,7 +99,7 @@ function Header() {
                         </div>
                     </div>
 
-                    <div className='flex justify-center items-center me-5 hover:cursor-pointer hover:scale-110 transition-all'>
+                    <div className='flex justify-center items-center me-5 hover:cursor-pointer hover:scale-110 transition-all' onClick={() => navigate('/login')}>
                         <FontAwesomeIcon icon={faUser} className='me-2 w-[25px] h-[25px]' />
                         <div className='text-[13px] hidden md:block'>
                             Đăng ký | Đăng nhập
@@ -184,7 +186,7 @@ function Header() {
                         <div className='pe-2 text-[18px]'>Thông báo</div>
                     </NavLink>
                     <NavLink
-                        to='/123'
+                        to='/login'
                         className={({ isActive }) =>
                             isActive ? 'active navlink' : 'navlink'
                         }

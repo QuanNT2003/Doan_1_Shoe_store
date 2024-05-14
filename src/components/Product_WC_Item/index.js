@@ -10,8 +10,8 @@ function Product_WC_item({ product }) {
         navigate('/product_collection/' + product.productID)
     }
     return (
-        <div className='max-w-[100px] ssm:max-w-[160px] bg-white shadow-xl rounded-md p-2 hover:shadow-2xl m-2 select-none cursor-pointer' onClick={() => onclick()}>
-            <div className='h-[80px] ssm:h-[160px] bg-no-repeat bg-center bg-cover '
+        <div className='max-w-[120px] ssm:max-w-[170px] bg-white shadow-xl rounded-md p-2 hover:shadow-2xl m-2 select-none cursor-pointer' onClick={() => onclick()}>
+            <div className='h-[100px] ssm:h-[170px] bg-no-repeat bg-cover '
                 style={{
                     backgroundImage: `url('${product.images[0] ? product.images[0].url : noImage}')`,
                 }}>

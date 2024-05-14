@@ -215,10 +215,10 @@ function HomePage() {
 
     return (
         <div className='select-none'>
-            <ProductCarousel title={'Siêu khuyến mãi'} listProduct={listProduct} path='/products' />
-            <ProductCarousel title={'Sản phẩm mới'} listProduct={listProduct} path='/products' />
+            <ProductCarousel title={'Siêu khuyến mãi'} listProduct={listProduct} path='/collection/123' />
+            <ProductCarousel title={'Sản phẩm mới'} listProduct={listProduct} path='/collection/123' />
             <Categories list={listCategories} />
-            <ProductCarousel title={'Siêu khuyến mãi'} listProduct={listProduct} path='/products' />
+            <ProductCarousel title={'Mua nhiều nhất'} listProduct={listProduct} path='/collection/123' />
             <div className='bg-white m-5 mb-10 p-3 rounded-lg'>
                 <div className='mb-2 ms-3 h-[40px] flex items-center justify-between'>
                     <div className='font-bold text-[16px]'>Just for you</div>

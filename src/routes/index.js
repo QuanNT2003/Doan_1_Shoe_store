@@ -5,6 +5,7 @@ import OrderList from "~/pages/OrderList";
 import CustomerList from "~/pages/CustomerList";
 import BrandList from "~/pages/BrandList";
 import ColorList from "~/pages/ColorList";
+import ExchangeReturnList from "~/pages/ExchangeReturnList";
 import AddPromotion from "~/pages/AddPromotion";
 import InfoPromotion from "~/pages/InfoPromotion";
 import UpdatePromotion from "~/pages/UpdatePromotion";
@@ -16,6 +17,7 @@ import InfoOrder from "~/pages/InfoOrder";
 import AddProduct from "~/pages/AddProduct";
 import UpdateProduct from "~/pages/UpdateProduct";
 import InfoProduct from "../pages/InfoProduct";
+import InfoExchangeReturn from "~/pages/InfoExchangeReturn";
 import ProductVersion from "../pages/ProductVersion";
 import ProductPage from "~/pages/ProductDetailPage";
 import BrandListPage from "~/pages/BrandListPage";
@@ -65,6 +67,13 @@ const publicRoutes = [
         component: ColorList,
         layout: DefaultLayoutAdmin,
         title: 'Các mẫu màu sắt',
+        back: true,
+    },
+    {
+        path: '/exchange_returns',
+        component: ExchangeReturnList,
+        layout: DefaultLayoutAdmin,
+        title: 'Danh sách đổi trả',
         back: true,
     },
     {
@@ -151,7 +160,13 @@ const publicRoutes = [
         title: 'Quản lý các phân loại sản phẩm',
         back: true
     },
-
+    {
+        path: '/exchange_returns/details/:id',
+        component: InfoExchangeReturn,
+        layout: DefaultLayoutAdmin,
+        title: 'Thông tin đổi trả sản phẩm',
+        back: true
+    },
 
 
     {

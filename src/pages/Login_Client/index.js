@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import bg from '~/assets/images/bg_muahe.jpg'
 import logo from '~/assets/images/logo.png'
 import Input from '~/components/Input';
+import { useNavigate } from 'react-router-dom';
 function Login_Client() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate();
     return (
         <div className='flex flex-col justify-center items-center h-screen bg-no-repeat bg-cover '
             style={{
@@ -43,7 +45,10 @@ function Login_Client() {
                         Quên mật khẩu ?
                     </div>
                 </div>
-                <div className='flex justify-center items-center'>
+                <div className='flex justify-center items-center gap-5'>
+                    <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => navigate('/register')} >
+                        Đăng ký
+                    </button>
                     <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' >
                         Đăng nhập
                     </button>
