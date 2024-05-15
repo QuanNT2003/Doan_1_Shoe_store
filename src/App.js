@@ -19,7 +19,7 @@ function App() {
         }
         return (
           <Route
-            key={index}
+            key={route.path}
             path={route.path}
             element={
 
@@ -43,7 +43,7 @@ function App() {
         }
         return (
           <Route
-            key={index}
+            key={route.path}
             path={route.path}
             element={
 

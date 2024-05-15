@@ -17,7 +17,7 @@ function ListExchangeReturn({ item, itemNew }) {
                 {
                     itemNew === null ? 'Sản phẩm trả' : 'Sản phẩm hoàn'
                 }
-                <div className='h-[80px] min-h-[80px] w-[100vh] min-w-[100%] flex text-[13px] border-b-[1px] border-solid border-[#0909090a] hover:bg-[#f3f4f5] hover:cursor-pointer' key={item.productId}>
+                <div className='h-[80px] min-h-[80px] w-[100vh] min-w-[100%] flex text-[13px] border-b-[1px] border-solid border-[#0909090a] hover:bg-[#f3f4f5] hover:cursor-pointer' >
                     <div className='flex justify-center items-center text-[14px] font-medium w-[8%] min-w-[42px]'>
                         <img src={item.featureImageUrl} className='h-[40px] w-[40px]' alt="" />
                     </div>
@@ -42,7 +42,7 @@ function ListExchangeReturn({ item, itemNew }) {
                 }
                 {
                     itemNew === null ? (<div></div>) : (
-                        <div className='h-[80px] min-h-[80px] w-[100vh] min-w-[100%] flex text-[13px] border-b-[1px] border-solid border-[#0909090a] hover:bg-[#f3f4f5] hover:cursor-pointer' key={item.productId}>
+                        <div className='h-[80px] min-h-[80px] w-[100vh] min-w-[100%] flex text-[13px] border-b-[1px] border-solid border-[#0909090a] hover:bg-[#f3f4f5] hover:cursor-pointer'>
 
                             <div className='flex justify-center items-center text-[14px] font-medium w-[8%] min-w-[42px]'>
                                 <img src={itemNew.featureImageUrl} className='h-[40px] w-[40px]' alt="" />

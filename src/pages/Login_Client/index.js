@@ -8,12 +8,10 @@ function Login_Client() {
     const [password, setPassword] = useState('')
     const navigate = useNavigate();
     return (
-        <div className='flex flex-col justify-center items-center h-screen bg-no-repeat bg-cover '
-            style={{
-                backgroundImage: `url('${bg}')`
-            }}>
+        <div className='flex flex-col justify-center items-center my-10 '
+        >
 
-            <div className='bg-white rounded-3xl min-h-[500px] md:w-[40%] w-[90%] p-3 shadow-2xl'>
+            <div className='bg-white rounded-3xl min-h-[500px] md:w-[60%] w-[90%] p-3 shadow-2xl'>
                 <div className='flex justify-center items-center'>
                     <img src={logo} className='w-[100px] me-3' alt='' />
                     <h1>TQ Shop</h1>

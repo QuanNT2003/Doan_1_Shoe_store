@@ -8,12 +8,9 @@ function Register() {
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
     return (
-        <div className='flex flex-col justify-center items-center h-screen bg-no-repeat bg-cover '
-            style={{
-                backgroundImage: `url('${bg}')`
-            }}>
-
-            <div className='bg-white rounded-3xl min-h-[500px] md:w-[40%] w-[90%] p-3 shadow-2xl'>
+        <div className='flex flex-col justify-center items-center my-10'
+        >
+            <div className='bg-white rounded-3xl min-h-[500px] md:w-[60%] w-[90%] p-3 shadow-2xl'>
                 <div className='flex justify-center items-center'>
                     <img src={logo} className='w-[100px] me-3' alt='' />
                     <h1>TQ Shop</h1>

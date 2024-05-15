@@ -304,18 +304,8 @@ function ProductPage() {
                 open={openModal}
                 handleClose={handleCloseModal}
                 title="Đặt hàng"
-                actionComponent={
-                    <div>
-                        <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => handleCloseModal()}>
-                            Quay lại
-                        </button>
-                        <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' >
-                            Thêm
-                        </button>
-                    </div>
-                }
             >
-                <Order />
+                <Order listBuy={[]} />
 
             </ModalComp>
         </div>

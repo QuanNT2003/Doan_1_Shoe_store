@@ -97,6 +97,18 @@ function InfoExchangeReturn() {
 
 
                 <ListExchangeReturn item={data.itemOld} itemNew={data.itemNew} />
+
+                <div className='me-[5%] mt-[20px]'>
+                    <div className='flex sm:justify-end mb-4'>
+                        <div className='min-w-[250px] text-[14px]'>Voucher giảm giá sản phẩm  </div>
+                        <div className='text-[14px]'> {addCommas(1000000)} VND</div>
+                    </div>
+                    <div className='flex sm:justify-end mb-4'>
+                        <div className='min-w-[250px] text-[14px] font-bold'>Phí hoàn trả  </div>
+                        <div className='text-[14px]'> {addCommas(1000000)} VND</div>
+                    </div>
+
+                </div>
             </div>
             <div className='frame md:flex md:justify-end grid grid-cols-2 gap-y-3'>
                 <button className='bg-blue-500 ms-5 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => navigate(-1)}>
