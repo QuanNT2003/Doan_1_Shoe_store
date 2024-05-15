@@ -183,8 +183,8 @@ function ProductPage() {
                     </div>
                     <hr className='mt-4' />
                     <div>
-                        <SelectVersion list={colorlist} title={'Màu sắc'} />
-                        <SelectVersion list={sizelist} title={'Kích thước'} />
+                        <SelectVersion list={colorlist} title={'Màu sắc'} onclick={setColor} />
+                        <SelectVersion list={sizelist} title={'Kích thước'} onclick={setSize} />
                         <div className='flex mt-5 items-center text-gray-500'>
                             <div className='w-[140px] flex flex-col justify-center'>
                                 Chọn số lượng
@@ -230,7 +230,11 @@ function ProductPage() {
                             </button>
                         </div>
                         <div className='ssm:w-[50%] flex justify-center items-center'>
-                            <button className='bg-orange-500 py-5 px-3 rounded-lg w-[80%] text-white hover:bg-orange-400 cursor-pointer '>
+                            <button className='bg-orange-500 py-5 px-3 rounded-lg w-[80%] text-white hover:bg-orange-400 cursor-pointer ' onClick={() => {
+                                console.log(size)
+                                console.log(color)
+                                console.log(quantity);
+                            }}>
                                 Thêm vào giỏ
                             </button>
                         </div>

@@ -29,7 +29,6 @@ function List({
     handleSort,
     // 
     selectableRowDisabled,
-    handleKeyDown,
 }) {
     return (
         <div className='w-[100%] bg-white rounded-2xl p-5 select-none shadow-table'>
@@ -41,7 +40,6 @@ function List({
                             placeholder={placeholderSearch}
                             value={search}
                             onChange={(e) => handleSearch(e)}
-                            onKeyDown={(e) => handleKeyDown(e)}
                         />
                     )}
 

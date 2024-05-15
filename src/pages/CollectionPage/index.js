@@ -14,7 +14,7 @@ const listProduct = [
                 url: 'https://cdn.giayhongthanh.com.vn/public/uploads/site/10179/wordpress/2023/04/IMG_4329.jpg',
             }
         ],
-        discount: 0,
+        discount: 2,
         price: 200000,
     },
     {

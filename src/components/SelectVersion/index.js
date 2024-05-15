@@ -8,6 +8,7 @@ function SelectVersion({
     const [select, setSelect] = useState('')
     const handleClick = (item) => {
         setSelect(item.name)
+        onclick(item)
     }
     return (
         <div className='flex mt-5 items-center text-gray-500'>

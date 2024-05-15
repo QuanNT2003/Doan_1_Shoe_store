@@ -6,6 +6,13 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faCcPaypal
+} from '@fortawesome/free-brands-svg-icons';
+import {
+    faCreditCard
+} from '@fortawesome/free-solid-svg-icons';
 const addCommas = (num) => {
     if (num === null) return;
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -337,7 +344,20 @@ function Order({
                         }}
                     >
                         <FormControlLabel value='123' control={<Radio />} label='Than toán khi nhận hàng' />
-                        <FormControlLabel value='234' control={<Radio />} label='Thanh toán chuyển khoản' />
+                        <FormControlLabel value='234' control={<Radio />} label={
+                            <div className='flex justify-center items-center'>
+                                <div className='me-3'>Thanh toán paypal</div>
+                                <FontAwesomeIcon icon={faCcPaypal} className='me-3 h-[40px] text-cyan-600' />
+
+                            </div>}
+                        />
+                        <FormControlLabel value='234' control={<Radio />} label={
+                            <div className='flex justify-center items-center'>
+                                <div className='me-3'>Thanh toán VNPay</div>
+                                <FontAwesomeIcon icon={faCreditCard} className='me-3 h-[40px] text-cyan-600' />
+
+                            </div>}
+                        />
 
                     </RadioGroup>
                 </FormControl>
