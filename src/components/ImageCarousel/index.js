@@ -13,7 +13,7 @@ function ImageCarousel({
             <AliceCarousel mouseTracking>
                 {images.map((item, index) => (
                     <div className=' flex justify-center items-center ' key={index}>
-                        <img src={item.src} className='h-[250px] ssm:h-[300px] ' onDragStart={handleDragStart} role="presentation" />
+                        <img src={item.url} className='h-[250px] ssm:h-[300px] ' onDragStart={handleDragStart} role="presentation" />
                     </div>
 
                 ))}

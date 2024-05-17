@@ -54,7 +54,7 @@ function AddProduct() {
     const [supplier, setSupplier] = useState('');
     const [errorSupplier, setErrorSupplier] = useState('');
 
-    // SUPPLIER
+    // CLASSIFY
     const [classify, setClassify] = useState('');
     const [errorClassify, setErrorClassify] = useState('');
 

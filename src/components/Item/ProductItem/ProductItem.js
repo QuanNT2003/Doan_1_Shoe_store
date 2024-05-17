@@ -21,7 +21,7 @@ export const ProductItem = [
                 <div
                     className='min-h-[50px] min-w-[50px] bg-no-repeat bg-center bg-cover mr-[10px]'
                     style={{
-                        backgroundImage: `url('${row.images[0] ? row.images[0] : noImage}')`,
+                        backgroundImage: `url('${row.images[0].url ? row.images[0].url : noImage}')`,
                     }}
                     data-tag="allowRowEvents"
                 ></div>
@@ -49,18 +49,27 @@ export const ProductItem = [
         cell: (row) => (
             <div
                 className={
-                    row.isActive ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] text-[#027948] bg-[#ecfdf3]'
-                        : 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] text-[#b32318] bg-[#fef3f2]'
+                    'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] text-[#027948] bg-[#ecfdf3]'
+                    // row.isActive ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] text-[#027948] bg-[#ecfdf3]'
+                    //     : 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] text-[#b32318] bg-[#fef3f2]'
                 }
                 data-tag="allowRowEvents"
             >
-                <FontAwesomeIcon
+                {/* <FontAwesomeIcon
                     className={row.isActive ? 'text-[#12b76a]' : 'text-[#f04438]'}
                     icon={row.isActive === true ? faCheck : faXmark}
                     data-tag="allowRowEvents"
                 />
                 <div className='ml-[5px] font-medium text-center' data-tag="allowRowEvents">
                     {row.isActive === true ? 'Đang giao dịch' : 'Ngừng giao dịch'}
+                </div> */}
+                <FontAwesomeIcon
+                    className='text-[#12b76a]'
+                    icon={faCheck}
+                    data-tag="allowRowEvents"
+                />
+                <div className='ml-[5px] font-medium text-center' data-tag="allowRowEvents">
+                    'Đang giao dịch'
                 </div>
             </div>
         ),
@@ -75,7 +84,7 @@ export const ProductItem = [
                 data-tag="allowRowEvents"
             >
                 <div className='font-medium text-center' data-tag="allowRowEvents">
-                    {row.categoryText}
+                    {row.category.name}
                 </div>
             </div>
         ),
@@ -91,7 +100,7 @@ export const ProductItem = [
                 data-tag="allowRowEvents"
             >
                 <div data-tag="allowRowEvents">
-                    {addCommas(row.salePrice)}
+                    {addCommas(row.price)}
                 </div>
             </div>
         ),
@@ -107,14 +116,14 @@ export const ProductItem = [
                 data-tag="allowRowEvents"
             >
                 <div data-tag="allowRowEvents">
-                    {addCommas(row.purchasePrice)}
+                    {addCommas(row.cost)}
                 </div>
             </div>
         ),
     },
     {
-        name: 'Tồn kho',
-        text: 'currentStock',
+        name: 'Thương hiệu',
+        text: 'brand',
         sortable: true,
         center: 'true',
         cell: (row) => (
@@ -123,7 +132,8 @@ export const ProductItem = [
                 data-tag="allowRowEvents"
             >
                 <div data-tag="allowRowEvents">
-                    {addCommas(row.currentStock)}
+                    {row.brand.name}
+                    {/* {addCommas(row.currentStock)} */}
                 </div>
             </div>
         ),

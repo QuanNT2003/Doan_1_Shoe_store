@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import List from '~/components/List';
 import { ProductItem } from '~/components/Item';
@@ -11,6 +11,9 @@ import {
     faPlus,
     faList
 } from '@fortawesome/free-solid-svg-icons';
+import * as ProductServices from '~/apiServices/productServices'
+import { ToastContext } from '~/components/ToastContext';
+
 const rows = [
     {
         productId: 'SP001',
@@ -67,13 +70,23 @@ const optionsPriceRange = [
 ];
 function ProductList() {
     const navigate = useNavigate();
-
+    const toastContext = useContext(ToastContext);
     const [search, setSearch] = useState('')
 
     const handleSearch = (e) => {
         setSearch(e.target.value);
     };
 
+    const [pending, setPending] = useState(false);
+    const [rows, setRows] = useState([]);
+
+    const [day, setDay] = useState(new Date())
+    // API PROPS
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(12);
+    const [totalRows, setTotalRows] = useState(0);
+    const [sortBy, setSortBy] = useState('');
+    const [orderBy, setOrderBy] = useState('');
 
     // Filter Options
     const [optionsLSP, setOptionsLSP] = useState([]);
@@ -116,7 +129,88 @@ function ProductList() {
         navigate('/products/details/' + row.productId);
     }, []);
 
-    const totalRows = 5
+    const createObjectQuery = async (
+        page,
+        limit,
+        sortBy,
+        orderBy,
+        statuses,
+        isOutdated,
+        query,
+    ) => {
+
+        let arr = [];
+        if (isOutdated) {
+            if (isOutdated.length < 2) {
+                arr = [...isOutdated];
+            }
+        }
+
+        return {
+            limit,
+            page,
+            ...(orderBy && { orderBy }),
+            ...(sortBy && { sortBy }),
+            ...(statuses && { statuses }),
+            ...(isOutdated && { isOutdated: arr }),
+            ...(query && { query }),
+        };
+    }
+    const handlePageChange = async (pageNumber) => {
+        setPage(pageNumber);
+        setDay(new Date())
+
+    }
+
+    const handlePerRowsChange = async (newPerPage, pageNumber) => {
+        setPage(pageNumber);
+        setLimit(newPerPage);
+        setDay(new Date())
+
+    }
+
+    const getList = async (obj) => {
+        setPending(true);
+
+        const response = await ProductServices.getAllProducts(obj)
+            .catch((error) => {
+                setPending(false);
+
+                if (error?.response?.status === 404) {
+                    setRows([]);
+                    setTotalRows(0);
+                } else {
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                }
+            });
+
+        if (response) {
+            console.log(response);
+            setPending(false);
+            setRows(response.data);
+            setTotalRows(response.total);
+
+        }
+    }
+
+    useEffect(() => {
+        const fetch = async () => {
+            getList(
+                await createObjectQuery(
+                    page,
+                    limit,
+                    sortBy,
+                    orderBy,
+                    search,
+                ));
+        }
+
+        fetch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+
+
     return (
         <div>
             <div className='frame flex'>
@@ -129,7 +223,6 @@ function ProductList() {
                     placeholderSearch={'Tìm kiếm theo mã, tên sản phẩm'}
                     search={search}
                     handleSearch={handleSearch}
-                    // handleKeyDown={handleKeyDown}
                     filterComponent={
                         <Filter
                             open={openFilter}
