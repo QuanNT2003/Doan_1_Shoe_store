@@ -1,54 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { faCircleXmark, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Input from '~/components/Input';
-
+import * as CategoryServices from '~/apiServices/categoryServices';
+import * as BrandServices from '~/apiServices/brandServices';
 const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, '');
 function UpdateProduct() {
     // OPTIONS
-    const [optionsLSP, setOptionsLSP] = useState([
-        {
-            label: 'dạ hội',
-            value: ''
-        },
-        {
-            label: 'thể thao',
-            value: ''
-        },
-        {
-            label: 'đời sống',
-            value: ''
-        },
-    ]);
-    const [optionsSupplier, setOptionsSupplier] = useState([
-        {
-            label: 'dạ hội',
-            value: ''
-        },
-        {
-            label: 'thể thao',
-            value: ''
-        },
-        {
-            label: 'đời sống',
-            value: ''
-        },
-    ]);
+    const [optionsLSP, setOptionsLSP] = useState([]);
+    const [optionsSupplier, setOptionsSupplier] = useState([]);
 
     // SELECTED
     const [selectedLSP, setSelectedLSP] = useState();
     const [selectedSupplier, setSelectedSupplier] = useState();
 
     // PRODUCTTYPE
-    const [productType, setProductType] = useState('');
+    const [productType, setProductType] = useState('Giày Bít');
     const onChangeProductType = (item) => {
         setProductType(item.label);
-        setSelectedLSP(item);
+        setSelectedLSP(item.obj);
 
 
     };
     // SUPPLIER
-    const [supplier, setSupplier] = useState('');
+    const [supplier, setSupplier] = useState('Thượng Đình');
     const [errorSupplier, setErrorSupplier] = useState('');
 
     // NAME
@@ -140,6 +115,57 @@ function UpdateProduct() {
 
         console.log(obj)
     }
+
+    const getBrand = async () => {
+        const response = await BrandServices.getAllBrands()
+            .catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        if (response) {
+            const data = await response.data.map((cate) => ({ label: cate.name, value: cate.categoryId, obj: cate }));
+            setOptionsSupplier(data);
+        }
+    }
+
+    // GET DATA SUPPLIERS
+    const getCate = async () => {
+        const response = await CategoryServices.getAllCategorys(
+        )
+            .catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        if (response) {
+            const data = await response.data.map((sup) => ({ label: sup.name, value: sup.supplierId, obj: sup }));
+            setOptionsLSP(data);
+        }
+    };
+
+    useEffect(() => {
+        getCate();
+        getBrand();
+
+        // eslint-disable-next-line no-use-before-define
+    }, []);
     return (
         <div>
             <div className='mt-6 lg:grid lg:grid-cols-5'>
@@ -264,7 +290,7 @@ function UpdateProduct() {
                         }}
                         handleClickAction={(item) => {
                             setSupplier(item.label);
-                            setSelectedSupplier(item);
+                            setSelectedSupplier(item.obj);
                         }}
                     />
                 </div>

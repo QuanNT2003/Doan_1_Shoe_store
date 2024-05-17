@@ -137,11 +137,6 @@ function InfoProduct() {
                         <div > 40</div>
                     </div>
                     <div className='flex my-3 flex-wrap'>
-                        <div className='min-w-[220px]'>Số lượng đã bán</div>
-                        <div className='min-w-[30px]'> : </div>
-                        <div > 40</div>
-                    </div>
-                    <div className='flex my-3 flex-wrap'>
                         <div className='min-w-[220px]'>Đánh giá sản phẩm</div>
                         <div className='min-w-[30px]'> : </div>
                         <div > <Rating name="size-large" value={4} readOnly size="small" /> </div>

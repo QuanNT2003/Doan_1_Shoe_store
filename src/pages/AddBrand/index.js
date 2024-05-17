@@ -24,7 +24,7 @@ function AddBrand() {
     const [images, setImages] = useState();
 
     // IMAGES
-    const [files, setFiles] = useState();
+    const [files, setFiles] = useState([]);
 
 
     //Date
@@ -58,6 +58,7 @@ function AddBrand() {
                 const image = {
                     images: files
                 }
+                console.log(image)
                 const resultImage = await ImageServices.AddImages(image)
                     .catch((error) => {
                         console.log(error);
@@ -103,7 +104,7 @@ function AddBrand() {
 
         reader.onloadend = () => {
             setDay(new Date())
-            setFiles(reader.result)
+            files.push(reader.result)
             // addImages(reader.result)
 
         }
@@ -111,7 +112,7 @@ function AddBrand() {
     }
 
     const handleRemoveImage = () => {
-        setFiles(undefined)
+        setFiles([])
 
     };
     useEffect(() => {
@@ -124,7 +125,7 @@ function AddBrand() {
                 <hr />
                 <div className='flex mt-5'>
                     {
-                        files === undefined ? <div>
+                        files.length === 0 ? <div>
                             <input
                                 id="addImg"
                                 type="file"
@@ -154,7 +155,7 @@ function AddBrand() {
                                 </div>
                                 <img
                                     className='w-fit h-fit rounded-[3px] max-w-[90px] max-h-[80px]'
-                                    src={files}
+                                    src={files[0]}
                                     alt=""
                                 />
                             </div>

@@ -174,12 +174,27 @@ function ColorList() {
                     onChange={onChangeName}
                     error={errorName}
                 />
-                <div className='md:grid md:grid-cols-2'>
+                <div className='md:grid md:grid-cols-2 gap-2'>
                     <div>
-                        <ColorPicker handleChangeColor={setColor1} title={'Màu sắc chính'} error={error} errorName={errorColor} required={true} />
+                        <Input
+                            title={'Màu sắc chính'}
+                            required
+                            className='my-5'
+                            value={name}
+                            onChange={onChangeName}
+                            error={errorName}
+                        />
+                        <ColorPicker handleChangeColor={setColor1} title={''} error={error} errorName={errorColor} required={true} />
                     </div>
                     <div>
-                        <ColorPicker handleChangeColor={setColor2} title={'Màu phụ'} />
+                        <Input
+                            title={'Màu phụ'}
+                            className='my-5'
+                            value={name}
+                            onChange={onChangeName}
+                            error={errorName}
+                        />
+                        <ColorPicker handleChangeColor={setColor2} title={''} />
                     </div>
 
                 </div>

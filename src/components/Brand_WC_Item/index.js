@@ -170,7 +170,7 @@ function Brand_WC_Item({
             <div className='ssm:flex items-center hover:shadow cursor-pointer py-2' onClick={() => onclick()}>
                 <div className='flex m-5 ms-8 flex-[2] justify-center ssm:justify-normal'>
                     <div className='me-5'>
-                        <img src={example} className='w-[80px] h-[80px] rounded-full' />
+                        <img src={brand.images[0]} className='w-[80px] h-[80px] rounded-full' />
                     </div>
                     <div className='flex flex-col'>
                         <div className='flex-1 font-bold mb-3 text-[20px] mt-2'>

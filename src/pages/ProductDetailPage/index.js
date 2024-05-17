@@ -141,7 +141,39 @@ const listProduct = [
         price: 200000,
     },
 ]
-
+const product = [{
+    cartId: '1',
+    product: {
+        _id: "6630ff5e53d233907bf4a13c",
+        name: "[NEW] Giày thể thao nam mẫu mới, Giày thể thao nam Sneaker êm chân thoáng khí chạy bộ, thể dục - 4167_114743771",
+        productId: "pr00000002",
+        cost: 100000,
+        price: 120000,
+        star: 5,
+        classify: "Male",
+        discount: 7,
+    },
+    quantity: 2,
+    size: {
+        _id: "6630e5a66d143fa314743793",
+        name: "46",
+        sizeId: "sz00000014",
+        child: false,
+        createdAt: "2024-04-30T12:35:50.943Z",
+        updatedAt: "2024-04-30T12:35:50.943Z",
+        __v: 0
+    },
+    color: {
+        _id: "662326f9e8e596224aae1ada",
+        name: "Hong - Vach vang",
+        colorId: "co00000001",
+        colorNameOne: "Vang",
+        colorCodeOne: "#agdgaa",
+        createdAt: "2024-04-20T02:22:49.983Z",
+        updatedAt: "2024-04-20T02:27:41.998Z",
+        __v: 0
+    },
+},]
 const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, '');
 function ProductPage() {
 
@@ -179,7 +211,7 @@ function ProductPage() {
                     <div className=''>
                         <span className='me-3 line-through text-stone-400'>120.000 đ</span>
                         <span className='me-2'>-</span>
-                        <span>70%</span>
+                        <span>7%</span>
                     </div>
                     <hr className='mt-4' />
                     <div>
@@ -309,7 +341,7 @@ function ProductPage() {
                 handleClose={handleCloseModal}
                 title="Đặt hàng"
             >
-                <Order listBuy={[]} />
+                <Order listBuy={product} />
 
             </ModalComp>
         </div>

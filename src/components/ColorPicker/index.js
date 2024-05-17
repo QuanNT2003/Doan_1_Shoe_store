@@ -9,10 +9,10 @@ function ColorPicker({
 }) {
     return (
         <div>
-            <div className='my-2'>
-                {title}
+            <div className='h-[20px]'>
                 {required && <span className='text-red-500'> *</span>}
             </div>
+
             <input className={error ? 'border-red-500 border-[1px] border-solid rounded' : ''} type='color' defaultValue={'#ffffff'} onChange={(e) => handleChangeColor(e.target.value)} />
             <div className=' text-red-500'>{errorName}</div>
         </div>

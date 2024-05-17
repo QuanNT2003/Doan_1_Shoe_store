@@ -25,7 +25,7 @@ function UpdateBrand() {
     const [images, setImages] = useState([]);
 
     // IMAGES
-    const [files, setFiles] = useState();
+    const [files, setFiles] = useState([]);
 
     const handleAddImages = (e) => {
         const file = e.target.files[0]
@@ -34,11 +34,11 @@ function UpdateBrand() {
         reader.readAsDataURL(file)
 
         reader.onloadend = () => {
-            setFiles(reader.result)
+            files.push(reader.result)
             // addImages(reader.result)
             const fetchApi = async () => {
                 const image = {
-                    images: reader.result
+                    images: files
                 }
                 const resultImage = await ImagesService.AddImages(image)
                     .catch((error) => {
@@ -57,7 +57,7 @@ function UpdateBrand() {
     const handleRemoveImage = (index) => {
         const fetchApi = async () => {
             const obj = {
-                publicId: images.publicId
+                publicId: images[0].publicId
             }
 
 
@@ -72,7 +72,7 @@ function UpdateBrand() {
 
 
         fetchApi()
-        setFiles(undefined)
+        setFiles([])
         setImages(undefined)
     };
 
@@ -94,7 +94,7 @@ function UpdateBrand() {
                 setPhone(result.data.phone)
                 setNation(result.data.nation)
                 setImages(result.data.image)
-                setFiles(result.data.image)
+                files.push(result.data.image)
             }
         }
 
@@ -152,7 +152,7 @@ function UpdateBrand() {
                 <hr />
                 <div className='flex mt-5'>
                     {
-                        files === undefined ? <div>
+                        files.length === 0 ? <div>
                             <input
                                 id="addImg"
                                 type="file"
@@ -182,7 +182,7 @@ function UpdateBrand() {
                                 </div>
                                 <img
                                     className='w-fit h-fit rounded-[3px] max-w-[90px] max-h-[80px]'
-                                    src={images?.url}
+                                    src={images[0]?.url}
                                     alt=""
                                 />
                             </div>

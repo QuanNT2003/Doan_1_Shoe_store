@@ -12,9 +12,9 @@ export const BrandItem = [
                 data-tag="allowRowEvents"
             >
                 <div
-                    className='min-h-[50px] min-w-[50px] bg-no-repeat bg-center bg-cover mr-[30px]'
+                    className='min-h-[50px] min-w-[50px] bg-no-repeat bg-center mr-[30px] bg-contain'
                     style={{
-                        backgroundImage: `url('${row.images[0] ? row.images[0] : noImage}')`,
+                        backgroundImage: `url('${row.image.url ? row.image.url : noImage}')`,
                     }}
                     data-tag="allowRowEvents"
                 ></div>
@@ -51,7 +51,7 @@ export const BrandItem = [
         center: 'true',
         cell: (row) => (
             <div className='font-medium' tag="allowRowEvents">
-                {row.totalProduct}
+                12
             </div>
         ),
     },

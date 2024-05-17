@@ -12,7 +12,7 @@ const listProduct = [
                 url: 'https://cdn.giayhongthanh.com.vn/public/uploads/site/10179/wordpress/2023/04/IMG_4329.jpg',
             }
         ],
-        discount: 0,
+        discount: 3,
         price: 200000,
     },
     {
@@ -23,7 +23,7 @@ const listProduct = [
                 url: 'https://cdn.giayhongthanh.com.vn/public/uploads/site/10179/wordpress/2023/04/IMG_4329.jpg',
             }
         ],
-        discount: 0,
+        discount: 1,
         price: 200000,
     },
     {
@@ -34,7 +34,7 @@ const listProduct = [
                 url: 'https://cdn.giayhongthanh.com.vn/public/uploads/site/10179/wordpress/2023/04/IMG_4329.jpg',
             }
         ],
-        discount: 0,
+        discount: 10,
         price: 200000,
     },
     {
