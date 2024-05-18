@@ -11,6 +11,7 @@ function List({
     search,
     searchVisibility,
     handleSearch,
+    setSearch,
     onRowClicked,
     pending,
     showSubHeader,
@@ -39,7 +40,8 @@ function List({
                             className='flex-1'
                             placeholder={placeholderSearch}
                             value={search}
-                            onChange={(e) => handleSearch(e)}
+                            onChange={(e) => setSearch(e.target.value)}
+                            onClick={handleSearch}
                         />
                     )}
 

@@ -28,49 +28,48 @@ function PromotionList() {
     const navigate = useNavigate();
     const toastContext = useContext(ToastContext);
 
-    const returnArray = (arr) => {
-        return arr.map((obj) => obj.value);
-    }
-
-
     // API PROPS
-    const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(12);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(12);
     const [totalRows, setTotalRows] = useState(0);
     const [sortBy, setSortBy] = useState('');
     const [orderBy, setOrderBy] = useState('');
-
+    const [date, setDate] = useState(new Date())
 
     const createObjectQuery = async (
-        pageNumber,
-        pageSize,
+        page,
+        limit,
         sortBy,
         orderBy,
-        statuses,
-        isOutdated,
-        query,
+        search,
+        classify,
+        status
     ) => {
 
-        let arr = [];
-        if (isOutdated) {
-            if (isOutdated.length < 2) {
-                arr = [...isOutdated];
-            }
-        }
-
         return {
-            pageNumber,
-            pageSize,
+            page,
+            limit,
             ...(orderBy && { orderBy }),
             ...(sortBy && { sortBy }),
-            ...(statuses && { statuses }),
-            ...(isOutdated && { isOutdated: arr }),
-            ...(query && { query }),
+            ...(search && { search }),
+            ...(classify && { classify }),
+            ...(status && { status }),
         };
     }
     const [search, setSearch] = useState('')
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
+    const handleSearch = async () => {
+        getList(
+            await createObjectQuery(
+                1,
+                limit,
+                sortBy,
+                orderBy,
+                search,
+            )
+        );
+
+        handleCloseFilter();
+
     };
 
     //table
@@ -88,21 +87,94 @@ function PromotionList() {
     const handleOpenFilter = () => setOpenFilter(true);
     const handleCloseFilter = () => setOpenFilter(false);
     const handleClearFilter = () => {
-
+        setSelectedTT([])
+        setSelectedLM([])
     };
 
     const handleFilter = async () => {
-
+        setPage(1);
+        let LM = []
+        let TT = []
+        if (selectedLM.length === 0) {
+            for (let option of optionsLM) LM.push(option.value)
+        } else {
+            for (let option of selectedLM) LM.push(option.value)
+        }
+        if (selectedTT.length === 0) {
+            for (let option of optionsTT) TT.push(option.value)
+        } else {
+            for (let option of selectedTT) TT.push(option.value)
+        }
+        getList(
+            await createObjectQuery(
+                1,
+                limit,
+                sortBy,
+                orderBy,
+                search,
+                LM,
+                TT
+            )
+        );
+        setDate(new Date())
         handleCloseFilter();
+
     };
 
+    const handleSort = async (column, sortDirection) => {
+        setSortBy(column.text);
+        setOrderBy(sortDirection);
+        setPage(1);
+        getList(
+            await createObjectQuery(
+                1,
+                limit,
+                column.text,
+                sortDirection,
+                search,
+            )
+        );
+        handleCloseFilter();
 
+    };
+
+    const handlePerRowsChange = async (newPerPage, pageNumber) => {
+        setLimit(newPerPage);
+        setPage(pageNumber);
+
+        getList(
+            await createObjectQuery(
+                pageNumber,
+                newPerPage,
+                sortBy,
+                orderBy,
+                search,
+            )
+        );
+        setDate(new Date())
+
+    }
+
+    const handlePageChange = async (pageNumber) => {
+        setPage(pageNumber);
+
+        getList(
+            await createObjectQuery(
+                pageNumber,
+                limit,
+                sortBy,
+                orderBy,
+                search,
+            )
+        );
+        setDate(new Date())
+    }
 
     // GET DATA
-    const getList = async (obj) => {
+    const getList = async (params) => {
+        console.log(params)
         setPending(true);
-
-        const response = await PromotionServices.getAllPromotions(obj)
+        const response = await PromotionServices.getAllPromotions(params)
             .catch((error) => {
                 setPending(false);
 
@@ -115,10 +187,11 @@ function PromotionList() {
             });
 
         if (response) {
-            console.log(response.data);
+            console.log(response);
             setPending(false);
             setRows(response.data);
-            setTotalRows(response.data.length);
+            setTotalRows(response.total);
+
         }
     }
     useEffect(() => {
@@ -127,12 +200,10 @@ function PromotionList() {
 
             getList(
                 await createObjectQuery(
-                    pageNumber,
-                    pageSize,
+                    page,
+                    limit,
                     sortBy,
                     orderBy,
-                    selectedTT.length > 0 && returnArray(selectedTT),
-                    selectedLM.length > 0 && returnArray(selectedLM),
                     search,
                 ));
         }
@@ -140,6 +211,10 @@ function PromotionList() {
         fetch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+
+    }, [date]);
     const onRowClicked = useCallback((row) => {
         navigate('/promotions/details/' + row.discountId);
     }, []);
@@ -154,6 +229,7 @@ function PromotionList() {
                     placeholderSearch={'Tìm kiếm theo mã, tên khuyến mãi'}
                     search={search}
                     handleSearch={handleSearch}
+                    setSearch={setSearch}
                     // handleKeyDown={handleKeyDown}
                     filterComponent={
                         <Filter
@@ -191,10 +267,10 @@ function PromotionList() {
 
                     // PAGINATION
                     totalRows={totalRows}
-                // handlePerRowsChange={handlePerRowsChange}
-                // handlePageChange={handlePageChange}
-                // SORT
-                // handleSort={handleSort}
+                    handlePerRowsChange={handlePerRowsChange}
+                    handlePageChange={handlePageChange}
+                    // SORT
+                    handleSort={handleSort}
                 />
             </div>
         </div>
