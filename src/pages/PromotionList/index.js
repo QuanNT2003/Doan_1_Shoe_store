@@ -58,15 +58,31 @@ function PromotionList() {
     }
     const [search, setSearch] = useState('')
     const handleSearch = async () => {
-        getList(
-            await createObjectQuery(
-                1,
-                limit,
-                sortBy,
-                orderBy,
-                search,
-            )
-        );
+        if (selectedLM.length === 0 && selectedTT.length === 0) {
+            getList(
+                await createObjectQuery(
+                    1,
+                    limit,
+                    sortBy,
+                    orderBy,
+                    search,
+                )
+            );
+        }
+        else {
+            getList(
+                await createObjectQuery(
+                    1,
+                    limit,
+                    sortBy,
+                    orderBy,
+                    search,
+                    selectedLM.length === 0 ? optionsLM : selectedLM,
+                    selectedTT.length === 0 ? optionsTT : selectedTT
+                )
+            );
+        }
+
 
         handleCloseFilter();
 
@@ -93,29 +109,32 @@ function PromotionList() {
 
     const handleFilter = async () => {
         setPage(1);
-        let LM = []
-        let TT = []
-        if (selectedLM.length === 0) {
-            for (let option of optionsLM) LM.push(option.value)
-        } else {
-            for (let option of selectedLM) LM.push(option.value)
+        if (selectedLM.length === 0 && selectedTT.length === 0) {
+            getList(
+                await createObjectQuery(
+                    1,
+                    limit,
+                    sortBy,
+                    orderBy,
+                    search,
+
+                )
+            );
         }
-        if (selectedTT.length === 0) {
-            for (let option of optionsTT) TT.push(option.value)
-        } else {
-            for (let option of selectedTT) TT.push(option.value)
+        else {
+            getList(
+                await createObjectQuery(
+                    1,
+                    limit,
+                    sortBy,
+                    orderBy,
+                    search,
+                    selectedLM.length === 0 ? optionsLM : selectedLM,
+                    selectedTT.length === 0 ? optionsTT : selectedTT
+                )
+            );
         }
-        getList(
-            await createObjectQuery(
-                1,
-                limit,
-                sortBy,
-                orderBy,
-                search,
-                LM,
-                TT
-            )
-        );
+
         setDate(new Date())
         handleCloseFilter();
 
@@ -125,15 +144,31 @@ function PromotionList() {
         setSortBy(column.text);
         setOrderBy(sortDirection);
         setPage(1);
-        getList(
-            await createObjectQuery(
-                1,
-                limit,
-                column.text,
-                sortDirection,
-                search,
-            )
-        );
+        if (selectedLM.length === 0 && selectedTT.length === 0) {
+            getList(
+                await createObjectQuery(
+                    1,
+                    limit,
+                    column.text,
+                    sortDirection,
+                    search,
+                )
+            );
+        }
+        else {
+            getList(
+                await createObjectQuery(
+                    1,
+                    limit,
+                    column.text,
+                    sortDirection,
+                    search,
+                    selectedLM.length === 0 ? optionsLM : selectedLM,
+                    selectedTT.length === 0 ? optionsTT : selectedTT
+                )
+            );
+        }
+
         handleCloseFilter();
 
     };
@@ -141,32 +176,62 @@ function PromotionList() {
     const handlePerRowsChange = async (newPerPage, pageNumber) => {
         setLimit(newPerPage);
         setPage(pageNumber);
+        if (selectedLM.length === 0 && selectedTT.length === 0) {
+            getList(
+                await createObjectQuery(
+                    pageNumber,
+                    newPerPage,
+                    sortBy,
+                    orderBy,
+                    search,
+                )
+            );
+        }
+        else {
+            getList(
+                await createObjectQuery(
+                    pageNumber,
+                    newPerPage,
+                    sortBy,
+                    orderBy,
+                    search,
+                    selectedLM.length === 0 ? optionsLM : selectedLM,
+                    selectedTT.length === 0 ? optionsTT : selectedTT
+                )
+            );
+        }
 
-        getList(
-            await createObjectQuery(
-                pageNumber,
-                newPerPage,
-                sortBy,
-                orderBy,
-                search,
-            )
-        );
         setDate(new Date())
 
     }
 
     const handlePageChange = async (pageNumber) => {
         setPage(pageNumber);
+        if (selectedLM.length === 0 && selectedTT.length === 0) {
+            getList(
+                await createObjectQuery(
+                    pageNumber,
+                    limit,
+                    sortBy,
+                    orderBy,
+                    search,
+                )
+            );
+        }
+        else {
+            getList(
+                await createObjectQuery(
+                    pageNumber,
+                    limit,
+                    sortBy,
+                    orderBy,
+                    search,
+                    selectedLM.length === 0 ? optionsLM : selectedLM,
+                    selectedTT.length === 0 ? optionsTT : selectedTT
+                )
+            );
+        }
 
-        getList(
-            await createObjectQuery(
-                pageNumber,
-                limit,
-                sortBy,
-                orderBy,
-                search,
-            )
-        );
         setDate(new Date())
     }
 
@@ -196,8 +261,6 @@ function PromotionList() {
     }
     useEffect(() => {
         const fetch = async () => {
-
-
             getList(
                 await createObjectQuery(
                     page,

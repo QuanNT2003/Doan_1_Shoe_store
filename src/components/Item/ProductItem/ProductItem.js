@@ -42,34 +42,49 @@ export const ProductItem = [
             </div>
         ),
     },
+    // {
+    //     name: 'Trạng thái',
+    //     center: 'true',
+    //     MinWidth: '180px',
+    //     cell: (row) => (
+    //         <div
+    //             className={
+    //                 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] text-[#027948] bg-[#ecfdf3]'
+    //                 // row.isActive ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] text-[#027948] bg-[#ecfdf3]'
+    //                 //     : 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] text-[#b32318] bg-[#fef3f2]'
+    //             }
+    //             data-tag="allowRowEvents"
+    //         >
+    //             {/* <FontAwesomeIcon
+    //                 className={row.isActive ? 'text-[#12b76a]' : 'text-[#f04438]'}
+    //                 icon={row.isActive === true ? faCheck : faXmark}
+    //                 data-tag="allowRowEvents"
+    //             />
+    //             <div className='ml-[5px] font-medium text-center' data-tag="allowRowEvents">
+    //                 {row.isActive === true ? 'Đang giao dịch' : 'Ngừng giao dịch'}
+    //             </div> */}
+    //             <FontAwesomeIcon
+    //                 className='text-[#12b76a]'
+    //                 icon={faCheck}
+    //                 data-tag="allowRowEvents"
+    //             />
+    //             <div className='ml-[5px] font-medium text-center' data-tag="allowRowEvents">
+    //                 'Đang giao dịch'
+    //             </div>
+    //         </div>
+    //     ),
+    // },
     {
-        name: 'Trạng thái',
+        name: 'Phân loại',
         center: 'true',
         MinWidth: '180px',
         cell: (row) => (
             <div
-                className={
-                    'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] text-[#027948] bg-[#ecfdf3]'
-                    // row.isActive ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] text-[#027948] bg-[#ecfdf3]'
-                    //     : 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] text-[#b32318] bg-[#fef3f2]'
-                }
+                className='text-[#101828] bg-[#d0d5f1] rounded-[20px] py-[5px] px-[10px] flex items-center text-[12px]'
                 data-tag="allowRowEvents"
             >
-                {/* <FontAwesomeIcon
-                    className={row.isActive ? 'text-[#12b76a]' : 'text-[#f04438]'}
-                    icon={row.isActive === true ? faCheck : faXmark}
-                    data-tag="allowRowEvents"
-                />
-                <div className='ml-[5px] font-medium text-center' data-tag="allowRowEvents">
-                    {row.isActive === true ? 'Đang giao dịch' : 'Ngừng giao dịch'}
-                </div> */}
-                <FontAwesomeIcon
-                    className='text-[#12b76a]'
-                    icon={faCheck}
-                    data-tag="allowRowEvents"
-                />
-                <div className='ml-[5px] font-medium text-center' data-tag="allowRowEvents">
-                    'Đang giao dịch'
+                <div className='font-medium text-center' data-tag="allowRowEvents">
+                    {row.classify}
                 </div>
             </div>
         ),
@@ -91,7 +106,7 @@ export const ProductItem = [
     },
     {
         name: 'Giá bán',
-        text: 'salePrice',
+        text: 'price',
         sortable: true,
         center: 'true',
         cell: (row) => (
@@ -107,7 +122,7 @@ export const ProductItem = [
     },
     {
         name: 'Giá vốn',
-        text: 'purchasePrice',
+        text: 'cost',
         sortable: true,
         center: 'true',
         cell: (row) => (

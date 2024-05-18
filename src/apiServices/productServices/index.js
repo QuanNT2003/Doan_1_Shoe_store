@@ -2,14 +2,24 @@ import * as request from '~/utils/request';
 
 export const getAllProducts = async (params) => {
     try {
+        console.log(params)
         const response = await request.getMethod('api/product/get-all?', {
             params,
             paramsSerializer: (params) => {
                 const serializedParams = Object.keys(params).map((key) => {
-                    return key + '=' + params[key];
+                    if (key === 'limit' || key === 'page' || key === 'search') {
+                        return key + '=' + params[key];
+                    }
+                    if (key === 'sortBy' || key === 'orderBy') {
+                        return 'sort' + '=' + params[key];
+                    }
+                    if (key === 'classify' || key === 'brand' || key === 'category') {
+                        let string = ''
+                        for (let item of params[key]) string += key + '=' + item.value + '&';
+                        return string
+                    }
                 }).join('&');
 
-                console.log(serializedParams);
 
                 return serializedParams;
             },

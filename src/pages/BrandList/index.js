@@ -65,8 +65,18 @@ function BrandList() {
     const navigate = useNavigate();
     const toastContext = useContext(ToastContext);
     const [search, setSearch] = useState('')
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
+    const handleSearch = async () => {
+        getList(
+            await createObjectQuery(
+                1,
+                limit,
+                sortBy,
+                orderBy,
+                search,
+            )
+        );
+
+        handleCloseFilter();
     };
 
     const [pending, setPending] = useState(false);
@@ -91,7 +101,7 @@ function BrandList() {
     const handleOpenFilter = () => setOpenFilter(true);
     const handleCloseFilter = () => setOpenFilter(false);
     const handleClearFilter = () => {
-
+        setSelectedNation([])
     };
 
     const createObjectQuery = async (
@@ -99,30 +109,32 @@ function BrandList() {
         limit,
         sortBy,
         orderBy,
-        statuses,
-        isOutdated,
-        query,
+        search,
+        nation
     ) => {
 
-        let arr = [];
-        if (isOutdated) {
-            if (isOutdated.length < 2) {
-                arr = [...isOutdated];
-            }
-        }
 
         return {
             limit,
             page,
             ...(orderBy && { orderBy }),
             ...(sortBy && { sortBy }),
-            ...(statuses && { statuses }),
-            ...(isOutdated && { isOutdated: arr }),
-            ...(query && { query }),
+            ...(search && { search }),
+            ...(nation && { nation }),
         };
     }
     const handlePageChange = async (pageNumber) => {
         setPage(pageNumber);
+
+        getList(
+            await createObjectQuery(
+                pageNumber,
+                limit,
+                sortBy,
+                orderBy,
+                search,
+            )
+        );
         setDay(new Date())
 
     }
@@ -130,6 +142,16 @@ function BrandList() {
     const handlePerRowsChange = async (newPerPage, pageNumber) => {
         setPage(pageNumber);
         setLimit(newPerPage);
+
+        getList(
+            await createObjectQuery(
+                pageNumber,
+                newPerPage,
+                sortBy,
+                orderBy,
+                search,
+            )
+        );
         setDay(new Date())
 
     }
@@ -157,13 +179,50 @@ function BrandList() {
         }
     }
     const handleFilter = async () => {
+        setPage(1);
+        let QG = []
 
+        if (selectedNation.length !== 0) {
+            for (let option of selectedNation) QG.push(option.value)
+        } else QG = undefined
+        getList(
+            await createObjectQuery(
+                1,
+                limit,
+                sortBy,
+                orderBy,
+                search,
+                QG
+            )
+        );
+        setDay(new Date())
         handleCloseFilter();
     };
     const onRowClicked = useCallback((row) => {
         navigate('/brands/details/' + row.brandId);
     }, []);
 
+
+    const getNation = async () => {
+        const response = await BrandServices.getNation()
+            .catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        if (response) {
+            const data = await response.data.map((nation) => ({ label: nation, value: nation }));
+            setOptionsNation(data);
+        }
+    }
     useEffect(() => {
         const fetch = async () => {
             getList(
@@ -174,6 +233,7 @@ function BrandList() {
                     orderBy,
                     search,
                 ));
+            getNation()
         }
 
         fetch();
@@ -181,19 +241,7 @@ function BrandList() {
     }, []);
 
     useEffect(() => {
-        const fetch = async () => {
-            getList(
-                await createObjectQuery(
-                    page,
-                    limit,
-                    sortBy,
-                    orderBy,
-                    search,
-                ));
-        }
 
-        fetch();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [day]);
     return (
         <div>
@@ -206,6 +254,7 @@ function BrandList() {
                     placeholderSearch={'Tìm kiếm theo mã, tên thương hiệu '}
                     search={search}
                     handleSearch={handleSearch}
+                    setSearch={setSearch}
                     // handleKeyDown={handleKeyDown}
                     filterComponent={
                         <Filter

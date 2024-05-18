@@ -12,53 +12,16 @@ import {
     faList
 } from '@fortawesome/free-solid-svg-icons';
 import * as ProductServices from '~/apiServices/productServices'
+import * as CategoryServices from '~/apiServices/categoryServices';
+import * as BrandServices from '~/apiServices/brandServices';
 import { ToastContext } from '~/components/ToastContext';
 
-const rows = [
-    {
-        productId: 'SP001',
-        images: [
-            'https://scontent.fhan4-3.fna.fbcdn.net/v/t39.30808-1/426571080_1792048851310816_3127445872686098501_n.jpg?stp=c4.0.320.320a_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=5740b7&_nc_eui2=AeF_O5dUR3hggeTQC4elh9BpKpda0SuVut4ql1rRK5W63q_d94FqKsQ3gCpk2OGaz7u-1xTsr65bfU8lhl3E2bo2&_nc_ohc=LaSPX4gBZA4AX-odx-Y&_nc_ht=scontent.fhan4-3.fna&oh=00_AfA_TZZxSCg8GaRj2Digu-EMrpq3hYEyj96MeFENslOadg&oe=65E8A4D2'
-        ],
-        name: 'Mot hai ba',
-        isActive: true,
-        categoryText: 'mot hai ba',
-        salePrice: 100000,
-        purchasePrice: 80000,
-        currentStock: 100,
 
-    },
-    {
-        productId: 'SP002',
-        images: [
-            'https://scontent.fhan4-3.fna.fbcdn.net/v/t39.30808-1/426571080_1792048851310816_3127445872686098501_n.jpg?stp=c4.0.320.320a_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=5740b7&_nc_eui2=AeF_O5dUR3hggeTQC4elh9BpKpda0SuVut4ql1rRK5W63q_d94FqKsQ3gCpk2OGaz7u-1xTsr65bfU8lhl3E2bo2&_nc_ohc=LaSPX4gBZA4AX-odx-Y&_nc_ht=scontent.fhan4-3.fna&oh=00_AfA_TZZxSCg8GaRj2Digu-EMrpq3hYEyj96MeFENslOadg&oe=65E8A4D2'
-        ],
-        name: 'Mot hai ba',
-        isActive: true,
-        categoryText: 'mot hai ba',
-        salePrice: 100000,
-        purchasePrice: 80000,
-        currentStock: 100,
 
-    },
-    {
-        productId: 'SP003',
-        images: [
-            'https://scontent.fhan4-3.fna.fbcdn.net/v/t39.30808-1/426571080_1792048851310816_3127445872686098501_n.jpg?stp=c4.0.320.320a_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=5740b7&_nc_eui2=AeF_O5dUR3hggeTQC4elh9BpKpda0SuVut4ql1rRK5W63q_d94FqKsQ3gCpk2OGaz7u-1xTsr65bfU8lhl3E2bo2&_nc_ohc=LaSPX4gBZA4AX-odx-Y&_nc_ht=scontent.fhan4-3.fna&oh=00_AfA_TZZxSCg8GaRj2Digu-EMrpq3hYEyj96MeFENslOadg&oe=65E8A4D2'
-        ],
-        name: 'Mot hai ba',
-        isActive: true,
-        categoryText: 'mot hai ba',
-        salePrice: 100000,
-        purchasePrice: 80000,
-        currentStock: 100,
-
-    },
-]
-
-const optionsTT = [
-    { label: 'Đang giao dịch', value: true },
-    { label: 'Ngừng giao dịch', value: false },
+const optionsPL = [
+    { label: 'Nam', value: 'Nam' },
+    { label: 'Nữ', value: 'Nữ' },
+    { label: 'Trẻ em', value: 'Trẻ em' },
 ];
 
 const optionsPriceRange = [
@@ -73,8 +36,18 @@ function ProductList() {
     const toastContext = useContext(ToastContext);
     const [search, setSearch] = useState('')
 
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
+    const handleSearch = async () => {
+        getList(
+            await createObjectQuery(
+                1,
+                limit,
+                sortBy,
+                orderBy,
+                search,
+            )
+        );
+
+        handleCloseFilter();
     };
 
     const [pending, setPending] = useState(false);
@@ -93,7 +66,7 @@ function ProductList() {
     const [optionsManufacturer, setOptionsManufacturer] = useState([]);
 
     //Filter
-    const [selectedTT, setSelectedTT] = useState([]);
+    const [selectedPL, setSelectedPL] = useState([]);
     const [selectedPriceRange, setSelectedPriceRange] = useState([]);
     const [selectedLSP, setSelectedLSP] = useState([]);
     const [selectedManufacturer, setSelectedManufacturer] = useState([]);
@@ -101,10 +74,80 @@ function ProductList() {
     const handleOpenFilter = () => setOpenFilter(true);
     const handleCloseFilter = () => setOpenFilter(false);
     const handleClearFilter = () => {
-
+        setSelectedLSP([])
+        setSelectedManufacturer([])
+        setSelectedPL([])
     };
+    const getBrand = async () => {
+        const response = await BrandServices.getAllBrands()
+            .catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
 
+        if (response) {
+            const data = await response.data.map((cate) => ({ label: cate.name, value: cate._id }));
+            setOptionsManufacturer(data);
+        }
+    }
+
+    // GET DATA SUPPLIERS
+    const getCate = async () => {
+        const response = await CategoryServices.getAllCategorys(
+        )
+            .catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        if (response) {
+            const data = await response.data.map((sup) => ({ label: sup.name, value: sup._id }));
+            setOptionsLSP(data);
+        }
+    };
     const handleFilter = async () => {
+        setPage(1);
+        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0) {
+            getList(
+                await createObjectQuery(
+                    1,
+                    limit,
+                    sortBy,
+                    orderBy,
+                    search,
+                )
+            );
+        }
+        else {
+            getList(
+                await createObjectQuery(
+                    1,
+                    limit,
+                    sortBy,
+                    orderBy,
+                    search,
+                    selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
+                    selectedLSP.length === 0 ? optionsLSP : selectedLSP,
+                    selectedPL.length === 0 ? optionsPL : selectedPL
+                )
+            );
+        }
 
         handleCloseFilter();
     };
@@ -134,30 +177,53 @@ function ProductList() {
         limit,
         sortBy,
         orderBy,
-        statuses,
-        isOutdated,
-        query,
+        search,
+        brand,
+        category,
+        classify
     ) => {
 
-        let arr = [];
-        if (isOutdated) {
-            if (isOutdated.length < 2) {
-                arr = [...isOutdated];
-            }
-        }
+
 
         return {
             limit,
             page,
             ...(orderBy && { orderBy }),
             ...(sortBy && { sortBy }),
-            ...(statuses && { statuses }),
-            ...(isOutdated && { isOutdated: arr }),
-            ...(query && { query }),
+            ...(search && { search }),
+            ...(brand && { brand }),
+            ...(category && { category }),
+            ...(classify && { classify }),
         };
     }
     const handlePageChange = async (pageNumber) => {
         setPage(pageNumber);
+        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0) {
+            getList(
+                await createObjectQuery(
+                    pageNumber,
+                    limit,
+                    sortBy,
+                    orderBy,
+                    search,
+                )
+            );
+        }
+        else {
+            getList(
+                await createObjectQuery(
+                    pageNumber,
+                    limit,
+                    sortBy,
+                    orderBy,
+                    search,
+                    selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
+                    selectedLSP.length === 0 ? optionsLSP : selectedLSP,
+                    selectedPL.length === 0 ? optionsPL : selectedPL
+                )
+            );
+        }
+
         setDay(new Date())
 
     }
@@ -165,13 +231,70 @@ function ProductList() {
     const handlePerRowsChange = async (newPerPage, pageNumber) => {
         setPage(pageNumber);
         setLimit(newPerPage);
+        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0) {
+            getList(
+                await createObjectQuery(
+                    pageNumber,
+                    newPerPage,
+                    sortBy,
+                    orderBy,
+                    search,
+                )
+            );
+        }
+        else {
+            getList(
+                await createObjectQuery(
+                    pageNumber,
+                    newPerPage,
+                    sortBy,
+                    orderBy,
+                    search,
+                    selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
+                    selectedLSP.length === 0 ? optionsLSP : selectedLSP,
+                    selectedPL.length === 0 ? optionsPL : selectedPL
+                )
+            );
+        }
+
         setDay(new Date())
 
     }
+    const handleSort = async (column, sortDirection) => {
+        setSortBy(column.text);
+        setOrderBy(sortDirection);
+        setPage(1);
+        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0) {
+            getList(
+                await createObjectQuery(
+                    1,
+                    limit,
+                    column.text,
+                    sortDirection,
+                    search,
+                )
+            );
+        }
+        else {
+            getList(
+                await createObjectQuery(
+                    1,
+                    limit,
+                    column.text,
+                    sortDirection,
+                    search,
+                    selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
+                    selectedLSP.length === 0 ? optionsLSP : selectedLSP,
+                    selectedPL.length === 0 ? optionsPL : selectedPL
+                )
+            );
+        }
 
+        handleCloseFilter();
+
+    };
     const getList = async (obj) => {
         setPending(true);
-
         const response = await ProductServices.getAllProducts(obj)
             .catch((error) => {
                 setPending(false);
@@ -203,6 +326,10 @@ function ProductList() {
                     orderBy,
                     search,
                 ));
+            getBrand();
+            getCate();
+            // console.log(optionsLSP)
+            // console.log(optionsManufacturer);
         }
 
         fetch();
@@ -223,6 +350,8 @@ function ProductList() {
                     placeholderSearch={'Tìm kiếm theo mã, tên sản phẩm'}
                     search={search}
                     handleSearch={handleSearch}
+                    setSearch={setSearch}
+                    pending={pending}
                     filterComponent={
                         <Filter
                             open={openFilter}
@@ -248,10 +377,10 @@ function ProductList() {
                             />
                             <MultiSelectComp
                                 className=''
-                                options={optionsTT}
-                                placeholder={'Trạng thái'}
-                                selected={selectedTT}
-                                setSelected={setSelectedTT}
+                                options={optionsPL}
+                                placeholder={'Phân loại'}
+                                selected={selectedPL}
+                                setSelected={setSelectedPL}
                                 hasSelectAll={true}
                             />
                             <MultiSelectComp
@@ -286,10 +415,10 @@ function ProductList() {
 
                     // PAGINATION
                     totalRows={totalRows}
-                // handlePerRowsChange={handlePerRowsChange}
-                // handlePageChange={handlePageChange}
-                // SORT
-                // handleSort={handleSort}
+                    handlePerRowsChange={handlePerRowsChange}
+                    handlePageChange={handlePageChange}
+                    // SORT
+                    handleSort={handleSort}
                 />
             </div>
         </div>

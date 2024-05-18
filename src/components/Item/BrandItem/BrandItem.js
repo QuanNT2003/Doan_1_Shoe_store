@@ -45,16 +45,16 @@ export const BrandItem = [
             </div>
         ),
     },
-    {
-        name: 'Số mặt hàng đang bán',
-        MinWidth: '180px',
-        center: 'true',
-        cell: (row) => (
-            <div className='font-medium' tag="allowRowEvents">
-                12
-            </div>
-        ),
-    },
+    // {
+    //     name: 'Số mặt hàng đang bán',
+    //     MinWidth: '180px',
+    //     center: 'true',
+    //     cell: (row) => (
+    //         <div className='font-medium' tag="allowRowEvents">
+    //             12
+    //         </div>
+    //     ),
+    // },
     {
         name: 'Email',
         MinWidth: '180px',
@@ -71,7 +71,7 @@ export const BrandItem = [
         center: 'true',
         cell: (row) => (
             <div className='font-medium' tag="allowRowEvents">
-                {row.website}
+                {row.web}
             </div>
         ),
     },

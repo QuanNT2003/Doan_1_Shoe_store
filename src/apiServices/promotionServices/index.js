@@ -14,7 +14,7 @@ export const getAllPromotions = async (params) => {
                     }
                     if (key === 'classify' || key === 'status') {
                         let string = ''
-                        for (let item of params[key]) string += key + '=' + item + '&';
+                        for (let item of params[key]) string += key + '=' + item.value + '&';
                         return string
                     }
                 }).join('&');
