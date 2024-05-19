@@ -8,11 +8,11 @@ export const BrandItem = [
         cell: (row) => (
             <div
                 key={row.productId}
-                className='flex justify-center items-center pt-[10px] pb-[10px]'
+                className='flex justify-start items-start pt-[10px] pb-[10px]'
                 data-tag="allowRowEvents"
             >
                 <div
-                    className='min-h-[50px] min-w-[50px] bg-no-repeat bg-center mr-[30px] bg-contain'
+                    className='h-[50px] w-[50px] bg-no-repeat bg-center mr-[30px] bg-contain'
                     style={{
                         backgroundImage: `url('${row.image[0].url ? row.image[0].url : noImage}')`,
                     }}
@@ -26,7 +26,7 @@ export const BrandItem = [
                         {row.brandId}
                     </div>
                     <div
-                        className='line-clamp-2 text-ellipsis '
+                        className='line-clamp-2 text-ellipsis w-[90px]'
                         data-tag="allowRowEvents"
                     >
                         {row.name}
