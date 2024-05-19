@@ -8,7 +8,7 @@ function SelectVersion({
     const [select, setSelect] = useState('')
     const handleClick = (item) => {
         setSelect(item.name)
-        onclick(item)
+        onclick(item.value)
     }
     return (
         <div className='flex mt-5 items-center text-gray-500'>
@@ -26,8 +26,8 @@ function SelectVersion({
             <div className='flex flex-wrap'>
                 {list.map((item, index) => (
                     <div key={index} className={item.name === select ?
-                        "bg-white min-w-[50px] p-2 border-[2px] mx-2 my-1 text-center cursor-pointer select-none rounded-lg border-sky-600 transition-all" :
-                        "bg-stone-300 min-w-[50px] p-2 border mx-2 my-1 text-center cursor-pointer select-none rounded-lg transition-all"} onClick={() => handleClick(item)}>{item.name}</div>
+                        "bg-white min-w-[60px] p-2 border-[2px] mx-1 my-1 text-center cursor-pointer select-none rounded-lg border-sky-600 transition-all" :
+                        "bg-stone-300 min-w-[60px] p-2 border-[2px] mx-1 my-1 text-center cursor-pointer select-none rounded-lg transition-all"} onClick={() => handleClick(item)}>{item.name}</div>
                 ))}
             </div>
         </div>

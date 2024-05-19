@@ -150,7 +150,7 @@ function ProductList() {
 
     // PriceRange
     const minDistance = 10;
-    const [price, setPrice] = React.useState([0, 500000000]);
+    const [price, setPrice] = React.useState([0, 30000000]);
 
     const handleChange1 = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
@@ -210,6 +210,7 @@ function ProductList() {
     const handlePageChange = async (pageNumber) => {
         setPage(pageNumber);
         if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0 && price[0] === 0 && price[1] === 30000000) {
+            console.log('page change not filter');
             getList(
                 await createObjectQuery(
                     pageNumber,
@@ -221,6 +222,7 @@ function ProductList() {
             );
         }
         else {
+            console.log('page change filter');
             getList(
                 await createObjectQuery(
                     pageNumber,

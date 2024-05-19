@@ -1,8 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Categories from '~/components/Categories';
 import ProductCarousel from '~/components/ProductCarousel';
 import Product_WC_item from '~/components/Product_WC_Item';
-
+import * as ProductServices from '~/apiServices/productServices'
+import * as CategoryServices from '~/apiServices/categoryServices';
+import { ToastContext } from '~/components/ToastContext';
 const listProduct = [
     {
         productID: 1,
@@ -212,20 +215,95 @@ const listCategories = [
     },
 ]
 function HomePage() {
+    const toastContext = useContext(ToastContext);
+    const [listSale, setListSale] = useState([])
+    const [listNew, setListNew] = useState([])
+    const [listJustForYou, setListJustForYou] = useState([])
+    const [pendingSale, setPendingSale] = useState(false)
+    const [pendingNew, setPendingNew] = useState(false)
+    const [pendJustForYou, setPendingJustForYou] = useState(false)
+    const createObjectQuery = async (
+        page,
+        limit,
+        sortBy,
+        orderBy,
+        search,
+        brand,
+        category,
+        classify,
+        price
+    ) => {
+        return {
+            limit,
+            page,
+            ...(orderBy && { orderBy }),
+            ...(sortBy && { sortBy }),
+            ...(search && { search }),
+            ...(brand && { brand }),
+            ...(category && { category }),
+            ...(classify && { classify }),
+            ...(price && { price }),
+        };
+    }
+    const getList = async (obj, setList, setPending) => {
+        setPending(true);
+        const response = await ProductServices.getAllProducts(obj)
+            .catch((error) => {
+                setPending(false);
+
+                if (error?.response?.status === 404) {
+                    setList([]);
+                } else {
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                }
+            });
+
+        if (response) {
+            console.log(response);
+            setPending(false);
+            setList(response.data);
+
+        }
+    }
+    useEffect(() => {
+        const fetch = async () => {
+            getList(
+                await createObjectQuery(
+                    1,
+                    12,
+                    'discount',
+                    'desc',
+
+                ), setListSale, setPendingSale);
+            getList(
+                await createObjectQuery(
+                    1,
+                    12,
+                ), setListNew, setPendingNew);
+            getList(
+                await createObjectQuery(
+                    1,
+                    20,
+                ), setListJustForYou, setPendingJustForYou);
+        }
+
+        fetch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className='select-none'>
-            <ProductCarousel title={'Siêu khuyến mãi'} listProduct={listProduct} path='/collection/123' />
-            <ProductCarousel title={'Sản phẩm mới'} listProduct={listProduct} path='/collection/123' />
+            <ProductCarousel title={'Siêu khuyến mãi'} listProduct={listSale} path='/collection/123' />
+            <ProductCarousel title={'Sản phẩm mới'} listProduct={listNew} path='/collection/123' />
             <Categories list={listCategories} />
-            <ProductCarousel title={'Mua nhiều nhất'} listProduct={listProduct} path='/collection/123' />
+            <ProductCarousel title={'Mua nhiều nhất'} listProduct={listNew} path='/collection/123' />
             <div className='bg-white m-5 mb-10 p-3 rounded-lg'>
                 <div className='mb-2 ms-3 h-[40px] flex items-center justify-between'>
                     <div className='font-bold text-[16px]'>Just for you</div>
                 </div>
                 <div className='flex flex-wrap mb-7'>
                     {
-                        listProduct.map((item, index) => (
+                        listJustForYou.map((item, index) => (
                             <div key={index}>
                                 <Product_WC_item product={item} />
 

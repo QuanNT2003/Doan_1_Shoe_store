@@ -108,7 +108,7 @@ function AddProduct() {
     const [day, setDay] = useState(new Date())
 
     const handleAddImages = (e) => {
-        if (e.target.files.length + files.length < 6) {
+        if (e.target.files.length + files.length < 7) {
             const arr = Array.from(e.target.files).map((file) => {
 
                 const reader = new FileReader();

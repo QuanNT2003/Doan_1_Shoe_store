@@ -7,17 +7,17 @@ const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 function Product_WC_item({ product }) {
     const navigate = useNavigate();
     const onclick = () => {
-        navigate('/product_collection/' + product.productID)
+        navigate('/product_collection/' + product.productId)
     }
     return (
-        <div className='max-w-[120px] ssm:max-w-[170px] bg-white shadow-xl rounded-md p-2 hover:shadow-2xl m-2 select-none cursor-pointer' onClick={() => onclick()}>
-            <div className='h-[100px] ssm:h-[170px] bg-no-repeat bg-cover '
+        <div className='w-[120px] ssm:w-[170px] bg-white shadow-xl rounded-md p-2 hover:shadow-2xl m-2 select-none cursor-pointer' onClick={() => onclick()}>
+            <div className='h-[100px] ssm:h-[160px] bg-no-repeat bg-cover '
                 style={{
                     backgroundImage: `url('${product.images[0] ? product.images[0].url : noImage}')`,
                 }}>
 
             </div>
-            <div className='ssm:text-wrap text-ellipsis line-clamp-1 ssm:line-clamp-2 mb-1 ssm:text-[14px] text-[11px]'>
+            <div className='ssm:text-wrap mt-2 h-[42px] text-ellipsis line-clamp-1 ssm:line-clamp-2 mb-1 ssm:text-[14px] text-[11px]'>
                 {product.name}
             </div>
             <div className='flex text-red-500 mb-1'>
@@ -37,7 +37,7 @@ function Product_WC_item({ product }) {
                 }
             </div>
             <div className='md:flex items-center'>
-                <Rating name="size-large" value={4} readOnly size="small" className='me-2' />
+                <Rating name="size-large" value={product.star} readOnly size="small" className='me-2' />
                 <div className='me-2 text-[11px] ssm:text-[13px]'>
                     (38)
                 </div>
