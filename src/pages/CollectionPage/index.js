@@ -12,29 +12,43 @@ import * as BrandServices from '~/apiServices/brandServices';
 import { ToastContext } from '~/components/ToastContext';
 import RangeValue from '~/components/RangeValue';
 import ModalLoading from '~/components/ModalLoading';
+import Button from '@mui/material/Button';
 
-const optionsTH = [
-    { label: '0 - 150.00đ', value: '0 - 150.000đ' },
-    { label: '150.000đ - 500.000đ', value: '150.000đ - 500.000đ' },
-    { label: '500.000đ - 1.000.000đ', value: '500.000đ - 1.000.000đ' },
-    { label: '1.000.000đ - 2.000.000đ', value: '1.000.000đ - 2.000.000đđ' },
-    { label: '2.000.000đ trở lên', value: '2.000.000đđ' },
-];
 const sortlist = [
     {
         name: 'Đánh giá từ thấp tới cao',
+        value: [
+            'asc',
+            'star'
+        ]
     },
     {
         name: 'Đánh giá từ cao tới thấp',
+        value: [
+            'desc',
+            'star'
+        ]
     },
     {
         name: 'Giá từ cao tới thấp',
+        value: [
+            'desc',
+            'price'
+        ]
     },
     {
         name: 'Giá từ thấp tới cao',
+        value: [
+            'asc',
+            'price'
+        ]
     },
     {
         name: 'Lượt đánh giá',
+        value: [
+            'asc',
+            'star'
+        ]
     },
 ]
 const optionsPL = [
@@ -56,7 +70,7 @@ function CollectionPage() {
     const minDistance = 10;
     const [price, setPrice] = React.useState([0, 0]);
 
-    const handleChange1 = (event, newValue, activeThumb) => {
+    const handleChange1 = async (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
             return;
         }
@@ -66,7 +80,43 @@ function CollectionPage() {
         } else {
             setPrice([price[0], Math.max(newValue[1], price[0] + minDistance)]);
         }
+
     };
+
+
+    const filter = async () => {
+        getList(
+            await createObjectQuery(
+                page,
+                limit,
+                sortBy,
+                orderBy,
+                search,
+                selectedManufacturer,
+                selectedLSP,
+                selectedPL,
+                price[1] === 0 ? '' : price
+            ));
+    }
+
+    const sortProcess = async (item) => {
+        setSort(item.name)
+        setSortBy(item.value[1])
+        setOrderBy(item.value[0])
+        getList(
+            await createObjectQuery(
+                page,
+                limit,
+                item.value[1],
+                item.value[0],
+                search,
+                selectedManufacturer,
+                selectedLSP,
+                selectedPL,
+                price[1] === 0 ? '' : price
+            ));
+    }
+
     const createObjectQuery = async (
         page,
         limit,
@@ -78,6 +128,7 @@ function CollectionPage() {
         classify,
         price
     ) => {
+
         return {
             limit,
             page,
@@ -183,7 +234,9 @@ function CollectionPage() {
                 orderBy,
                 search,
                 selectedManufacturer,
-                selectedLSP
+                selectedLSP,
+                selectedPL,
+                price[1] === 0 ? '' : price
             ));
         setDay(new Date())
     }
@@ -192,6 +245,8 @@ function CollectionPage() {
             if (key[0] === 'desc') {
                 getCate()
                 getBrand()
+                setSortBy(key[1])
+                setOrderBy(key[0])
                 getList(
                     await createObjectQuery(
                         page,
@@ -219,6 +274,19 @@ function CollectionPage() {
                         selectedManufacturer,
                         selectedLSP
                     ));
+            } else if (key[0] === 'search') {
+                getCate()
+                getBrand()
+                setSearch(key[1])
+                getList(
+                    await createObjectQuery(
+                        page,
+                        limit,
+                        sortBy,
+                        orderBy,
+                        key[1],
+
+                    ));
             }
 
         }
@@ -237,81 +305,116 @@ function CollectionPage() {
                 totalPage={totalPage}
                 changePage={changePage}
                 // loading={pending}
-                filter={<div className='flex flex-wrap mt-3 items-center'>
-                    <div className='w-[340px] me-3'>
-                        <RangeValue
-                            placeholder={'Giá bán'}
-                            value={price}
-                            handleChange={handleChange1}
-                        />
-                    </div>
-                    {
-                        key[0] == 'brand' ? (
-                            <div> </div>
-                        ) : (
+                filter={
+                    <div>
+                        <div className='flex flex-wrap mt-3 items-center'>
+                            <div className='w-[360px] me-3'>
+                                <RangeValue
+                                    placeholder={'Giá bán'}
+                                    value={price}
+                                    handleChange={handleChange1}
+                                />
+                            </div>
+                            {
+                                key[0] == 'brand' ? (
+                                    <div> </div>
+                                ) : (
+                                    <div className='w-[250px] me-3'>
+                                        <MultiSelectComp
+                                            options={optionsManufacturer}
+                                            placeholder={'Thương hiệu'}
+                                            selected={selectedManufacturer}
+                                            setSelected={setSelectedManufacturer}
+                                            hasSelectAll={true}
+                                            notShowTitle={true}
+                                        />
+                                    </div>
+                                )
+                            }
+
+                            {
+                                key[0] == 'category' ? (
+                                    <div> </div>
+                                ) : (
+                                    <div className='w-[250px] me-3'>
+                                        <MultiSelectComp
+                                            options={optionsLSP}
+                                            placeholder={'Loại sản phẩm'}
+                                            selected={selectedLSP}
+                                            setSelected={setSelectedLSP}
+                                            hasSelectAll={true}
+                                            notShowTitle={true}
+                                        />
+                                    </div>
+                                )
+                            }
+
                             <div className='w-[250px] me-3'>
                                 <MultiSelectComp
-                                    options={optionsManufacturer}
-                                    placeholder={'Thương hiệu'}
-                                    selected={selectedManufacturer}
-                                    setSelected={setSelectedManufacturer}
+                                    options={optionsPL}
+                                    placeholder={'Phân loại'}
+                                    selected={selectedPL}
+                                    setSelected={setSelectedPL}
                                     hasSelectAll={true}
                                     notShowTitle={true}
                                 />
                             </div>
-                        )
-                    }
+                        </div>
+                        <div className='flex gap-2'>
+                            <Button
+                                className=' p-4 font-semibold mr-[20px] hover:bg-blue-600 hover:text-stone-600'
+                                variant="outlined"
+                                onClick={() => {
+                                    setPrice([0, 0])
+                                    if (key[0] === 'category') {
 
-                    {
-                        key[0] == 'category' ? (
-                            <div> </div>
-                        ) : (
-                            <div className='w-[250px] me-3'>
-                                <MultiSelectComp
-                                    options={optionsLSP}
-                                    placeholder={'Loại sản phẩm'}
-                                    selected={selectedLSP}
-                                    setSelected={setSelectedLSP}
-                                    hasSelectAll={true}
-                                    notShowTitle={true}
-                                />
-                            </div>
-                        )
-                    }
+                                    } else setSelectedLSP([])
+                                    if (key[0] === 'brand') {
 
-                    <div className='w-[250px] me-3'>
-                        <MultiSelectComp
-                            options={optionsPL}
-                            placeholder={'Phân loại'}
-                            selected={selectedPL}
-                            setSelected={setSelectedPL}
-                            hasSelectAll={true}
-                            notShowTitle={true}
-                        />
+                                    } else setSelectedManufacturer([])
+                                    setSelectedPL([])
+                                }}
+                            >
+                                Xóa bộ lọc
+                            </Button>
+                            <Button
+                                className=' p-4 font-semibold mr-[20px] hover:bg-blue-600 hover:text-stone-600'
+                                variant="outlined"
+                                onClick={filter}
+                            >
+                                Lọc
+                            </Button>
+                        </div>
                     </div>
-                </div>}
+                }
                 sort={
-                    <div className='ms-2 cursor-pointer flex items-center group relative'>
-                        <div className='me-4 flex items-center justify-center'>
-                            <div className='font-bold me-3'> Sắp xếp</div>
+                    key[0] === 'desc' ? (<div> </div>) : (
+                        <div className='ms-2 cursor-pointer flex items-center group relative'>
+                            <div className='me-4 flex items-center justify-center'>
+                                <div className='font-bold me-3'> Sắp xếp</div>
 
-                            <FontAwesomeIcon icon={faFilter} className='h-[20px] w-[20px] me-4 text-gray-500' />
+                                <FontAwesomeIcon icon={faFilter} className='h-[20px] w-[20px] me-4 text-gray-500' />
 
-                            <div>:</div>
-                        </div>
-                        <div>{sort}</div>
-                        <div className='scale-y-0 absolute group-hover:scale-y-100 group-hover:block transition-all mt-2 duration-300 inset-y-7 z-50'>
-                            <div className='min-w-[250px] min-h-[100px] bg-white rounded-md rounded-tr-[0] border shadow'>
-                                {sortlist.map((item, index) => (
-                                    <div key={index} className='h-[40px] flex items-center hover:bg-gray-200 w-[100%] ps-2 transition-all' onClick={(e) => setSort(item.name)}>{item.name}</div>
-                                ))}
+                                <div>:</div>
                             </div>
-                        </div>
-                        <ModalLoading open={pending} title={'Đang tải'} />
-                    </div>
+                            <div>{sort}</div>
+                            <div className='scale-y-0 absolute group-hover:scale-y-100 group-hover:block transition-all mt-2 duration-300 inset-y-7 z-50'>
+                                <div className='min-w-[250px] min-h-[100px] bg-white rounded-md rounded-tr-[0] border shadow'>
+                                    {sortlist.map((item, index) => (
+                                        <div key={index} className='h-[40px] flex items-center hover:bg-gray-200 w-[100%] ps-2 transition-all' onClick={(e) => {
+                                            sortProcess(item)
+                                        }
+                                        }
+                                        >{item.name}</div>
+                                    ))}
+                                </div>
+                            </div>
 
+                        </div>
+                    )
                 }
             />
+            <ModalLoading open={pending} title={'Đang tải'} />
         </div>
     );
 }

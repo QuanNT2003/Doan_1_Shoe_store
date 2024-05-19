@@ -20,7 +20,7 @@ function RangeValue({
                     getAriaLabel={() => 'Minimum distance'}
                     value={value}
                     min={0}
-                    max={30000000}
+                    max={20000000}
                     onChange={handleChange}
                     valueLabelDisplay="auto"
                     disableSwap

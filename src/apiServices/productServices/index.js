@@ -2,7 +2,6 @@ import * as request from '~/utils/request';
 
 export const getAllProducts = async (params) => {
     try {
-        console.log(params)
         const response = await request.getMethod('api/product/get-all?', {
             params,
             paramsSerializer: (params) => {

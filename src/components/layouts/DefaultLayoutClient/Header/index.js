@@ -49,9 +49,10 @@ function Header() {
     const navigate = useNavigate();
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [search, setSearch] = useState('')
 
     const onClick = () => {
-        navigate('/collection/123')
+        navigate('/collection/search&' + search)
     }
     return (
         <div className=' bg-cyan-600 text-white transition-all'>
@@ -61,7 +62,7 @@ function Header() {
                 </div>
 
                 <div className='justify-center items-center flex ssm:flex-[2] ssm:mx-5'>
-                    <SearchBar placeholder={'Tim kiếm sản phẩm'} onClick={onClick} />
+                    <SearchBar placeholder={'Tim kiếm sản phẩm'} onClick={onClick} value={search} onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div onClick={handleOpen} className='lg:hidden cursor-pointer me-2 '>
                     <FontAwesomeIcon icon={faBars} className='hover:scale-110 me-4 w-[25px] h-[25px]' />
