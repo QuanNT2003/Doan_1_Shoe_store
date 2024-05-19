@@ -18,9 +18,14 @@ export const getAllProducts = async (params) => {
                         for (let item of params[key]) string += key + '=' + item.value + '&';
                         return string
                     }
+                    if (key === 'price') {
+                        let string = ''
+                        string += 'min' + '=' + params[key][0] + '&' + 'max' + '=' + params[key][1] + '&';
+                        return string
+                    }
                 }).join('&');
 
-
+                console.log(serializedParams);
                 return serializedParams;
             },
         });

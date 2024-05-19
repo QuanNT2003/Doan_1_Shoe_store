@@ -15,6 +15,7 @@ import * as ProductServices from '~/apiServices/productServices'
 import * as CategoryServices from '~/apiServices/categoryServices';
 import * as BrandServices from '~/apiServices/brandServices';
 import { ToastContext } from '~/components/ToastContext';
+import RangeValue from '~/components/RangeValue';
 
 
 
@@ -24,13 +25,6 @@ const optionsPL = [
     { label: 'Trẻ em', value: 'Trẻ em' },
 ];
 
-const optionsPriceRange = [
-    { label: '0đ - 150,000đ', value: '0-150000' },
-    { label: '150,000đ - 300,000đ', value: '150000-300000' },
-    { label: '300,000đ - 500,000đ', value: '300000-500000' },
-    { label: '500,000đ - 700,000đ', value: '500000-700000' },
-    { label: '700,000đ - Trở lên', value: '700000-50000000' },
-];
 function ProductList() {
     const navigate = useNavigate();
     const toastContext = useContext(ToastContext);
@@ -67,16 +61,47 @@ function ProductList() {
 
     //Filter
     const [selectedPL, setSelectedPL] = useState([]);
-    const [selectedPriceRange, setSelectedPriceRange] = useState([]);
     const [selectedLSP, setSelectedLSP] = useState([]);
     const [selectedManufacturer, setSelectedManufacturer] = useState([]);
     const [openFilter, setOpenFilter] = useState(false);
     const handleOpenFilter = () => setOpenFilter(true);
     const handleCloseFilter = () => setOpenFilter(false);
-    const handleClearFilter = () => {
+    const handleClearFilter = async () => {
         setSelectedLSP([])
         setSelectedManufacturer([])
         setSelectedPL([])
+        setPrice([0, 50000000])
+        setPage(1);
+        getList(
+            await createObjectQuery(
+                1,
+                limit,
+                sortBy,
+                orderBy,
+                search,
+            )
+        );
+        handleCloseFilter();
+    };
+
+    const handleFilter = async () => {
+        setPage(1);
+        getList(
+            await createObjectQuery(
+                1,
+                limit,
+                sortBy,
+                orderBy,
+                search,
+                selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
+                selectedLSP.length === 0 ? optionsLSP : selectedLSP,
+                selectedPL.length === 0 ? optionsPL : selectedPL,
+                price
+            )
+        );
+
+
+        handleCloseFilter();
     };
     const getBrand = async () => {
         const response = await BrandServices.getAllBrands()
@@ -121,35 +146,22 @@ function ProductList() {
             setOptionsLSP(data);
         }
     };
-    const handleFilter = async () => {
-        setPage(1);
-        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0) {
-            getList(
-                await createObjectQuery(
-                    1,
-                    limit,
-                    sortBy,
-                    orderBy,
-                    search,
-                )
-            );
-        }
-        else {
-            getList(
-                await createObjectQuery(
-                    1,
-                    limit,
-                    sortBy,
-                    orderBy,
-                    search,
-                    selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
-                    selectedLSP.length === 0 ? optionsLSP : selectedLSP,
-                    selectedPL.length === 0 ? optionsPL : selectedPL
-                )
-            );
+
+
+    // PriceRange
+    const minDistance = 10;
+    const [price, setPrice] = React.useState([0, 500000000]);
+
+    const handleChange1 = (event, newValue, activeThumb) => {
+        if (!Array.isArray(newValue)) {
+            return;
         }
 
-        handleCloseFilter();
+        if (activeThumb === 0) {
+            setPrice([Math.min(newValue[0], price[1] - minDistance), price[1]]);
+        } else {
+            setPrice([price[0], Math.max(newValue[1], price[0] + minDistance)]);
+        }
     };
 
     //SubHeader
@@ -180,11 +192,9 @@ function ProductList() {
         search,
         brand,
         category,
-        classify
+        classify,
+        price
     ) => {
-
-
-
         return {
             limit,
             page,
@@ -194,11 +204,12 @@ function ProductList() {
             ...(brand && { brand }),
             ...(category && { category }),
             ...(classify && { classify }),
+            ...(price && { price }),
         };
     }
     const handlePageChange = async (pageNumber) => {
         setPage(pageNumber);
-        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0) {
+        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0 && price[0] === 0 && price[1] === 30000000) {
             getList(
                 await createObjectQuery(
                     pageNumber,
@@ -219,7 +230,9 @@ function ProductList() {
                     search,
                     selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
                     selectedLSP.length === 0 ? optionsLSP : selectedLSP,
-                    selectedPL.length === 0 ? optionsPL : selectedPL
+                    selectedPL.length === 0 ? optionsPL : selectedPL,
+                    price
+
                 )
             );
         }
@@ -231,7 +244,7 @@ function ProductList() {
     const handlePerRowsChange = async (newPerPage, pageNumber) => {
         setPage(pageNumber);
         setLimit(newPerPage);
-        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0) {
+        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0 && price[0] === 0 && price[1] === 30000000) {
             getList(
                 await createObjectQuery(
                     pageNumber,
@@ -252,7 +265,9 @@ function ProductList() {
                     search,
                     selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
                     selectedLSP.length === 0 ? optionsLSP : selectedLSP,
-                    selectedPL.length === 0 ? optionsPL : selectedPL
+                    selectedPL.length === 0 ? optionsPL : selectedPL,
+                    price
+
                 )
             );
         }
@@ -264,7 +279,7 @@ function ProductList() {
         setSortBy(column.text);
         setOrderBy(sortDirection);
         setPage(1);
-        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0) {
+        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0 && price[0] === 0 && price[1] === 30000000) {
             getList(
                 await createObjectQuery(
                     1,
@@ -285,7 +300,9 @@ function ProductList() {
                     search,
                     selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
                     selectedLSP.length === 0 ? optionsLSP : selectedLSP,
-                    selectedPL.length === 0 ? optionsPL : selectedPL
+                    selectedPL.length === 0 ? optionsPL : selectedPL,
+                    price
+
                 )
             );
         }
@@ -359,13 +376,10 @@ function ProductList() {
                             handleOpen={handleOpenFilter}
                             handleClearFilter={handleClearFilter}
                             handleFilter={handleFilter}
-                        > <MultiSelectComp
-
-                                options={optionsPriceRange}
+                        > <RangeValue
                                 placeholder={'Giá bán'}
-                                selected={selectedPriceRange}
-                                setSelected={setSelectedPriceRange}
-                                hasSelectAll={true}
+                                value={price}
+                                handleChange={handleChange1}
                             />
                             <MultiSelectComp
 
