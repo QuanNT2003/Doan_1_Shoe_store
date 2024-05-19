@@ -185,7 +185,7 @@ const publicRoutes = [
         layout: DefaultLayoutClient,
     },
     {
-        path: '/collection/:url',
+        path: '/collection/:key',
         component: CollectionPage,
         layout: DefaultLayoutClient,
     },

@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import Product_WC_item from '../Product_WC_Item';
 import Pagination from '@mui/material/Pagination';
-import MultiSelectComp from '~/components/MultiSelectComp';
-
+import ModalLoading from '../ModalLoading';
 
 function ProductList({
     list,
     filter,
-    sort
+    sort,
+    totalPage,
+    changePage,
 }) {
-
-    const [page, setPage] = React.useState(1);
     const handleChange = (event, value) => {
-        setPage(value);
+        changePage(value)
     };
     return (
         <div>
@@ -38,7 +37,7 @@ function ProductList({
                 }
             </div>
             <div className='flex justify-end pb-4 me-4'>
-                <Pagination count={10} color="primary" onChange={handleChange} />
+                <Pagination count={totalPage} color="primary" onChange={handleChange} />
             </div>
         </div>
     );

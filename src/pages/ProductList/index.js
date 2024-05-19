@@ -38,6 +38,10 @@ function ProductList() {
                 sortBy,
                 orderBy,
                 search,
+                selectedManufacturer,
+                selectedLSP,
+                selectedPL,
+                price
             )
         );
 
@@ -70,22 +74,12 @@ function ProductList() {
         setSelectedLSP([])
         setSelectedManufacturer([])
         setSelectedPL([])
-        setPrice([0, 50000000])
-        setPage(1);
-        getList(
-            await createObjectQuery(
-                1,
-                limit,
-                sortBy,
-                orderBy,
-                search,
-            )
-        );
-        handleCloseFilter();
+        setPrice([0, 0])
     };
 
     const handleFilter = async () => {
         setPage(1);
+        console.log('handleFilter');
         getList(
             await createObjectQuery(
                 1,
@@ -93,10 +87,10 @@ function ProductList() {
                 sortBy,
                 orderBy,
                 search,
-                selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
-                selectedLSP.length === 0 ? optionsLSP : selectedLSP,
-                selectedPL.length === 0 ? optionsPL : selectedPL,
-                price
+                selectedManufacturer,
+                selectedLSP,
+                selectedPL,
+                price[1] === 0 ? '' : price
             )
         );
 
@@ -150,7 +144,7 @@ function ProductList() {
 
     // PriceRange
     const minDistance = 10;
-    const [price, setPrice] = React.useState([0, 30000000]);
+    const [price, setPrice] = React.useState([0, 0]);
 
     const handleChange1 = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
@@ -209,106 +203,61 @@ function ProductList() {
     }
     const handlePageChange = async (pageNumber) => {
         setPage(pageNumber);
-        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0 && price[0] === 0 && price[1] === 30000000) {
-            console.log('page change not filter');
-            getList(
-                await createObjectQuery(
-                    pageNumber,
-                    limit,
-                    sortBy,
-                    orderBy,
-                    search,
-                )
-            );
-        }
-        else {
-            console.log('page change filter');
-            getList(
-                await createObjectQuery(
-                    pageNumber,
-                    limit,
-                    sortBy,
-                    orderBy,
-                    search,
-                    selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
-                    selectedLSP.length === 0 ? optionsLSP : selectedLSP,
-                    selectedPL.length === 0 ? optionsPL : selectedPL,
-                    price
+        console.log('handlePageChange');
+        getList(
+            await createObjectQuery(
+                pageNumber,
+                limit,
+                sortBy,
+                orderBy,
+                search,
+                selectedManufacturer,
+                selectedLSP,
+                selectedPL,
+                price[1] === 0 ? '' : price
 
-                )
-            );
-        }
-
-        setDay(new Date())
-
+            )
+        );
     }
 
     const handlePerRowsChange = async (newPerPage, pageNumber) => {
         setPage(pageNumber);
         setLimit(newPerPage);
-        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0 && price[0] === 0 && price[1] === 30000000) {
-            getList(
-                await createObjectQuery(
-                    pageNumber,
-                    newPerPage,
-                    sortBy,
-                    orderBy,
-                    search,
-                )
-            );
-        }
-        else {
-            getList(
-                await createObjectQuery(
-                    pageNumber,
-                    newPerPage,
-                    sortBy,
-                    orderBy,
-                    search,
-                    selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
-                    selectedLSP.length === 0 ? optionsLSP : selectedLSP,
-                    selectedPL.length === 0 ? optionsPL : selectedPL,
-                    price
+        console.log('handlePerRowsChange');
+        getList(
+            await createObjectQuery(
+                pageNumber,
+                newPerPage,
+                sortBy,
+                orderBy,
+                search,
+                selectedManufacturer,
+                selectedLSP,
+                selectedPL,
+                price[1] === 0 ? '' : price
 
-                )
-            );
-        }
-
-        setDay(new Date())
-
+            )
+        );
     }
     const handleSort = async (column, sortDirection) => {
         setSortBy(column.text);
         setOrderBy(sortDirection);
         setPage(1);
-        if (selectedManufacturer.length === 0 && selectedLSP.length === 0 && selectedPL.length === 0 && price[0] === 0 && price[1] === 30000000) {
-            getList(
-                await createObjectQuery(
-                    1,
-                    limit,
-                    column.text,
-                    sortDirection,
-                    search,
-                )
-            );
-        }
-        else {
-            getList(
-                await createObjectQuery(
-                    1,
-                    limit,
-                    column.text,
-                    sortDirection,
-                    search,
-                    selectedManufacturer.length === 0 ? optionsManufacturer : selectedManufacturer,
-                    selectedLSP.length === 0 ? optionsLSP : selectedLSP,
-                    selectedPL.length === 0 ? optionsPL : selectedPL,
-                    price
+        console.log('handleSort');
+        getList(
+            await createObjectQuery(
+                1,
+                limit,
+                column.text,
+                sortDirection,
+                search,
+                selectedManufacturer,
+                selectedLSP,
+                selectedPL,
+                price[1] === 0 ? '' : price
 
-                )
-            );
-        }
-
+            )
+        );
         handleCloseFilter();
 
     };
@@ -355,7 +304,9 @@ function ProductList() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
 
+    }, [day]);
 
     return (
         <div>
