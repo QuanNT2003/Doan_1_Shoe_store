@@ -288,6 +288,24 @@ function CollectionPage() {
 
                     ));
             }
+            else if (key[0] === 'brand') {
+                getCate()
+                selectedManufacturer.push(
+                    {
+                        value: key[1]
+                    }
+                )
+                getList(
+                    await createObjectQuery(
+                        page,
+                        limit,
+                        sortBy,
+                        orderBy,
+                        '',
+                        selectedManufacturer
+
+                    ));
+            }
 
         }
 
@@ -316,7 +334,7 @@ function CollectionPage() {
                                 />
                             </div>
                             {
-                                key[0] == 'brand' ? (
+                                key[0] === 'brand' ? (
                                     <div> </div>
                                 ) : (
                                     <div className='w-[250px] me-3'>
@@ -333,7 +351,7 @@ function CollectionPage() {
                             }
 
                             {
-                                key[0] == 'category' ? (
+                                key[0] === 'category' ? (
                                     <div> </div>
                                 ) : (
                                     <div className='w-[250px] me-3'>

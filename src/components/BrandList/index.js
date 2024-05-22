@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import Product_WC_item from '../Product_WC_Item';
 import Pagination from '@mui/material/Pagination';
+import Brand_WC_Item from '../Brand_WC_Item';
 
-function ProductList({
+function BrandList({
     list,
     filter,
-    sort,
     totalPage,
     changePage,
 }) {
@@ -22,14 +21,13 @@ function ProductList({
 
             </div>
             <div className='m-3 p-3'>
-                {sort}
             </div>
             <hr className='mt-5' />
-            <div className='flex flex-wrap mb-7 ms-5'>
+            <div className='mb-7 ms-5'>
                 {
                     list.map((item, index) => (
                         <div key={index}>
-                            <Product_WC_item product={item} />
+                            <Brand_WC_Item brand={item} />
 
                         </div>
                     ))
@@ -42,4 +40,4 @@ function ProductList({
     );
 }
 
-export default ProductList;
+export default BrandList;

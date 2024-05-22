@@ -14,7 +14,7 @@ export const BrandItem = [
                 <div
                     className='h-[50px] w-[50px] bg-no-repeat bg-center mr-[30px] bg-contain'
                     style={{
-                        backgroundImage: `url('${row.image[0].url ? row.image[0].url : noImage}')`,
+                        backgroundImage: `url('${row.brand.image[0].url ? row.brand.image[0].url : noImage}')`,
                     }}
                     data-tag="allowRowEvents"
                 ></div>
@@ -23,13 +23,13 @@ export const BrandItem = [
                     data-tag="allowRowEvents"
                 >
                     <div className='font-bold mb-[2px]' data-tag="allowRowEvents">
-                        {row.brandId}
+                        {row.brand.brandId}
                     </div>
                     <div
                         className='line-clamp-2 text-ellipsis w-[90px]'
                         data-tag="allowRowEvents"
                     >
-                        {row.name}
+                        {row.brand.name}
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@ export const BrandItem = [
         center: 'true',
         cell: (row) => (
             <div className='font-medium' tag="allowRowEvents">
-                {row.nation}
+                {row.brand.nation}
             </div>
         ),
     },
@@ -61,7 +61,7 @@ export const BrandItem = [
         center: 'true',
         cell: (row) => (
             <div className='font-medium' tag="allowRowEvents">
-                {row.email}
+                {row.brand.email}
             </div>
         ),
     },
@@ -71,7 +71,7 @@ export const BrandItem = [
         center: 'true',
         cell: (row) => (
             <div className='font-medium' tag="allowRowEvents">
-                {row.web}
+                {row.brand.web}
             </div>
         ),
     },

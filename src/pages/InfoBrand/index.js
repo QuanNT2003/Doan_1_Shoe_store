@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import example from '~/assets/example.jpg'
 import * as Brand from '~/apiServices/brandServices';
 import ModalLoading from '~/components/ModalLoading';
-import format from 'date-fns/format'
 import { ToastContext } from '~/components/ToastContext';
 function InfoBrand() {
     const navigate = useNavigate();

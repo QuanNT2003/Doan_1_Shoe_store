@@ -199,7 +199,7 @@ function BrandList() {
         handleCloseFilter();
     };
     const onRowClicked = useCallback((row) => {
-        navigate('/brands/details/' + row.brandId);
+        navigate('/brands/details/' + row.brand.brandId);
     }, []);
 
 
@@ -264,14 +264,6 @@ function BrandList() {
                             handleClearFilter={handleClearFilter}
                             handleFilter={handleFilter}
                         >
-                            <MultiSelectComp
-
-                                options={optionsSL}
-                                placeholder={'Số lượng sản phẩm'}
-                                selected={selectedSL}
-                                setSelected={setSelectedSL}
-                                hasSelectAll={true}
-                            />
                             <MultiSelectComp
 
                                 options={optionsNation}
