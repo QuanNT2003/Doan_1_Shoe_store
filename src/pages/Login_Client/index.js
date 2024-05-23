@@ -1,12 +1,70 @@
-import React, { useState } from 'react';
-import bg from '~/assets/images/bg_muahe.jpg'
+import React, { useContext, useEffect, useState } from 'react';
 import logo from '~/assets/images/logo.png'
 import Input from '~/components/Input';
+import * as UserService from '~/apiServices/userServices';
+import { ToastContext } from '~/components/ToastContext';
+import ModalLoading from '~/components/ModalLoading';
 import { useNavigate } from 'react-router-dom';
 function Login_Client() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
     const navigate = useNavigate();
+    const toastContext = useContext(ToastContext);
+    const [loading, setLoading] = useState(false);
+
+    const [email, setEmail] = useState('')
+    const onChangeEmail = (value) => {
+        setEmail(value);
+        setErrorEmail('')
+    };
+    const [errorEmail, setErrorEmail] = useState('');
+    const [password, setPassword] = useState('')
+    const [errorPass, setErrorPass] = useState('');
+    const onChangePass = (value) => {
+        setPassword(value);
+        setErrorPass('')
+    };
+
+
+    const login = async () => {
+        if (email === '') {
+            toastContext.notify('error', 'Chưa nhập email');
+            setErrorEmail('Không được để trống')
+        }
+        else if (password === '') {
+            toastContext.notify('error', 'Chưa nhập mật khẩu');
+            setErrorPass('Không được để trống')
+        }
+        else {
+            setLoading(true)
+            const obj = {
+                email: email,
+                password: password
+            }
+
+            const result = await UserService.login(obj)
+                .catch((error) => {
+                    console.log(error);
+                    toastContext.notify('error', 'Email hoặc mật khẩu không đúng');
+                    setLoading(false);
+                });
+
+            if (result) {
+                setLoading(false);
+                console.log(result)
+                if (result.status === 'ERR') toastContext.notify('error', 'Email hoặc mật khẩu không đúng');
+                else {
+                    if (result.data.active === false) toastContext.notify('error', 'Tài khoản đã bị khóa');
+                    else {
+                        window.localStorage.setItem('user', JSON.stringify(result.data));
+                        window.localStorage.setItem('UserLogin', true);
+                        toastContext.notify('success', 'Đăng nhập thành công');
+                        navigate('/');
+                    }
+
+                }
+
+            }
+        }
+    }
     return (
         <div className='flex flex-col justify-center items-center my-10 '
         >
@@ -20,22 +78,24 @@ function Login_Client() {
                     Welcome to TQShop! Please login.
                 </div>
                 <div className='mx-3 my-7'>
-                    <div className=' font-medium'>Nhập email</div>
                     <Input
-                        placeholder="Số điện thoại hoặc email"
+                        placeholder="Nhập email"
                         value={email}
-                        className='p-2 rounded-lg outline-none relative w-[100%] h-[92%] border-none text-[14px] font-medium text-[#263c51] indent-4'
-                        onChange={(value) => setEmail(value)}
+                        title="Nhập email"
+                        required
+                        error={errorEmail}
+                        onChange={(value) => onChangeEmail(value)}
                     />
                 </div>
                 <div className='mx-3 my-7'>
-                    <div className=' font-medium'>Nhập mật khẩu</div>
                     <Input
-                        placeholder="Mật khẩu"
+                        placeholder="Nhập mật khẩu"
                         password
+                        title="Mật khẩu"
                         value={password}
-                        onChange={(value) => setPassword(value)}
-                        className='p-2 rounded-lg outline-none relative w-[100%] h-[92%] border-none text-[14px] font-medium text-[#263c51] indent-4'
+                        required
+                        error={errorPass}
+                        onChange={(value) => onChangePass(value)}
                     />
                 </div>
                 <div className='flex justify-end me-5 my-7'>
@@ -47,11 +107,12 @@ function Login_Client() {
                     <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => navigate('/register')} >
                         Đăng ký
                     </button>
-                    <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' >
+                    <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => login()}>
                         Đăng nhập
                     </button>
                 </div>
             </div>
+            <ModalLoading open={loading} title={'Đang tải'} />
         </div >
     );
 }
