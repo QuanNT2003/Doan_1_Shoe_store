@@ -4,6 +4,7 @@ import SelectVersion from '~/components/SelectVersion';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as ProductServices from '~/apiServices/productServices'
 import * as VersionServices from '~/apiServices/versionServices'
+import * as ShoppingCartServices from '~/apiServices/productCartServices'
 import { ToastContext } from '~/components/ToastContext';
 import ModalLoading from '~/components/ModalLoading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -107,6 +108,10 @@ const product = [{
         __v: 0
     },
 },]
+const addCommas = (num) => {
+    if (num === null) return;
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
 const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, '');
 function ProductPage() {
     const navigate = useNavigate();
@@ -116,16 +121,78 @@ function ProductPage() {
     const [loading, setLoading] = useState(false);
     const [obj, setObj] = useState(null);
     const [updatePage, setUpdatePage] = useState(new Date());
+    const [user, setUser] = useState('')
+
     // Add to cart
     const [sizeList, setSizeList] = useState([])
     const [colorList, setColorList] = useState([])
-    const [size, setSize] = useState({})
-    const [color, setColor] = useState({})
+    const [size, setSize] = useState('')
+    const [color, setColor] = useState('')
     const [quantity, setQuantity] = useState(1)
+    const [version, setVersion] = useState()
+    const changeColor = (value) => {
+        setColor(value)
+        if (size !== '') getVersion(size._id, value._id)
+    }
+
+    const changeSize = (value) => {
+        setSize(value)
+        if (color !== '') getVersion(value._id, color._id)
+    }
+    const getVersion = async (sizeId, colorId) => {
+        const fetchApi = async () => {
+            setLoading(true)
+            const result = await VersionServices.getAllVersions({
+                productId: productID.id,
+                size: sizeId,
+                color: colorId
+            })
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            if (result) {
+                console.log(result.data[0]);
+                setVersion(result.data[0])
+                if (result.data[0].inStock < quantity) toastContext.notify('warning', 'Số lượng sản phẩm còn dưới ' + quantity);
+            }
+
+        }
+
+        fetchApi();
+        setLoading(false)
+    }
+
+    const addToCart = async () => {
+        const fetchApi = async () => {
+            setLoading(true)
+            const cartItem = {
+                user: user,
+                version: version,
+                product: obj,
+                quantity: quantity
+            }
+            const result = await ShoppingCartServices.CreateShoppingCart(cartItem)
+                .catch((error) => {
+                    console.log(error);
+                    setLoading(false);
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                });
+
+            if (result) {
+                setLoading(false);
+                console.log(result)
+                toastContext.notify('success', 'Đã thêm sản phẩm vào giỏ');
+            }
+        }
+
+        fetchApi();
+    }
 
     useEffect(() => {
         const fetchApi = async () => {
             setLoading(true)
+            setUser(JSON.parse(window.localStorage.getItem('user')))
             const result = await ProductServices.getProduct(productID.id)
                 .catch((err) => {
                     console.log(err);
@@ -162,11 +229,6 @@ function ProductPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
-    const addCommas = (num) => {
-        if (num === null) return;
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    };
     // Content
     const [showall, setShowAll] = useState(false)
 
@@ -200,8 +262,8 @@ function ProductPage() {
                                 </div>
                                 <hr className='mt-4' />
                                 <div>
-                                    <SelectVersion list={colorList} title={'Màu sắc'} onclick={setColor} />
-                                    <SelectVersion list={sizeList} title={'Kích thước'} onclick={setSize} />
+                                    <SelectVersion list={colorList} title={'Màu sắc'} onclick={changeColor} />
+                                    <SelectVersion list={sizeList} title={'Kích thước'} onclick={changeSize} />
                                     <div className='flex mt-5 items-center text-gray-500'>
                                         <div className='w-[140px] flex flex-col justify-center'>
                                             Chọn số lượng
@@ -239,6 +301,9 @@ function ProductPage() {
                                             </div>
                                         </div>
                                     </div>
+                                    {
+                                        version?.inStock < 10 ? (<div className='flex justify-center mt-5 text-[17px] font-semibold'>Còn {version?.inStock} sản phẩm </div>) : (<div> </div>)
+                                    }
                                 </div>
                                 <div className='mt-7 ssm:flex ssm:flex-row'>
                                     <div className='ssm:w-[50%] mb-2 ssm:mb-0 flex justify-center items-center'>
@@ -248,9 +313,7 @@ function ProductPage() {
                                     </div>
                                     <div className='ssm:w-[50%] flex justify-center items-center'>
                                         <button className='bg-orange-500 py-5 px-3 rounded-lg w-[80%] text-white hover:bg-orange-400 cursor-pointer ' onClick={() => {
-                                            console.log(size)
-                                            console.log(color)
-                                            console.log(quantity);
+                                            addToCart()
                                         }}>
                                             Thêm vào giỏ
                                         </button>
@@ -300,6 +363,7 @@ function ProductPage() {
 
                         </ModalComp>
                     </div>)}
+            <ModalLoading open={loading} title={'Đang tải'} />
         </div>
 
     );

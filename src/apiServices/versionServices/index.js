@@ -2,11 +2,17 @@ import * as request from '~/utils/request';
 
 export const getAllVersions = async (params) => {
     try {
+        console.log(params)
         const response = await request.getMethod('api/version/get-all?', {
             params,
             paramsSerializer: (params) => {
                 const serializedParams = Object.keys(params).map((key) => {
-                    return key + '=' + params[key];
+                    if (key === 'limit' || key === 'page' || key === 'search' || key === 'productId' || key === 'size' || key === 'color') {
+                        return key + '=' + params[key];
+                    }
+                    if (key === 'sortBy' || key === 'orderBy') {
+                        return 'sort' + '=' + params[key];
+                    }
                 }).join('&');
 
                 console.log(serializedParams);
@@ -20,6 +26,7 @@ export const getAllVersions = async (params) => {
         return Promise.reject(error);
     }
 }
+
 export const getVersion = async (id) => {
     try {
         const res = await request.getMethod('api/version/get-details/' + id);
