@@ -11,12 +11,14 @@ const addCommas = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 function Voucher_Item({
-    discount
+    discount,
+    addToCart
 }) {
     const [colect, setColect] = useState(false)
 
     const onClick = () => {
         setColect(true)
+        addToCart(discount)
     }
 
     return (

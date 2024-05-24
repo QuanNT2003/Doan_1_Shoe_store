@@ -173,6 +173,7 @@ function Header() {
                                             setDay(new Date())
                                             setLoading(false)
                                             handleClose()
+                                            navigate('/login')
                                         }} className='w-[200px] hover:bg-slate-400'>
                                             <FontAwesomeIcon icon={faArrowRightFromBracket} className='me-4' />
                                             Đăng suất
@@ -297,6 +298,7 @@ function Header() {
                                         window.localStorage.setItem('UserLogin', false);
                                         setDay(new Date())
                                         setLoading(false)
+                                        navigate('/login')
                                     }}
                                 >
                                     <div >

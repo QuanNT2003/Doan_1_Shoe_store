@@ -1,86 +1,88 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Voucher_Item from '~/components/Voucher_Item';
-
-const list = [
-    {
-        _id: "6637101f32427247464f8bed",
-        name: "123",
-        discountId: "ds00000004",
-        classify: "sale",
-        typeDiscount: false,
-        value: 12000,
-        apply: 200000,
-        status: true,
-        note: "",
-        startDay: "2024-05-01T00:00:00.000Z",
-        endDay: "2024-05-31T00:00:00.000Z",
-        createdAt: "2024-05-05T04:50:39.658Z",
-        updatedAt: "2024-05-05T04:50:39.658Z",
-        __v: 0
-    },
-    {
-        _id: "66370feb32427247464f8be6",
-        name: "123",
-        discountId: "ds00000003",
-        classify: "ship",
-        typeDiscount: true,
-        value: 3,
-        apply: 160000,
-        status: true,
-        note: "123",
-        startDay: "2024-04-29T00:00:00.000Z",
-        endDay: "2024-05-31T00:00:00.000Z",
-        createdAt: "2024-05-05T04:49:47.757Z",
-        updatedAt: "2024-05-05T04:49:47.757Z",
-        __v: 0
-    },
-    {
-        _id: "6630da1c8e8aae4231f85d71",
-        name: "234",
-        discountId: "ds00000002",
-        classify: "pay",
-        typeDiscount: true,
-        value: 10,
-        apply: 200000,
-        status: true,
-        note: "234",
-        startDay: "2024-04-30T00:00:00.000Z",
-        endDay: "2024-05-31T00:00:00.000Z",
-        createdAt: "2024-04-30T11:46:36.632Z",
-        updatedAt: "2024-04-30T11:46:36.632Z",
-        __v: 0
-    },
-    {
-        _id: "6630d9f58e8aae4231f85d6c",
-        name: "123",
-        discountId: "ds00000001",
-        classify: "ship",
-        typeDiscount: true,
-        value: 3,
-        apply: 150000,
-        status: true,
-        note: "123",
-        startDay: "2024-04-30T00:00:00.000Z",
-        endDay: "2024-05-31T00:00:00.000Z",
-        createdAt: "2024-04-30T11:45:57.070Z",
-        updatedAt: "2024-04-30T11:45:57.070Z",
-        __v: 0
-    }
-]
+import * as PromotionsServices from '~/apiServices/promotionServices';
+import * as PromotionsCartServices from '~/apiServices/promotionCartServices';
+import ModalLoading from '~/components/ModalLoading';
+import { ToastContext } from '~/components/ToastContext';
 function DiscountPage() {
+    const navigate = useNavigate();
+    const toastContext = useContext(ToastContext);
+
+
+    const [loading, setLoading] = useState(false);
+    const [obj, setObj] = useState(null);
+    const [updatePage, setUpdatePage] = useState(new Date());
+
+    const [user, setUser] = useState()
+    useEffect(() => {
+        const fetchApi = async () => {
+            if (window.localStorage.getItem("UserLogin") === 'false') {
+                toastContext.notify('info', 'Bạn chưa đăng nhập');
+                navigate('/login')
+            }
+            else {
+                setLoading(true)
+                setUser(JSON.parse(window.localStorage.getItem('user')))
+                const result = await PromotionsServices.getPromotionUser(JSON.parse(window.localStorage.getItem('user'))._id)
+                    .catch((err) => {
+                        console.log(err);
+                        setLoading(false)
+                    });
+
+                if (result) {
+                    console.log(result);
+                    setObj(result.data);
+                    setLoading(false)
+                }
+            }
+
+        }
+
+        fetchApi();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [updatePage]);
+
+    const addPromotionCart = async (item) => {
+        const promotionCart = {
+            user: user,
+            discount: item
+        }
+        const fetchApi = async () => {
+            const result = await PromotionsCartServices.CreatePromotionCart(promotionCart)
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            if (result) {
+                console.log(result);
+            }
+
+        }
+
+        fetchApi();
+
+    }
     return (
         <div className='m-5 mb-10 p-3 rounded-lg min-h-[600px]'>
-            <div className='mb-4 font-bold text-[18px]'>
-                Khuyến mãi hôm nay
-                <div className='flex flex-wrap gap-[5%] mt-4 justify-center md:justify-start'>
-                    {
-                        list.map((item, index) => (
-                            <Voucher_Item discount={item} key={index} />
-                        ))
-                    }
-                </div>
+            {
+                obj === null ? (<div><ModalLoading open={true} title={'Đang tải'} /></div>)
+                    :
+                    (
+                        <div className='mb-4 font-bold text-[18px]'>
+                            Khuyến mãi hôm nay
+                            <div className='flex flex-wrap gap-[5%] mt-4 justify-center md:justify-start'>
+                                {
+                                    obj.map((item, index) => (
+                                        <Voucher_Item discount={item} key={index} addToCart={addPromotionCart} />
+                                    ))
+                                }
+                            </div>
 
-            </div>
+                        </div>
+                    )}
+
         </div>
     );
 }

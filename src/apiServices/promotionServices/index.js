@@ -31,16 +31,6 @@ export const getAllPromotions = async (params) => {
     }
 }
 
-export const getPromotionsForSale = async (price) => {
-    try {
-        const res = await request.getMethod(`api/discount/get-all?pageSize=${-1}&pageNumber=${1}&salesOrderPrice=${price}&statuses=running&isOutdated=false`);
-
-        return res;
-    } catch (error) {
-        return Promise.reject(error);
-    }
-}
-
 export const getPromotion = async (id) => {
     try {
         const res = await request.getMethod('api/discount/get-details/' + id);
@@ -74,6 +64,16 @@ export const CreatePromotion = async (obj) => {
 export const deletePromotion = async (id) => {
     try {
         const res = await request.deleteMethod('api/discount/delete-Discount/' + id);
+        console.log(res);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+export const getPromotionUser = async (id) => {
+    try {
+        const res = await request.getMethod('api/discount/get-discount-user/' + id);
         console.log(res);
         return res;
     } catch (error) {
