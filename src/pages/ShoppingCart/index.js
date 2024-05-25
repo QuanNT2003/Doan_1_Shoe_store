@@ -1,49 +1,101 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import ShoppingCartItem from '~/components/ShoppingCartItem';
 import ModalLoading from '~/components/ModalLoading';
 import ModalComp from '~/components/ModalComp';
-import { data } from './data';
 import Order from '~/components/Order';
+import * as ShoppingCartServices from '~/apiServices/productCartServices'
+import { ToastContext } from '~/components/ToastContext';
 function ShoppingCart() {
     const [list, setList] = useState([])
-    const [loading, setLoading] = useState(true)
+    const toastContext = useContext(ToastContext);
+    const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
+    const [obj, setObj] = useState(null);
+    const [updatePage, setUpdatePage] = useState(new Date());
+    const [user, setUser] = useState('')
 
     const [listBuy, setListBuy] = useState([])
 
-    const [rerender, setRerender] = useState(new Date())
-
     const onClick = () => {
         const newlist = list.filter(item => item.choose === true)
-        setListBuy(newlist)
-        setOpenModal(true)
+        if (newlist.length === 0) {
+            toastContext.notify('info', 'Bạn chưa chọn sản phẩm');
+        }
+        else {
+            const listFinal = newlist.map((item) => ({
+                quantity: item.quantity,
+                product: item.product,
+                version: item.version,
+                comment: false,
+                exchange_return: false,
+                total: item.quantity * (item.product.price - (item.product.discount / 100) * item.product.price)
+            }))
+            setListBuy(listFinal)
+            setOpenModal(true)
+        }
+
+    }
+
+    const getList = async () => {
+        const fetchApi = async () => {
+            if (window.localStorage.getItem("UserLogin") === 'false') {
+                toastContext.notify('info', 'Bạn chưa đăng nhập');
+                navigate('/login')
+            }
+            else {
+                setList([])
+                setLoading(true)
+                const result = await ShoppingCartServices.getAllCarts({
+                    user: JSON.parse(window.localStorage.getItem('user'))._id
+                })
+                    .catch((err) => {
+                        console.log(err);
+                        setLoading(false)
+                    });
+
+                if (result) {
+                    console.log(result);
+                    result.data.map((item) => {
+                        const obj = {
+                            cartId: item.shoppingCartId,
+                            product: item.product,
+                            quantity: item.quantity,
+                            version: item.version,
+                            choose: false
+                        }
+                        setList(arr => [...arr, obj]);
+                    })
+                    setLoading(false)
+                }
+            }
+        }
+        fetchApi();
     }
 
     useEffect(() => {
-        const fetchApi = async () => {
-            setLoading(true)
-            data.map((item) => {
-                const obj = {
-                    cartId: item.cartId,
-                    product: item.product,
-                    quantity: item.quantity,
-                    size: item.size,
-                    color: item.color,
-                    choose: false
-                }
-                setList(arr => [...arr, obj]);
-            })
-        }
-        fetchApi();
+        setUser(JSON.parse(window.localStorage.getItem('user')))
+        getList()
         setLoading(false)
     }, [])
 
-    const deleteList = (index) => {
-        console.log(index)
-        list.splice(index, 1)
+    const deleteList = (item) => {
+        const fetchApi = async () => {
+            setLoading(true)
+            const result = await ShoppingCartServices.deleteCart(item.cartId)
+                .catch((err) => {
+                    console.log(err);
+                    setLoading(false)
+                });
 
-        // setList(list.filter(items => items.cartId !== cartId))
-        setRerender(new Date())
-        console.log(list)
+            if (result) {
+                console.log(result);
+                getList()
+                setLoading(false)
+            }
+        }
+        fetchApi();
     }
 
     // Modal

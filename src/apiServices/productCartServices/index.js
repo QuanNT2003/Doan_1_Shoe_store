@@ -2,7 +2,7 @@ import * as request from '~/utils/request';
 
 export const getAllCarts = async (params) => {
     try {
-        const response = await request.getMethod('api/product/get-all?', {
+        const response = await request.getMethod('api/shoppingCart/get-all?', {
             params,
             paramsSerializer: (params) => {
                 const serializedParams = Object.keys(params).map((key) => {
@@ -25,10 +25,19 @@ export const getAllCarts = async (params) => {
     }
 }
 
-
 export const CreateShoppingCart = async (obj) => {
     try {
         const res = await request.postMethod('api/shoppingCart/add', obj);
+
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+export const deleteCart = async (id) => {
+    try {
+        const res = await request.deleteMethod('api/shoppingCart/delete-ShoppingCart/' + id);
 
         return res;
     } catch (error) {

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Input from '~/components/Input';
-import logo from '../../assets/images/logo.png'
 import ApplyVoucher from '../ApplyVoucher';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -13,96 +13,50 @@ import {
 import {
     faCreditCard
 } from '@fortawesome/free-solid-svg-icons';
+import * as PromotionCartServices from '~/apiServices/promotionCartServices'
+import * as OrderServices from '~/apiServices/orderServices'
+import { ToastContext } from '~/components/ToastContext';
+import ModalLoading from '~/components/ModalLoading';
 const addCommas = (num) => {
     if (num === null) return;
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
-const list = [
-    {
-        _id: "6637101f32427247464f8bed",
-        name: "123",
-        discountId: "ds00000004",
-        classify: "sale",
-        typeDiscount: false,
-        value: 12000,
-        apply: 450000,
-        status: true,
-        note: "",
-        startDay: "2024-05-01T00:00:00.000Z",
-        endDay: "2024-05-31T00:00:00.000Z",
-        createdAt: "2024-05-05T04:50:39.658Z",
-        updatedAt: "2024-05-05T04:50:39.658Z",
-        __v: 0
-    },
-    {
-        _id: "66370feb32427247464f8be6",
-        name: "123",
-        discountId: "ds00000003",
-        classify: "ship",
-        typeDiscount: true,
-        value: 3,
-        apply: 160000,
-        status: true,
-        note: "123",
-        startDay: "2024-04-29T00:00:00.000Z",
-        endDay: "2024-05-31T00:00:00.000Z",
-        createdAt: "2024-05-05T04:49:47.757Z",
-        updatedAt: "2024-05-05T04:49:47.757Z",
-        __v: 0
-    },
-    {
-        _id: "6630da1c8e8aae4231f85d71",
-        name: "234",
-        discountId: "ds00000002",
-        classify: "pay",
-        typeDiscount: true,
-        value: 10,
-        apply: 200000,
-        status: true,
-        note: "234",
-        startDay: "2024-04-30T00:00:00.000Z",
-        endDay: "2024-05-31T00:00:00.000Z",
-        createdAt: "2024-04-30T11:46:36.632Z",
-        updatedAt: "2024-04-30T11:46:36.632Z",
-        __v: 0
-    },
-    {
-        _id: "6630d9f58e8aae4231f85d6c",
-        name: "123",
-        discountId: "ds00000001",
-        classify: "ship",
-        typeDiscount: true,
-        value: 3,
-        apply: 150000,
-        status: true,
-        note: "123",
-        startDay: "2024-04-30T00:00:00.000Z",
-        endDay: "2024-05-31T00:00:00.000Z",
-        createdAt: "2024-04-30T11:45:57.070Z",
-        updatedAt: "2024-04-30T11:45:57.070Z",
-        __v: 0
-    }
-]
 
 function Order({
     listBuy
 }) {
+    const navigate = useNavigate();
+    const toastContext = useContext(ToastContext);
+    const [loading, setLoading] = useState(false);
+    //USER
+    const [user, setUser] = useState()
     // NAME
     const [email, setEmail] = useState('');
     const onChangeEmail = (value) => {
         setEmail(value);
+        setErrorEmail('')
     };
+    const [errorEmail, setErrorEmail] = useState('');
     // email
     const [phone, setPhone] = useState('');
     const onChangePhone = (value) => {
         setPhone(value);
+        setErrorPhone('')
     };
+    const [errorPhone, setErrorPhone] = useState('');
     // address
     const [address, setAddress] = useState('');
+
     const onChangeAddress = (value) => {
         setAddress(value);
+        setErrorAddress('')
     };
+    const [errorAddress, setErrorAddress] = useState('');
 
+    //list Voucher
+    const [listShip, setListShip] = useState([])
+    const [listSale, setListSale] = useState([])
+    const [listPay, setListPay] = useState([])
 
     //voucher
     const [voucherSale, setVoucherSale] = useState()
@@ -116,8 +70,8 @@ function Order({
     const [indexApply, setIndexApply] = useState()
 
     const editVoucherSale = (value, apply) => {
-        setVoucherSale(value)
-        setVoucherSaleText(value.name)
+        setVoucherSale(value.discount)
+        setVoucherSaleText(value.discount.name)
         setIndexApply(apply)
         let cost = 0
         listBuy.map((item, index) => {
@@ -126,30 +80,30 @@ function Order({
 
         })
         console.log(cost)
-        if (value.typeDiscount === true) cost = cost * value.value / 100
-        else cost = value.value
+        if (value.typeDiscount === true) cost = cost * value.discount.value / 100
+        else cost = value.discount.value
 
         setCostSale(cost)
     }
 
     const editVoucherShip = (value, apply) => {
-        setVoucherShip(value)
-        setVoucherShipText(value.name)
+        setVoucherShip(value.discount)
+        setVoucherShipText(value.discount.name)
 
         let cost = 0
-        if (value.typeDiscount === true) cost = ship * value.value / 100
-        else cost = value.value
+        if (value.discount.typeDiscount === true) cost = ship * value.discount.value / 100
+        else cost = value.discount.value
 
         setCostShip(cost)
     }
 
     const editVoucherPay = (value, apply) => {
-        setVoucherPayment(value)
-        setVoucherPaymentText(value.name)
+        setVoucherPayment(value.discount)
+        setVoucherPaymentText(value.discount.name)
 
         let cost = 0
-        if (value.typeDiscount === true) cost = (subTotal + ship - costSale - costPay) * value.value / 100
-        else cost = value.value
+        if (value.discount.typeDiscount === true) cost = (subTotal + ship - costSale - costPay - costShip) * value.discount.value / 100
+        else cost = value.discount.value
 
         setCostPay(cost)
 
@@ -160,15 +114,12 @@ function Order({
         setVoucherSaleText('Không có')
         setIndexApply()
 
-
         setCostSale(0)
     }
 
     const deleteVoucherShip = () => {
         setVoucherShip()
         setVoucherShipText('Không có')
-
-
 
         setCostShip(0)
     }
@@ -190,23 +141,103 @@ function Order({
     const [total, setTotal] = useState(0)
 
     // Payment Type 
-    const [paymentType, setPaymentType] = useState('123')
+    const [paymentType, setPaymentType] = useState('cod')
 
 
     useEffect(() => {
-        let newSubTotal = 0
-        listBuy.map(item => {
-            newSubTotal += (item.product.price - (item.product.discount / 100) * item.product.price) * item.quantity
-        })
+        const fetchApi = async () => {
+            let newSubTotal = 0
+            listBuy.map(item => {
+                newSubTotal += item.total
+            })
+            setUser(JSON.parse(window.localStorage.getItem('user')))
+            setAddress(JSON.parse(window.localStorage.getItem('user')).address || '')
+            setEmail(JSON.parse(window.localStorage.getItem('user')).email)
+            setPhone(JSON.parse(window.localStorage.getItem('user')).phone)
+            setSubTotal(newSubTotal)
+            setShip(100000)
+            setTotal(newSubTotal + 100000)
 
-        setSubTotal(newSubTotal)
-        setShip(100000)
-        setTotal(newSubTotal + 100000)
+            const result = await PromotionCartServices.getAllCarts({ user: JSON.parse(window.localStorage.getItem('user'))._id })
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            if (result) {
+                setListPay(result.pay)
+                setListSale(result.sale)
+                setListShip(result.ship)
+            }
+        }
+
+        fetchApi();
+
+
+
     }, []);
 
-    // useEffect(() => {
-    //     setTotal(subTotal + ship - costPay - costSale - costShip)
-    // }, [costSale], [costPay], [costShip]);
+    const submit = async () => {
+        if (email === '') {
+            setErrorEmail('Không được để trống')
+        }
+        else if (phone === '') {
+            setErrorPhone('Không được để trống')
+        }
+        else if (address === '') {
+            setErrorAddress('Không được để trống')
+        }
+        else {
+            const fetchApi = async () => {
+                setLoading(true)
+                const obj = {
+                    user: user,
+                    note: '',
+                    address: address,
+                    phone: phone,
+                    email: email,
+                    item: listBuy,
+                    saleOff: {
+                        voucherSaleOff: voucherSale,
+                        totalSaleOff: costSale
+                    },
+                    ship: {
+                        shipCost: ship,
+                        voucherShip: voucherShip,
+                        shipTotal: ship - costShip
+                    },
+                    payment: {
+                        subTotal: subTotal + ship - costSale - costShip,
+                        voucherPayment: voucherPayment,
+                        paymentTotal: costPay,
+                        total: subTotal + ship - costSale - costShip - costPay,
+                        paymentType: paymentType,
+                        paid: 0,
+                        remain: subTotal + ship - costSale - costShip - costPay
+                    },
+                    status: 'receiving'
+                }
+
+                console.log(obj)
+                const result = await OrderServices.CreateOrder(obj)
+                    .catch((error) => {
+                        console.log(error);
+                        setLoading(false);
+                        toastContext.notify('error', 'Có lỗi xảy ra');
+                    });
+
+                if (result) {
+                    setLoading(false);
+                    console.log(result)
+                    toastContext.notify('success', 'Đã đặt hàng');
+                    navigate('/order_colection/detail/' + result.data.orderId);
+                }
+
+
+            }
+
+            fetchApi();
+        }
+    }
     return (
         <div>
             <div className='md:grid md:grid-cols-2 gap-4'>
@@ -215,6 +246,7 @@ function Order({
                     required
                     className='my-5'
                     value={phone}
+                    error={errorPhone}
                     onChange={onChangePhone}
 
                 />
@@ -223,6 +255,7 @@ function Order({
                     required
                     className='my-5'
                     value={email}
+                    error={errorEmail}
                     onChange={onChangeEmail}
 
                 />
@@ -233,6 +266,7 @@ function Order({
                 textarea
                 className='my-5'
                 value={address}
+                error={errorAddress}
                 onChange={onChangeAddress}
 
             />
@@ -244,14 +278,14 @@ function Order({
                             <div className=' mt-3 border rounded-md p-1' key={index}>
                                 <div className='flex mb-2'>
                                     <div className='justify-center md:w-[150px] ssm:w-[35%] min-w-[50px] flex items-center'>
-                                        <img src={logo} className='md:w-[100px] md:h-[100px] w-[80px]' />
+                                        <img src={item.product.images[0].url} className='md:w-[100px] md:h-[100px] w-[80px]' />
                                     </div>
                                     <div className='md:ms-4 mx-1 cursor-pointer md:w-[50%] w-[75%] md:me-3'>
                                         <div className='font-bold text-wrap mb-3 line-clamp-2 text-ellipsis '>
                                             {item.product.name}
                                         </div>
                                         <div className='text-[13px] md:text-[15px] line-clamp-2 text-ellipsis '>
-                                            {item.color.name}, Size : {item.size.name}
+                                            {item.version.color.name}, Size : {item.version.size.name}
                                         </div>
                                         <div className='mt-3 md:text-[17px] text-[13px] font-semibold md:hidden block'>
                                             {addCommas((item.product.price - (item.product.discount / 100) * item.product.price))} đ  x {item.quantity}
@@ -266,10 +300,10 @@ function Order({
                                     </div>
                                 </div>
                                 {
-                                    indexApply === undefined ? (<ApplyVoucher title={'Voucher giảm giá'} listVoucher={list.filter(voucher => voucher.apply < (item.product.price - (item.product.discount / 100) * item.product.price) * item.quantity)} setVoucher={editVoucherSale} text={voucherSaleText} index={index} setIndex={setIndexApply} deleteVoucher={deleteVoucherSale} />)
+                                    indexApply === undefined ? (<ApplyVoucher title={'Voucher giảm giá'} listVoucher={listSale.filter(voucher => voucher.discount.apply < (item.product.price - (item.product.discount / 100) * item.product.price) * item.quantity)} setVoucher={editVoucherSale} text={voucherSaleText} index={index} setIndex={setIndexApply} deleteVoucher={deleteVoucherSale} />)
                                         :
                                         (
-                                            indexApply === index ? (<ApplyVoucher title={'Voucher giảm giá'} listVoucher={list.filter(voucher => voucher.apply < (item.product.price - (item.product.discount / 100) * item.product.price) * item.quantity)} setVoucher={editVoucherSale} text={voucherSaleText} index={index} setIndex={setIndexApply} deleteVoucher={deleteVoucherSale} />) : (
+                                            indexApply === index ? (<ApplyVoucher title={'Voucher giảm giá'} listVoucher={listSale.filter(voucher => voucher.discount.apply < (item.product.price - (item.product.discount / 100) * item.product.price) * item.quantity)} setVoucher={editVoucherSale} text={voucherSaleText} index={index} setIndex={setIndexApply} deleteVoucher={deleteVoucherSale} />) : (
                                                 <div> </div>
                                             )
                                         )
@@ -321,10 +355,10 @@ function Order({
             <hr className='mt-3' />
             <div className='p-3 mt-3'>
                 <div className='mt-4 font-semibold'>Voucher áp dụng</div>
-                <ApplyVoucher title={'Voucher vận chuyển'} listVoucher={list} setVoucher={editVoucherShip} text={voucherShipText} deleteVoucher={deleteVoucherShip} />
+                <ApplyVoucher title={'Voucher vận chuyển'} listVoucher={listShip} setVoucher={editVoucherShip} text={voucherShipText} deleteVoucher={deleteVoucherShip} />
 
                 {
-                    paymentType !== '123' ? <ApplyVoucher title={'Voucher thanh toán'} listVoucher={list} setVoucher={editVoucherPay} text={voucherPaymentText} deleteVoucher={deleteVoucherPay} />
+                    paymentType !== 'cod' ? <ApplyVoucher title={'Voucher thanh toán'} listVoucher={listPay} setVoucher={editVoucherPay} text={voucherPaymentText} deleteVoucher={deleteVoucherPay} />
                         : (<div> </div>)
                 }
 
@@ -335,7 +369,7 @@ function Order({
                 <FormControl>
                     <RadioGroup
                         aria-labelledby="demo-radio-buttons-group-label"
-                        defaultValue="female"
+                        defaultValue="cod"
                         name="radio-buttons-group"
                         className='p-2'
                         onChange={(e) => {
@@ -343,15 +377,15 @@ function Order({
 
                         }}
                     >
-                        <FormControlLabel value='123' control={<Radio />} label='Than toán khi nhận hàng' />
-                        <FormControlLabel value='234' control={<Radio />} label={
+                        <FormControlLabel value='cod' control={<Radio />} label='Thanh toán khi nhận hàng' />
+                        <FormControlLabel value='paypal' control={<Radio />} label={
                             <div className='flex justify-center items-center'>
                                 <div className='me-3'>Thanh toán paypal</div>
                                 <FontAwesomeIcon icon={faCcPaypal} className='me-3 h-[40px] text-cyan-600' />
 
                             </div>}
                         />
-                        <FormControlLabel value='234' control={<Radio />} label={
+                        <FormControlLabel value='vnpay' control={<Radio />} label={
                             <div className='flex justify-center items-center'>
                                 <div className='me-3'>Thanh toán VNPay</div>
                                 <FontAwesomeIcon icon={faCreditCard} className='me-3 h-[40px] text-cyan-600' />
@@ -365,10 +399,11 @@ function Order({
             <hr className='mt-4' />
             <div className='p-3 mt-3 flex justify-end '>
 
-                <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' >
+                <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => submit()}>
                     Đặt hàng
                 </button>
             </div>
+            <ModalLoading open={loading} title={'Đang tải'} />
         </div>
     );
 }

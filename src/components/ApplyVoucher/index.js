@@ -40,7 +40,7 @@ function ApplyVoucher({
     const [open, setOpen] = useState(false)
 
     const setVoucherLocal = (value) => {
-        setVoucher(listVoucher.find(item => item.discountId === value), index)
+        setVoucher(listVoucher.find(item => item.discountCartId === value), index)
         // setIndex(index)
         setOpen(false)
     }
@@ -105,7 +105,7 @@ function ApplyVoucher({
                                         {
                                             listVoucher.map((item, index) => (
                                                 <div key={index}>
-                                                    <FormControlLabel value={item.discountId} control={<Radio />} label={item.name} />
+                                                    <FormControlLabel value={item.discountCartId} control={<Radio />} label={item.discount.name} />
                                                 </div>
 
                                             ))

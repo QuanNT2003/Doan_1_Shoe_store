@@ -45,14 +45,14 @@ function ShoppingCartItem({
                 }} />
             </div>
             <div className='justify-center md:w-[150px] min-w-[50px] flex items-center'>
-                <img src={logo} className='md:w-[100px] md:h-[100px] w-[50px] h-[50px]' />
+                <img src={cartItem.product.images[0].url} className='md:w-[100px] md:h-[100px] w-[50px] h-[50px]' />
             </div>
             <div className='ms-4 cursor-pointer w-[50%]'>
                 <div className='md:text-[17px] text-[14px] font-bold text-wrap mb-3  line-clamp-2 text-ellipsis '>
                     {cartItem.product.name}
                 </div>
                 <div className='text-[13px] md:text-[15px] line-clamp-2 text-ellipsis '>
-                    {cartItem.color.name} - Size {cartItem.size.name}
+                    {cartItem.version.color.name} - Size {cartItem.version.size.name}
                 </div>
             </div>
             <div className='lg:w-[180px] ssm:w-[150px] w-[100px] text-center ms-5 flex flex-col'>
@@ -93,7 +93,7 @@ function ShoppingCartItem({
                     </div>
                 </div>
                 <div>
-                    <FontAwesomeIcon icon={faTrash} className='md:h-[20px] h-[14px] cursor-pointer hover:scale-125 transition-all' onClick={() => deleteList(index)} />
+                    <FontAwesomeIcon icon={faTrash} className='md:h-[20px] h-[14px] cursor-pointer hover:scale-125 transition-all' onClick={() => deleteList(cartItem)} />
                 </div>
 
             </div>

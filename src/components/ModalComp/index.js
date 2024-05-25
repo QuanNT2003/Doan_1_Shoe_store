@@ -7,7 +7,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    maxWidth: 700,
+    maxWidth: 900,
     minWidth: 360,
     maxHeight: '90vh',
     bgcolor: 'white',
@@ -25,7 +25,7 @@ function ModalComp({ open, handleClose, children, actionComponent, title }) {
         <Modal open={open}>
             <Fade in={open}>
                 <Box sx={style}>
-                    <div className='md:w-[700px] overflow-auto'>
+                    <div className='md:w-[700px] lg:w-[900px] overflow-auto'>
                         <div className='flex justify-between items-center my-[5px] mr-[10px] ml-[20px]'>
                             <div className='text-[20px] font-semibold leading-[0]'>{title}</div>
                             <div
