@@ -9,7 +9,7 @@ export const OrderItem = [
         center: 'true',
         cell: (row) => (
             <div className='font-medium text-[--primary]' data-tag="allowRowEvents">
-                {row.salesOrderId}
+                {row.orderId}
             </div>
         ),
     },
@@ -30,7 +30,7 @@ export const OrderItem = [
         MinWidth: '180px',
         cell: (row) => (
             <div className='font-medium' data-tag="allowRowEvents">
-                {row.customerName}
+                {row.user.name}
             </div>
         ),
     },
@@ -40,7 +40,7 @@ export const OrderItem = [
         center: 'true',
         cell: (row) => (
             <div className='font-medium' data-tag="allowRowEvents">
-                {addCommas(row.totalAmount)}
+                {addCommas(row.payment.total)} đ
             </div>
         ),
     },
@@ -50,7 +50,7 @@ export const OrderItem = [
         center: 'true',
         cell: (row) => (
             <div
-                className={row.status === 'receiving' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#fff7e7] text-[#e4a482] '
+                className={row.status === 'receiving' || row.status === 'received' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#fff7e7] text-[#e4a482] '
                     : row.status === 'delivering' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#fff7e7] text-[#e4a482]'
                         : row.status === 'delivered' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#ecfdf3] text-[#027948]'
                             : 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-xs bg-[#fef3f2] text-[#b32318]'}
@@ -59,9 +59,10 @@ export const OrderItem = [
                 <div className='font-medium text-center' data-tag="allowRowEvents">
                     {row.status === 'receiving'
                         ? 'Đang tiếp nhận'
-                        : row.status === 'delivering'
-                            ? 'Đang giao'
-                            : row.status === 'delivered' ? 'Đã giao' : 'Đã hủy đơn'}
+                        : row.status === 'received' ? 'Đã tiếp nhận'
+                            : row.status === 'delivering'
+                                ? 'Đang giao'
+                                : row.status === 'delivered' ? 'Đã giao' : 'Đã hủy đơn'}
                 </div>
             </div>
         ),

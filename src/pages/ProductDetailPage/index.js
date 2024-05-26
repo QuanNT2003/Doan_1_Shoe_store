@@ -132,20 +132,26 @@ function ProductPage() {
     const [version, setVersion] = useState()
     const changeColor = (value) => {
         setColor(value)
+        console.log(value);
         if (size !== '') getVersion(size._id, value._id)
     }
 
     const changeSize = (value) => {
         setSize(value)
+        console.log(value);
         if (color !== '') getVersion(value._id, color._id)
     }
     const getVersion = async (sizeId, colorId) => {
         const fetchApi = async () => {
             setLoading(true)
+            let sizeL = []
+            let colorL = []
+            sizeL.push({ value: sizeId })
+            colorL.push({ value: colorId })
             const result = await VersionServices.getAllVersions({
                 productId: productID.id,
-                size: sizeId,
-                color: colorId
+                size: sizeL,
+                color: colorL
             })
                 .catch((err) => {
                     console.log(err);
@@ -241,6 +247,24 @@ function ProductPage() {
         setOpenModal(false)
 
     };
+
+    const [listBuy, setListBuy] = useState([])
+    const handleOpen = () => {
+        if (version === undefined) {
+            toastContext.notify('warning', 'Chưa chọn phiên bản sản phẩm');
+        }
+        else {
+            listBuy.push({
+                quantity: quantity,
+                product: obj,
+                version: version,
+                comment: false,
+                exchange_return: false,
+                total: quantity * (obj.price - (obj.discount / 100) * obj.price)
+            })
+            setOpenModal(true)
+        }
+    }
     return (
         <div>
             {
@@ -307,7 +331,7 @@ function ProductPage() {
                                 </div>
                                 <div className='mt-7 ssm:flex ssm:flex-row'>
                                     <div className='ssm:w-[50%] mb-2 ssm:mb-0 flex justify-center items-center'>
-                                        <button className='bg-amber-500 py-5 px-3 rounded-lg w-[80%] text-white hover:bg-amber-400 cursor-pointer ' onClick={() => setOpenModal(true)}>
+                                        <button className='bg-amber-500 py-5 px-3 rounded-lg w-[80%] text-white hover:bg-amber-400 cursor-pointer ' onClick={() => handleOpen()}>
                                             Mua Ngay
                                         </button>
                                     </div>
@@ -359,7 +383,7 @@ function ProductPage() {
                             handleClose={handleCloseModal}
                             title="Đặt hàng"
                         >
-                            <Order listBuy={product} />
+                            <Order listBuy={listBuy} />
 
                         </ModalComp>
                     </div>)}

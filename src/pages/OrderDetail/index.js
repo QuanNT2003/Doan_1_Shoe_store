@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useEffect, useState, useContext, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faLocationDot,
@@ -7,16 +8,22 @@ import {
     faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/images/logo.png'
+import { useNavigate, useParams } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import ModalLoading from '~/components/ModalLoading';
 import ModalComp from '~/components/ModalComp';
 import Input from '~/components/Input';
 import Exchange_Return from '~/components/Exchange_Return';
-import { data } from './data'
+import * as OrderServices from '~/apiServices/orderServices'
+import { ToastContext } from '~/components/ToastContext';
 
 const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 function OrderDetail() {
+    const navigate = useNavigate();
+    const order = useParams();
+    const toastContext = useContext(ToastContext);
+
     const [loading, setLoading] = useState(false);
     const [obj, setObj] = useState(null);
     const [day, setDay] = useState(new Date());
@@ -72,9 +79,23 @@ function OrderDetail() {
     };
 
     useEffect(() => {
-        setObj(data)
+        const fetchApi = async () => {
+            setLoading(true)
+            const result = await OrderServices.getOrder(order.id)
+                .catch((err) => {
+                    console.log(err);
+                });
 
-    }, []);
+            if (result) {
+                console.log(result);
+                setObj(result.data);
+            }
+        }
+
+        fetchApi();
+        setLoading(false)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [day]);
     return (
         <div>
             {
@@ -89,12 +110,12 @@ function OrderDetail() {
                                     {obj.user.name}
                                 </div>
                                 <div className='ms-2'>
-                                    ({obj.user.phone})
+                                    ({obj.phone})
                                 </div>
                             </div>
                             <div className='mt-2'>
-                                <div>email : {obj.user.email}</div>
-                                <div>Địa chỉ: {obj.user.address}</div>
+                                <div>email : {obj.email}</div>
+                                <div>Địa chỉ: {obj.address}</div>
                             </div>
                             <div>
                                 {
@@ -125,10 +146,10 @@ function OrderDetail() {
                                             </div>
                                             <div className='flex justify-center my-3'>
                                                 {
-                                                    item.comment === false ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100' onClick={() => setOpenModal(true)}>Viết đánh giá</button> : <div></div>
+                                                    item.comment === false && obj.status === "delivered" ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100' onClick={() => setOpenModal(true)}>Viết đánh giá</button> : <div></div>
                                                 }
                                                 {
-                                                    item.exchange_return === false ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100 ' onClick={() => setOpenModalReturn(true)}>Đổi /Trả hàng</button> : <div></div>
+                                                    item.exchange_return === false && obj.status === "delivered" ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100 ' onClick={() => setOpenModalReturn(true)}>Đổi /Trả hàng</button> : <div></div>
                                                 }
 
                                             </div>
@@ -206,12 +227,16 @@ function OrderDetail() {
                                 <div className='flex mb-2 font-semibold'>
                                     <div className='w-[50%]'>Hình thức thanh toán</div>
                                     <div className='w-[10%]'>:</div>
-                                    <div className='w-[30%]'>Chuyển khoản</div>
+                                    <div className='w-[30%]'>{
+                                        obj.payment.paymentType === 'cod' ? 'Thanh toán khi nhận hàng'
+                                            : obj.payment.paymentType === 'vnpay' ? 'Chuyển khoản VNPay'
+                                                : 'Chuyển khoản Paypal'
+                                    }</div>
                                 </div>
                                 <div className='flex mb-2 font-semibold'>
                                     <div className='w-[50%]'>Trạng thái</div>
                                     <div className='w-[10%]'>:</div>
-                                    <div className='w-[30%]'>Đã thanh toán</div>
+                                    <div className='w-[30%]'>{obj.payment.ramain === 0 ? 'Đã thanh toán' : 'Chưa thanh toán'}</div>
                                 </div>
                                 <div className='mb-2 '>
                                     <div >QR Thanh toán :</div>

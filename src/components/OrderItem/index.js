@@ -4,22 +4,33 @@ import {
     faTruckFast,
     faAngleRight
 } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../assets/images/logo.png'
-import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
 const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 function OrderItem({
-    Item
+    Item,
+    onCLick
 }) {
-    const navigate = useNavigate();
     return (
-        <div className='bg-white ssm:m-5 mb-4 p-3 rounded-lg select-none border cursor-pointer' onClick={() => navigate('/order_colection/detail/' + 123)}>
-            <div className='flex items-center text-[17px] font-medium'> Đơn hàng đã được giao</div>
+        <div className='bg-white ssm:m-5 mb-4 p-3 rounded-lg select-none border cursor-pointer' onClick={() => onCLick(Item)}>
+            <div className='flex items-center text-[17px] font-medium'> Đơn hàng {
+                Item.status === 'receiving' ? 'đang chờ tiếp nhận'
+                    : Item.status === 'received' ? 'đã tiếp nhân'
+                        : Item.status === 'delivering' ? 'đang giao'
+                            : Item.status === 'delivered' ? 'đã giao'
+                                : 'đã hủy'
+            }</div>
             <div className=' bg-slate-200 flex items-center p-3 my-3 rounded-md justify-between'>
                 <div className='flex items-center me-4'>
                     <FontAwesomeIcon icon={faTruckFast} className='ssm:me-10 me-3 ssm:h-[40px] h-[25px]' />
                     <div>
-                        <div className='font-semibold ssm:text-[18px] text-[14px]'>May 4 đã giao</div>
-                        <div className='ssm:text-[15px] text-[12px]'>Kiện hàng của bạn đã giao</div>
+                        <div className='font-semibold ssm:text-[18px] text-[14px]'>{Item.status === 'receiving' ? format(new Date(Item.updatedAt), 'MMM dd') : format(new Date(Item.createdAt), 'MMM dd')}</div>
+                        <div className='ssm:text-[15px] text-[12px]'>Kiện hàng {
+                            Item.status === 'receiving' ? 'đang chờ tiếp nhận'
+                                : Item.status === 'received' ? 'đã tiếp nhân'
+                                    : Item.status === 'delivering' ? 'đang giao'
+                                        : Item.status === 'delivered' ? 'đã giao'
+                                            : 'đã hủy'
+                        }</div>
                     </div>
                 </div>
                 <div>
