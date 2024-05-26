@@ -10,7 +10,7 @@ export const CustomerItem = [
         MinWidth: '180px',
         cell: (row) => (
             <div className='font-medium text-[--primary]' data-tag="allowRowEvents">
-                {row.customerId}
+                {row.userId}
             </div>
         ),
     },
@@ -28,7 +28,7 @@ export const CustomerItem = [
         MinWidth: '180px',
         cell: (row) => (
             <div className='font-medium' data-tag="allowRowEvents">
-                {row.phoneNumber}
+                {row.phone}
             </div>
         ),
     },
@@ -38,31 +38,31 @@ export const CustomerItem = [
         MinWidth: '180px',
         cell: (row) => (
             <div
-                className={row.isActive ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] bg-[#ecfdf3] text-[#027948]'
+                className={row.active ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] bg-[#ecfdf3] text-[#027948]'
                     : 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] text-[12px] bg-[#fef3f2] text-[#b32318]'}
                 data-tag="allowRowEvents"
             >
                 <FontAwesomeIcon
-                    className={row.isActive ? 'text-[#12b76a]' : 'text-[#f04438]'}
-                    icon={row.isActive ? faCheck : faXmark}
+                    className={row.active ? 'text-[#12b76a]' : 'text-[#f04438]'}
+                    icon={row.active ? faCheck : faXmark}
                     data-tag="allowRowEvents"
                 />
                 <div className='ml-[5px] text-center font-medium' data-tag="allowRowEvents">
-                    {row.isActive ? 'Đang hoạt động' : 'Bị khóa'}
+                    {row.active ? 'Đang hoạt động' : 'Bị khóa'}
                 </div>
             </div>
         ),
     },
-    {
-        name: 'Tổng đơn hàng',
-        text: 'purchasedOrder',
-        center: 'true',
-        sortable: true,
-        MinWidth: '180px',
-        cell: (row) => (
-            <div className='font-medium' data-tag="allowRowEvents">
-                {addCommas(row.purchasedOrder)}
-            </div>
-        ),
-    },
+    // {
+    //     name: 'Tổng đơn hàng',
+    //     text: 'purchasedOrder',
+    //     center: 'true',
+    //     sortable: true,
+    //     MinWidth: '180px',
+    //     cell: (row) => (
+    //         <div className='font-medium' data-tag="allowRowEvents">
+    //             {addCommas(row.purchasedOrder)}
+    //         </div>
+    //     ),
+    // },
 ];

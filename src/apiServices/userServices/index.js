@@ -13,11 +13,6 @@ export const getAllusers = async (params) => {
                     if (key === 'sortBy' || key === 'orderBy') {
                         return 'sort' + '=' + params[key];
                     }
-                    if (key === 'nation') {
-                        let string = ''
-                        for (let item of params[key]) string += key + '=' + item + '&';
-                        return string
-                    }
                 }).join('&');
 
                 console.log(serializedParams);

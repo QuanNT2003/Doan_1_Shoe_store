@@ -11,56 +11,7 @@ import {
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { ToastContext } from '~/components/ToastContext';
-// const rows = [
-//     {
-//         brandId: 'SP001',
-//         images: [
-//             'https://scontent.fhan4-3.fna.fbcdn.net/v/t39.30808-1/426571080_1792048851310816_3127445872686098501_n.jpg?stp=c4.0.320.320a_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=5740b7&_nc_eui2=AeF_O5dUR3hggeTQC4elh9BpKpda0SuVut4ql1rRK5W63q_d94FqKsQ3gCpk2OGaz7u-1xTsr65bfU8lhl3E2bo2&_nc_ohc=LaSPX4gBZA4AX-odx-Y&_nc_ht=scontent.fhan4-3.fna&oh=00_AfA_TZZxSCg8GaRj2Digu-EMrpq3hYEyj96MeFENslOadg&oe=65E8A4D2'
-//         ],
-//         name: 'Mot hai ba',
-//         nation: 'Việt Nam',
-//         totalProduct: 20,
-//         email: '123@gmail.com',
-//         website: 'www.123.com'
 
-//     },
-//     {
-//         brandId: 'SP002',
-//         images: [
-//             'https://scontent.fhan4-3.fna.fbcdn.net/v/t39.30808-1/426571080_1792048851310816_3127445872686098501_n.jpg?stp=c4.0.320.320a_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=5740b7&_nc_eui2=AeF_O5dUR3hggeTQC4elh9BpKpda0SuVut4ql1rRK5W63q_d94FqKsQ3gCpk2OGaz7u-1xTsr65bfU8lhl3E2bo2&_nc_ohc=LaSPX4gBZA4AX-odx-Y&_nc_ht=scontent.fhan4-3.fna&oh=00_AfA_TZZxSCg8GaRj2Digu-EMrpq3hYEyj96MeFENslOadg&oe=65E8A4D2'
-//         ],
-//         name: 'Mot hai ba',
-//         nation: 'Việt Nam',
-//         totalProduct: 20,
-//         email: '123@gmail.com',
-//         website: 'www.123.com'
-
-//     },
-//     {
-//         brandId: 'SP003',
-//         images: [
-//             'https://scontent.fhan4-3.fna.fbcdn.net/v/t39.30808-1/426571080_1792048851310816_3127445872686098501_n.jpg?stp=c4.0.320.320a_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=5740b7&_nc_eui2=AeF_O5dUR3hggeTQC4elh9BpKpda0SuVut4ql1rRK5W63q_d94FqKsQ3gCpk2OGaz7u-1xTsr65bfU8lhl3E2bo2&_nc_ohc=LaSPX4gBZA4AX-odx-Y&_nc_ht=scontent.fhan4-3.fna&oh=00_AfA_TZZxSCg8GaRj2Digu-EMrpq3hYEyj96MeFENslOadg&oe=65E8A4D2'
-//         ],
-//         name: 'Mot hai ba',
-//         nation: 'Việt Nam',
-//         totalProduct: 20,
-//         email: '123@gmail.com',
-//         website: 'www.123.com'
-
-//     },
-// ]
-
-const optionsSL = [
-    { label: '0 - 15', value: '0-15' },
-    { label: '15 - 30', value: '15-30' },
-    { label: '30 - 50', value: '30-50' },
-    { label: '50 - 70', value: '50-700' },
-    { label: '70 - Trở lên', value: '70-500' },
-];
-
-const optionsNation = [
-
-];
 function BrandList() {
     const navigate = useNavigate();
     const toastContext = useContext(ToastContext);

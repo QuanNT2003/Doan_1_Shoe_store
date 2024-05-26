@@ -9,7 +9,7 @@ export const VersionItem = [
         center: 'true',
         cell: (row) => (
             <div className='font-medium text-[--primary]' data-tag="allowRowEvents">
-                {row.VersionId}
+                {row.versionId}
             </div>
         ),
     },
@@ -19,7 +19,7 @@ export const VersionItem = [
         center: 'true',
         cell: (row) => (
             <div className='font-medium ' data-tag="allowRowEvents">
-                {row.ColorName}
+                {row.color.name}
             </div>
         ),
     },
@@ -29,7 +29,7 @@ export const VersionItem = [
         center: 'true',
         cell: (row) => (
             <div className='font-medium ' data-tag="allowRowEvents">
-                {row.SizeName}
+                {row.size.name}
             </div>
         ),
     },
@@ -39,7 +39,7 @@ export const VersionItem = [
         center: 'true',
         cell: (row) => (
             <div className='font-medium ' data-tag="allowRowEvents">
-                {row.Quantity}
+                {row.inStock}
             </div>
         ),
     },
