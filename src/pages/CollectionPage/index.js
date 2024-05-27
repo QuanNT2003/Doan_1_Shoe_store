@@ -174,7 +174,7 @@ function CollectionPage() {
             });
 
         if (response) {
-            const data = await response.data.map((cate) => ({ label: cate.name, value: cate._id }));
+            const data = await response.data.map((cate) => ({ label: cate.brand.name, value: cate.brand._id }));
             setOptionsManufacturer(data);
         }
     }

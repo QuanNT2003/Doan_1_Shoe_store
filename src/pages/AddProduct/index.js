@@ -230,7 +230,8 @@ function AddProduct() {
             });
 
         if (response) {
-            const data = await response.data.map((cate) => ({ label: cate.name, value: cate.categoryId, obj: cate }));
+            console.log(response)
+            const data = await response.data.map((cate) => ({ label: cate.brand.name, value: cate.categoryId, obj: cate.brand }));
             setOptionsSupplier(data);
         }
     }

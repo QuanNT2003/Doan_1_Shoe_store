@@ -24,18 +24,33 @@ function ShoppingCart() {
             toastContext.notify('info', 'Bạn chưa chọn sản phẩm');
         }
         else {
-            const listFinal = newlist.map((item) => ({
-                quantity: item.quantity,
-                product: item.product,
-                version: item.version,
-                comment: false,
-                exchange_return: false,
-                total: item.quantity * (item.product.price - (item.product.discount / 100) * item.product.price)
-            }))
-            setListBuy(listFinal)
-            setOpenModal(true)
+            let block = false
+            for (let item of newlist) {
+                if (item.quantity > item.version.inStock) block = true
+            }
+            if (block === true) toastContext.notify('warning', 'Số lượng sản phẩm không đủ');
+            else {
+                const listFinal = newlist.map((item) => ({
+                    quantity: item.quantity,
+                    product: item.product,
+                    version: item.version,
+                    comment: false,
+                    exchange_return: false,
+                    total: item.quantity * (item.product.price - (item.product.discount / 100) * item.product.price)
+                }))
+                setListBuy(listFinal)
+                setOpenModal(true)
+            }
+
         }
 
+    }
+
+    const deleteCart = () => {
+        const newlist = list.filter(item => item.choose === true)
+        for (let item of newlist) {
+            deleteList(item)
+        }
     }
 
     const getList = async () => {
@@ -141,7 +156,7 @@ function ShoppingCart() {
                             handleClose={handleCloseModal}
                             title="Đặt hàng"
                         >
-                            <Order listBuy={listBuy} />
+                            <Order listBuy={listBuy} deleteCart={deleteCart} />
 
                         </ModalComp>
                     </div>)

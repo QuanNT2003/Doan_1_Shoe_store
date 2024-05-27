@@ -139,6 +139,9 @@ function InfoProduct() {
                             <button className='bg-white py-4 px-3 rounded-lg min-w-[130px] text-red-500 hover:bg-[#fef3f2] cursor-pointer border-red-500 border-[1px] border-solid' onClick={() => handleDelete()}>
                                 Xóa
                             </button>
+                            <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => navigate('/products/import/' + productID.id)}>
+                                Nhập hàng
+                            </button>
                         </div>
                         <ModalLoading open={loading} title={'Đang tải'} />
                     </div>)

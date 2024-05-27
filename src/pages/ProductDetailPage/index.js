@@ -253,6 +253,9 @@ function ProductPage() {
         if (version === undefined) {
             toastContext.notify('warning', 'Chưa chọn phiên bản sản phẩm');
         }
+        else if (version.inStock < quantity) {
+            toastContext.notify('warning', 'Số lượng sản phẩm không đủ');
+        }
         else {
             listBuy.push({
                 quantity: quantity,

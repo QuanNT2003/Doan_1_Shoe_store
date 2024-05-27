@@ -29,6 +29,9 @@ import OrderCollection from "~/pages/OrderCollection";
 import OrderDetail from "~/pages/OrderDetail";
 import Login_Client from "~/pages/Login_Client";
 import Register from "~/pages/Register";
+import Import from "~/pages/ImportPage";
+import InfoImport from "~/pages/InfoImport";
+import ImportList from "~/pages/ImportList";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -209,7 +212,24 @@ const publicRoutes = [
         component: OrderDetail,
         layout: DefaultLayoutClient,
     },
-
+    {
+        path: '/products/import/:id',
+        component: Import,
+        title: 'Nhập hàng',
+        layout: DefaultLayoutAdmin,
+    },
+    {
+        path: '/imports/detail/:id',
+        component: InfoImport,
+        title: 'Thông tin nhập hàng',
+        layout: DefaultLayoutAdmin,
+    },
+    {
+        path: '/imports',
+        component: ImportList,
+        title: 'Danh sách nhập hàng',
+        layout: DefaultLayoutAdmin,
+    },
 ];
 
 const privateRoutes = [

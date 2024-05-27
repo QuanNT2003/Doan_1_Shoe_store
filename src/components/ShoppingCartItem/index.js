@@ -54,6 +54,11 @@ function ShoppingCartItem({
                 <div className='text-[13px] md:text-[15px] line-clamp-2 text-ellipsis '>
                     {cartItem.version.color.name} - Size {cartItem.version.size.name}
                 </div>
+                <div>
+                    {
+                        cartItem.version.inStock < 10 ? (<div className='flex justify-center mt-5 text-[17px] font-semibold'>Còn {cartItem.version?.inStock} sản phẩm </div>) : (<div> </div>)
+                    }
+                </div>
             </div>
             <div className='lg:w-[180px] ssm:w-[150px] w-[100px] text-center ms-5 flex flex-col'>
                 <div className='text-red-500 md:text-[17px] text-[14px] font-medium mb-5'>

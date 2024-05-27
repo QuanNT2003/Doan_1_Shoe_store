@@ -10,7 +10,8 @@ import {
     faReceipt,
     faChartSimple,
     faUser,
-    faRightLeft
+    faRightLeft,
+    faWarehouse
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -40,6 +41,12 @@ function SideBar() {
             title: 'Đổi - Trả hàng',
             path: '/exchange_returns',
             icon: <FontAwesomeIcon icon={faRightLeft} className='me-4 ' />,
+
+        },
+        {
+            title: 'Nhập hàng',
+            path: '/imports',
+            icon: <FontAwesomeIcon icon={faWarehouse} className='me-4 ' />,
 
         },
         {

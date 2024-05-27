@@ -23,7 +23,8 @@ const addCommas = (num) => {
 };
 
 function Order({
-    listBuy
+    listBuy,
+    deleteCart
 }) {
     const navigate = useNavigate();
     const toastContext = useContext(ToastContext);
@@ -228,6 +229,7 @@ function Order({
                 if (result) {
                     setLoading(false);
                     console.log(result)
+                    deleteCart()
                     toastContext.notify('success', 'Đã đặt hàng');
                     navigate('/order_colection/detail/' + result.data.orderId);
                 }

@@ -254,29 +254,35 @@ function ProductVersion() {
                             <List
                                 // handleKeyDown={handleKeyDown}
                                 filterComponent={
-                                    <Filter
-                                        open={openFilter}
-                                        handleClose={handleCloseFilter}
-                                        handleOpen={handleOpenFilter}
-                                        handleClearFilter={handleClearFilter}
-                                        handleFilter={handleFilter}
-                                    >
-                                        <MultiSelectComp
-                                            options={optionsColor}
-                                            placeholder={'Màu sắc'}
-                                            selected={selectedColor}
-                                            setSelected={setSelectedColor}
-                                            hasSelectAll={true}
-                                        />
-                                        <MultiSelectComp
+                                    <div className='flex'>
+                                        <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => navigate('/products/import/' + product.id)}>
+                                            Nhập hàng
+                                        </button>
+                                        <Filter
+                                            open={openFilter}
+                                            handleClose={handleCloseFilter}
+                                            handleOpen={handleOpenFilter}
+                                            handleClearFilter={handleClearFilter}
+                                            handleFilter={handleFilter}
+                                        >
+                                            <MultiSelectComp
+                                                options={optionsColor}
+                                                placeholder={'Màu sắc'}
+                                                selected={selectedColor}
+                                                setSelected={setSelectedColor}
+                                                hasSelectAll={true}
+                                            />
+                                            <MultiSelectComp
 
-                                            options={optionsSize}
-                                            placeholder={'Size'}
-                                            selected={selectedSize}
-                                            setSelected={setSelectedSize}
-                                            hasSelectAll={true}
-                                        />
-                                    </Filter>
+                                                options={optionsSize}
+                                                placeholder={'Size'}
+                                                selected={selectedSize}
+                                                setSelected={setSelectedSize}
+                                                hasSelectAll={true}
+                                            />
+                                        </Filter>
+                                    </div>
+
                                 }
                                 // TABLE
                                 pagination
