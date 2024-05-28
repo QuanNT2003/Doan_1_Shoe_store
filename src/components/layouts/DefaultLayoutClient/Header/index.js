@@ -24,6 +24,8 @@ import Button from '@mui/material/Button';
 import example from '~/assets/example.jpg'
 import Avatar from '@mui/material/Avatar';
 import ModalLoading from '~/components/ModalLoading';
+import Badge from '@mui/material/Badge';
+import * as ShoppingCartServices from '~/apiServices/productCartServices'
 const links = [
     {
         title: 'Trang chủ',
@@ -78,13 +80,28 @@ function Header() {
     };
 
     const [user, setUser] = useState('')
+    const [number, setNumber] = useState(1)
     useEffect(() => {
         setLoading(true)
-        setUser(JSON.parse(window.localStorage.getItem('user')))
+        const fetchApi = async () => {
+            setUser(JSON.parse(window.localStorage.getItem('user')))
+            if (window.localStorage.getItem('UserLogin') === "true") {
+                const result = await ShoppingCartServices.getAllCarts({
+                    user: JSON.parse(window.localStorage.getItem('user'))._id
+                })
+                if (result) {
+                    setNumber(result.total)
+                    console.log(result);
+                }
+            }
+        }
+        fetchApi();
+        setDay(new Date())
         setLoading(false)
 
     }, []);
-
+    useEffect(() => {
+    }, [day]);
     return (
         <div className=' bg-cyan-600 text-white transition-all'>
             <div className='flex justify-around py-2 items-center md:w-[85%] md:mx-auto mt-2 h-[130px]'>
@@ -119,20 +136,16 @@ function Header() {
                     </div>
                     <div className='me-5 hover:cursor-pointer group relative '>
                         <div className='flex justify-center items-center group-hover:scale-110'>
-                            <FontAwesomeIcon icon={faCartShopping} className='me-4 w-[25px] h-[25px] ' />
+                            <Badge badgeContent={number} color="primary" className='me-4'>
+                                <FontAwesomeIcon icon={faCartShopping} className=' w-[25px] h-[25px] ' />
+                            </Badge>
+
                             <div className='text-[13px] hidden md:block'>
                                 Giỏ hàng
                             </div>
                         </div>
 
-                        <div className='scale-y-0 absolute group-hover:scale-y-100 group-hover:block transition-all mt-2 duration-300 origin-top inset-y-7 right-0 z-50'>
-                            <div className='flex justify-end'>
-                                <div className='triangle-up border'></div>
-                            </div>
-                            <div className='min-w-[300px] min-h-[400px] bg-white rounded-md rounded-tr-[0] p-2 border'>
-                                123
-                            </div>
-                        </div>
+
                     </div>
                     {
                         window.localStorage.getItem("UserLogin") === 'true' ? (
@@ -148,7 +161,7 @@ function Header() {
                                         <div className='flex items-center gap-3 text-black'>
                                             <Avatar alt="Remy Sharp" src={example} />
 
-                                            <div className='hidden sm:block text-white text-[13px]'>{user?.name}</div>
+                                            <div className='hidden sm:block text-white text-[13px]'>{user.name}</div>
                                         </div>
                                     </Button>
                                     <Menu
@@ -167,13 +180,19 @@ function Header() {
                                             Tài khoản
                                         </MenuItem>
                                         <MenuItem onClick={() => {
-                                            setLoading(true)
-                                            window.localStorage.setItem('user', null);
-                                            window.localStorage.setItem('UserLogin', false);
-                                            setDay(new Date())
-                                            setLoading(false)
+
+                                            setTimeout(() => {
+                                                setLoading(true)
+                                                window.localStorage.setItem('user', null);
+                                                window.localStorage.setItem('UserLogin', false);
+                                                setNumber(0)
+                                                setDay(new Date())
+                                                setLoading(false)
+                                                navigate('/login')
+                                                setUser('')
+                                            }, 500);
+
                                             handleClose()
-                                            navigate('/login')
                                         }} className='w-[200px] hover:bg-slate-400'>
                                             <FontAwesomeIcon icon={faArrowRightFromBracket} className='me-4' />
                                             Đăng suất
@@ -293,12 +312,19 @@ function Header() {
                                         isActive ? 'active navlink' : 'navlink'
                                     }
                                     onClick={() => {
-                                        setLoading(true)
-                                        window.localStorage.setItem('user', null);
-                                        window.localStorage.setItem('UserLogin', false);
-                                        setDay(new Date())
-                                        setLoading(false)
-                                        navigate('/login')
+
+                                        setTimeout(() => {
+                                            setLoading(true)
+                                            window.localStorage.setItem('user', null);
+                                            window.localStorage.setItem('UserLogin', false);
+                                            setNumber(0)
+                                            setDay(new Date())
+                                            setLoading(false)
+                                            navigate('/login')
+                                            setUser('')
+                                        }, 500);
+
+                                        handleClose()
                                     }}
                                 >
                                     <div >

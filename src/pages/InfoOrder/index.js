@@ -45,6 +45,40 @@ function InfoOrder() {
         if (reason === '' || location === '') setErrorType('Không được bỏ trống');
 
     }
+
+    const handleCancel = () => {
+        if (reason === '') setErrorType('Không được bỏ trống');
+        else {
+            setLoading(true);
+            const fetchApi = async () => {
+                let isSuccess = true;
+
+                const newObj = {
+                    ...obj,
+                    status: 'cancelled',
+                    note: reason
+                }
+
+                const result = await OrderServices.UpdateOrder(order.id, newObj)
+                    .catch((err) => {
+                        console.log(err);
+                        isSuccess = false;
+                        setLoading(false);
+                        toastContext.notify('error', 'Có lỗi xảy ra');
+                    });
+
+                if (isSuccess) {
+                    setLoading(false);
+                    toastContext.notify('success', 'Đã cập nhật đơn hàng');
+                    setUpdatePage(new Date());
+                    setOpenModal1(false)
+                }
+            }
+
+            fetchApi();
+        }
+
+    }
     useEffect(() => {
         const fetchApi = async () => {
             setLoading(true)
@@ -224,7 +258,7 @@ function InfoOrder() {
                                     <button className='bg-blue-500 ms-5 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => handleCloseModal1()}>
                                         Quay lại
                                     </button>
-                                    <button className='bg-red-500 ms-5 py-4 px-2 rounded-lg min-w-[130px] text-white hover:bg-[#f97777fd] cursor-pointer' onClick={() => handleValidation()}>
+                                    <button className='bg-red-500 ms-5 py-4 px-2 rounded-lg min-w-[130px] text-white hover:bg-[#f97777fd] cursor-pointer' onClick={() => handleCancel()}>
                                         Xác nhận hủy đơn
                                     </button>
 

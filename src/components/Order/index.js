@@ -229,7 +229,7 @@ function Order({
                 if (result) {
                     setLoading(false);
                     console.log(result)
-                    deleteCart()
+                    if (deleteCart) deleteCart()
                     toastContext.notify('success', 'Đã đặt hàng');
                     navigate('/order_colection/detail/' + result.data.orderId);
                 }

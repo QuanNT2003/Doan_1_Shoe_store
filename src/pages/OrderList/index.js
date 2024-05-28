@@ -12,7 +12,7 @@ const optionsTT = [
     { label: 'Đã nhận', value: 'received' },
     { label: 'Đang giao', value: 'delivering' },
     { label: 'Đã giao', value: 'delivered' },
-    { label: 'Đã hủy', value: 'canceled' },
+    { label: 'Đã hủy', value: 'cancelled' },
 ];
 
 function OrderList() {

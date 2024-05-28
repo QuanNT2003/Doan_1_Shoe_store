@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState, useContext, useCallback } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faLocationDot,
@@ -15,7 +15,10 @@ import ModalComp from '~/components/ModalComp';
 import Input from '~/components/Input';
 import Exchange_Return from '~/components/Exchange_Return';
 import * as OrderServices from '~/apiServices/orderServices'
+import * as ImageServices from '~/apiServices/imageServices'
+import * as CommentServices from '~/apiServices/commentServices'
 import { ToastContext } from '~/components/ToastContext';
+import Comment from '~/components/Comment';
 
 const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
@@ -33,41 +36,8 @@ function OrderDetail() {
 
     const handleCloseModal = () => {
         setOpenModal(false)
-        setFiles([])
-    };
-
-    const [desc, setDesc] = useState('');
-    const onChangeDesc = (value) => {
-        setDesc(value);
-    };
-
-    // URL IMAGE
-    const [images, setImages] = useState([]);
-
-    // IMAGES
-    const [files, setFiles] = useState([]);
-
-    const handleAddImages = (e) => {
-        if (e.target.files.length + files.length < 4) {
-            const arr = Array.from(e.target.files).map((file) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file)
-
-                reader.onloadend = () => {
-                    files.push(reader.result)
-                    setDay(new Date())
-                }
-            });
-
-
-
-        }
-
-
-    };
-    const handleRemoveImage = (index) => {
-        files.splice(index, 1)
-        setDay(new Date())
+        setItem('')
+        setIndex()
     };
 
     //Modal return 
@@ -96,6 +66,18 @@ function OrderDetail() {
         setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [day]);
+
+    const [item, setItem] = useState('')
+    const [index, setIndex] = useState()
+    const handleOpenComment = (item, index) => {
+        setOpenModal(true)
+        setItem(item)
+        setIndex(index)
+    }
+
+    const update = () => {
+        console.log(obj);
+    }
     return (
         <div>
             {
@@ -146,7 +128,7 @@ function OrderDetail() {
                                             </div>
                                             <div className='flex justify-center my-3'>
                                                 {
-                                                    item.comment === false && obj.status === "delivered" ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100' onClick={() => setOpenModal(true)}>Viết đánh giá</button> : <div></div>
+                                                    item.comment === false && obj.status === "delivered" ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100' onClick={() => handleOpenComment(item, index)}>Viết đánh giá</button> : <div></div>
                                                 }
                                                 {
                                                     item.exchange_return === false && obj.status === "delivered" ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100 ' onClick={() => setOpenModalReturn(true)}>Đổi /Trả hàng</button> : <div></div>
@@ -251,95 +233,8 @@ function OrderDetail() {
                                 open={openModal}
                                 handleClose={handleCloseModal}
                                 title="Đánh giá sản phẩm"
-                                actionComponent={
-                                    <div>
-                                        <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => handleCloseModal()}>
-                                            Quay lại
-                                        </button>
-                                        <button className='bg-blue-500 ms-5 py-4 px-3 my-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' >
-                                            Thêm
-                                        </button>
-                                    </div>
-                                }
                             >
-
-                                <div className='flex mb-2'>
-                                    <div className='justify-center md:w-[150px] ssm:w-[35%] min-w-[50px] flex items-center'>
-                                        <img src={logo} className='md:w-[120px] md:h-[120px] w-[80px]' />
-                                    </div>
-                                    <div className='md:ms-4 mx-1 cursor-pointer md:w-[50%] w-[75%] md:me-3'>
-                                        <div className='md:text-[17px] text-[13px] font-bold text-wrap mb-3 line-clamp-2 text-ellipsis '>
-                                            Giày tây nam công sở da mềm đế khâu chắc chắn đóng hộp cẩn thận bao đổi trả nếu ko vừa hàng lỗi sản phẩm đóng hộp (MT04)
-                                        </div>
-                                        <div className='text-[13px] md:text-[15px] line-clamp-2 text-ellipsis '>
-                                            Xanh - Vàng, Size : 40
-                                        </div>
-                                        <div className='mt-3 md:text-[17px] text-[13px] font-semibold md:hidden block'>
-                                            166.000 đ  x 3
-                                        </div>
-
-                                    </div>
-                                    <div className='w-[15%] md:text-[17px] text-[14px] font-semibold hidden md:block'>
-                                        Đơn giá : 166.000 đ
-                                    </div>
-                                    <div className='w-[15%] md:text-[17px] text-[14px] font-semibold hidden md:block'>
-                                        SL : 3 sản phẩm
-                                    </div>
-                                </div>
-
-                                <div className='mt-3'>
-                                    <div className='font-bold mb-4'>Đánh giá sản phẩm</div>
-                                    <Rating name="size-large" defaultValue={2} size="medium" className='mb-6' />
-                                </div>
-                                <Input
-                                    title={'Viết đánh giá'}
-                                    value={desc}
-                                    onChange={onChangeDesc}
-                                    textarea
-                                    rows={5}
-                                />
-                                <div className='mt-2 p-1'>
-                                    <div>
-                                        Thêm hình ảnh
-                                    </div>
-                                    <div className='flex'>
-                                        <input
-                                            id="addImg"
-                                            type="file"
-                                            className='hidden'
-                                            accept="image/png,image/gif,image/jpeg"
-                                            multiple
-                                            onChange={handleAddImages}
-                                        />
-                                        <label
-                                            htmlFor="addImg"
-                                            className='w-[90px] h-[90px] border-[1px] border-dashed border-[#d3d5d7] rounded-[3px] flex justify-center items-center m-[5px] hover:cursor-pointer'
-                                        >
-                                            <FontAwesomeIcon icon={faPlus} />
-                                        </label>
-                                        {files.map((file, index) => (
-                                            <div key={index} className='group w-[90px] h-[90px] rounded-[3px] m-[5px] relative select-none'>
-                                                <div
-                                                    className='absolute top-0 right-0 bg-white p-[5px] rounded-[999px] w-[20px] h-[20px] hidden justify-center items-center mt-[2px] mr-[2px] mb-[2px] ml-[2px] hover:cursor-pointer group-hover:flex'
-                                                    onClick={() =>
-                                                        handleRemoveImage(index)
-                                                    }
-                                                >
-                                                    <FontAwesomeIcon
-                                                        className='text-red-600'
-                                                        icon={faXmark}
-                                                    />
-                                                </div>
-                                                <img
-                                                    className='w-[inherit] h-[inherit] rounded-[3px]'
-                                                    src={file}
-                                                    alt=""
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                </div>
+                                <Comment item={item} handleCloseModal={handleCloseModal} update={update} />
                             </ModalComp>
 
                             <ModalComp

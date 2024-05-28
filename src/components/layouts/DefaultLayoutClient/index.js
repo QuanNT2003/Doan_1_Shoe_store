@@ -6,7 +6,6 @@ function defaultLayoutClient({ children }) {
         <div className=' bg-[#e9ecef] bg-no-repeat bg-cover bg-fixed' >
             <Header />
             <div className='lg:w-[75%] w-[100%] mx-auto my-0'>
-                {/* <UtilityBar /> */}
                 {children}
             </div>
             <Footer />
