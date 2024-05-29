@@ -264,6 +264,15 @@ function Header() {
 
                         <div className='text-[18px]'>Đơn hàng</div>
                     </NavLink>
+                    <NavLink
+                        to='/return_colection'
+                        className={({ isActive }) =>
+                            isActive ? 'max-w-[240px] min-w-[200px] text-black bg-white h-[50px] rounded-t-lg flex justify-center items-center ' : 'max-w-[240px] min-w-[200px] h-[50px] flex justify-center items-center'
+                        }
+                    >
+
+                        <div className='text-[18px]'>Hoàn trả hàng</div>
+                    </NavLink>
 
                 </div>
             </div>

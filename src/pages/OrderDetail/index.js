@@ -4,22 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faLocationDot,
     faCircleCheck,
-    faPlus,
-    faXmark
 } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../assets/images/logo.png'
 import { useNavigate, useParams } from 'react-router-dom';
-import Rating from '@mui/material/Rating';
 import ModalLoading from '~/components/ModalLoading';
 import ModalComp from '~/components/ModalComp';
-import Input from '~/components/Input';
 import Exchange_Return from '~/components/Exchange_Return';
 import * as OrderServices from '~/apiServices/orderServices'
-import * as ImageServices from '~/apiServices/imageServices'
-import * as CommentServices from '~/apiServices/commentServices'
+import * as OrderProgressServices from '~/apiServices/orderProgressServices'
 import { ToastContext } from '~/components/ToastContext';
 import Comment from '~/components/Comment';
-
+import { format } from 'date-fns';
 const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 function OrderDetail() {
@@ -29,6 +23,7 @@ function OrderDetail() {
 
     const [loading, setLoading] = useState(false);
     const [obj, setObj] = useState(null);
+    const [progress, setProgress] = useState([])
     const [day, setDay] = useState(new Date());
 
     const [openModal, setOpenModal] = useState(false);
@@ -60,6 +55,15 @@ function OrderDetail() {
                 console.log(result);
                 setObj(result.data);
             }
+            const orderProgress = await OrderProgressServices.GetOrderProgressForOrder(order.id)
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            if (orderProgress) {
+                console.log(orderProgress);
+                setProgress(orderProgress.data);
+            }
         }
 
         fetchApi();
@@ -75,6 +79,11 @@ function OrderDetail() {
         setIndex(index)
     }
 
+    const handleOpenReturn = (item, index) => {
+        setOpenModalReturn(true)
+        setItem(item)
+        setIndex(index)
+    }
     const update = () => {
         setLoading(true);
         const fetchApi = async () => {
@@ -97,6 +106,32 @@ function OrderDetail() {
 
         fetchApi();
     }
+
+    const cancel = () => {
+        setLoading(true);
+        const fetchApi = async () => {
+            const newObj = {
+                ...obj,
+                status: 'cancelled'
+            }
+
+
+            const result = await OrderServices.UpdateOrder(obj.orderId, newObj)
+                .catch((err) => {
+                    console.log(err);
+                    setLoading(false);
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                });
+
+            if (result) {
+                setLoading(false);
+                setDay(new Date());
+                toastContext.notify('success', 'Đã hủy đơn thành công');
+            }
+        }
+
+        fetchApi();
+    }
     return (
         <div>
             {
@@ -104,7 +139,13 @@ function OrderDetail() {
                     <div className='lg:m-5 m-2 mb-10 p-3'>
                         <div className='font-bold text-[18px]'>Chi tiết đơn hàng</div>
                         <div className='p-3 rounded-lg bg-white'>
-                            <div className='font-semibold'>Đơn hàng đã giao hoàn tất</div>
+                            <div className='flex items-center text-[17px] font-medium'> Đơn hàng {
+                                obj.status === 'receiving' ? 'đang chờ tiếp nhận'
+                                    : obj.status === 'received' ? 'đã tiếp nhân'
+                                        : obj.status === 'delivering' ? 'đang giao'
+                                            : obj.status === 'delivered' ? 'đã giao'
+                                                : 'đã hủy'
+                            }</div>
                             <div className='flex items-center mt-4'>
                                 <FontAwesomeIcon icon={faLocationDot} className='me-3' />
                                 <div className='font-bold'>
@@ -150,7 +191,7 @@ function OrderDetail() {
                                                     item.comment === false && obj.status === "delivered" ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100' onClick={() => handleOpenComment(item, index)}>Viết đánh giá</button> : <div></div>
                                                 }
                                                 {
-                                                    item.exchange_return === false && obj.status === "delivered" ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100 ' onClick={() => setOpenModalReturn(true)}>Đổi /Trả hàng</button> : <div></div>
+                                                    item.exchange_return === false && obj.status === "delivered" ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100 ' onClick={() => handleOpenReturn(item, index)}>Đổi /Trả hàng</button> : <div></div>
                                                 }
 
                                             </div>
@@ -159,39 +200,32 @@ function OrderDetail() {
                                     ))
                                 }
 
+                                <div className='flex justify-center my-3'>
+                                    {
+                                        obj.status === "receiving" ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100' onClick={() => cancel()}>Hủy đơn</button> : <div></div>
+                                    }
+                                </div>
 
                             </div>
                         </div>
                         <div className='lg:flex mt-5'>
                             <div className='lg:flex-[2] lg:me-3 mb-4 lg:mb-0 rounded-lg bg-white p-3'>
-                                <div className='font-bold mb-4'>Đánh giá đơn hàng</div>
-                                <Rating name="size-large" defaultValue={obj.star} size="large" className='mb-6' />
                                 <div className='font-bold mb-4'>Tiến độ đơn hàng</div>
-                                <div className='flex min-h-[90px] items-center'>
-                                    <div className='w-[30%]'>thứ 4 - 04/05/2024 10:53 AM</div>
-                                    <FontAwesomeIcon icon={faCircleCheck} className='me-3 w-[10%] text-slate-400' />
+                                {
+                                    progress.map((item, index) => (
+                                        <div className='flex min-h-[90px] items-center' key={index}>
+                                            <div className='w-[30%]'>{format(new Date(item.createdAt), 'dd MMM yyyy - HH:mm')}</div>
+                                            <FontAwesomeIcon icon={faCircleCheck} className='me-3 w-[10%] text-slate-400' />
 
-                                    <div className='w-[60%]'>
-                                        <div className='mb-2 font-semibold'>Đã giao</div>
-                                        Kiện hàng đã được giao bởi người giao
-                                    </div>
-                                </div>
-                                <div className='flex min-h-[90px] items-center'>
-                                    <div className='w-[30%]'>thứ 4 - 04/05/2024 10:53 AM</div>
-                                    <FontAwesomeIcon icon={faCircleCheck} className='me-3 w-[10%] text-slate-400' />
-                                    <div className='w-[60%]'>
-                                        <div className='mb-2 font-semibold'>Đã giao</div>
-                                        Kiện hàng đã được giao bởi người giao
-                                    </div>
-                                </div>
-                                <div className='flex min-h-[90px] items-center'>
-                                    <div className='w-[30%]'>thứ 4 - 04/05/2024 10:53 AM</div>
-                                    <FontAwesomeIcon icon={faCircleCheck} className='me-3 w-[10%] text-slate-400' />
-                                    <div className='w-[60%]'>
-                                        <div className='mb-2 font-semibold'>Đã giao</div>
-                                        Kiện hàng đã được giao bởi người giao
-                                    </div>
-                                </div>
+                                            <div className='w-[60%]'>
+                                                <div className='mb-2 font-semibold'>{item.title}</div>
+                                                {item.note}
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+
+
                             </div>
                             <div className='lg:flex-1 rounded-lg bg-white p-3'>
                                 <div className='font-bold mb-4'>Tổng quan đơn hàng</div>
@@ -239,13 +273,7 @@ function OrderDetail() {
                                     <div className='w-[10%]'>:</div>
                                     <div className='w-[30%]'>{obj.payment.ramain === 0 ? 'Đã thanh toán' : 'Chưa thanh toán'}</div>
                                 </div>
-                                <div className='mb-2 '>
-                                    <div >QR Thanh toán :</div>
-                                    <div className='flex justify-center'>
-                                        <img src={logo} className='lg:w-[60%] ssm:w-[40%] w-[60%]' />
-                                    </div>
 
-                                </div>
 
                             </div>
                             <ModalComp
@@ -261,12 +289,14 @@ function OrderDetail() {
                                 handleClose={handleCloseModalReturn}
                                 title="Hoàn đổi hàng"
                             >
-                                <Exchange_Return />
+                                <Exchange_Return item={item} handleCloseModal={handleCloseModalReturn} update={update} orderId={obj.orderId} />
 
                             </ModalComp>
                         </div>
                     </div>
+
                 )}
+            <ModalLoading open={loading} title={'Đang tải'} />
         </div>
 
     );

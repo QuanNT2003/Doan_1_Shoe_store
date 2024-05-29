@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect, useState, useContext, useCallback } from 'react';
-import { data } from './data';
 import ListBillProduct from '~/components/ListBillProduct';
 import { useNavigate, useParams } from 'react-router-dom';
 import ModalComp from '~/components/ModalComp';
 import Input from '~/components/Input';
 import * as OrderServices from '~/apiServices/orderServices'
+import * as OrderProgressServices from '~/apiServices/orderProgressServices'
 import { ToastContext } from '~/components/ToastContext';
 import ModalLoading from '~/components/ModalLoading';
 const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -42,8 +42,37 @@ function InfoOrder() {
     // Submit Modal
     const [errorType, setErrorType] = useState('');
     const handleValidation = () => {
-        if (reason === '' || location === '') setErrorType('Không được bỏ trống');
+        if (location === '') setErrorType('Không được bỏ trống');
+        else {
+            const fetchApi = async () => {
+                setLoading(true)
+                let isSuccess = true;
 
+                const newObj = {
+                    title: "Vận chuyển",
+                    note: location,
+                    orderId: obj.orderId
+                }
+
+                const result = await OrderProgressServices.CreateOrderProgress(newObj)
+                    .catch((err) => {
+                        console.log(err);
+                        isSuccess = false;
+                        setLoading(false);
+                        toastContext.notify('error', 'Có lỗi xảy ra');
+                    });
+
+                if (isSuccess) {
+                    setLoading(false);
+                    toastContext.notify('success', 'Đã cập nhật đơn hàng');
+                    setUpdatePage(new Date());
+                    setOpenModal2(false)
+                }
+            }
+
+            fetchApi()
+            setLoading(false)
+        }
     }
 
     const handleCancel = () => {
@@ -133,7 +162,7 @@ function InfoOrder() {
                     (<div>
                         <div className='my-6 mx-auto h-10 w-[90%] flex items-center'>
                             <div className='me-5 font-bold text-[18px]'>
-                                0rd00001
+                                {obj.orderId}
                             </div>
                             <div
                                 className={obj.status === 'receiving' || obj.status === 'received' ? 'flex justify-center items-center rounded-[20px] py-[5px] px-[10px] h-9 text-[15px] bg-[#fff7e7] text-[#e4a482] '
@@ -268,7 +297,10 @@ function InfoOrder() {
                             <Input
                                 title={'Lý do hủy đơn'}
                                 value={reason}
-                                onChange={(value) => setReason(value)}
+                                onChange={(value) => {
+                                    setReason(value)
+                                    setErrorType('')
+                                }}
                                 error={errorType}
                                 required
                             />
@@ -292,7 +324,10 @@ function InfoOrder() {
                             <Input
                                 title={'Hiện trạng đơn hàng'}
                                 value={location}
-                                onChange={(value) => setLocation(value)}
+                                onChange={(value) => {
+                                    setLocation(value)
+                                    setErrorType('')
+                                }}
                                 error={errorType}
                                 required
                             />

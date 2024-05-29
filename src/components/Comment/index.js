@@ -64,7 +64,6 @@ function Comment({ item, handleCloseModal, update }) {
         let newObj = obj;
         newObj['comment'] = true;
         setObj(newObj)
-        update()
         setLoading(true);
         const fetchApi = async () => {
             const image = {

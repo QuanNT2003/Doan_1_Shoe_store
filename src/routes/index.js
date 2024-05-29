@@ -33,6 +33,8 @@ import Import from "~/pages/ImportPage";
 import InfoImport from "~/pages/InfoImport";
 import ImportList from "~/pages/ImportList";
 import CommentList from "~/pages/CommentList";
+import Return_Collection from "~/pages/ReturnCollection";
+import ReturnDetail from "~/pages/ReturnDetail";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -211,6 +213,16 @@ const publicRoutes = [
     {
         path: '/order_colection/detail/:id',
         component: OrderDetail,
+        layout: DefaultLayoutClient,
+    },
+    {
+        path: '/return_colection',
+        component: Return_Collection,
+        layout: DefaultLayoutClient,
+    },
+    {
+        path: '/return_colection/detail/:id',
+        component: ReturnDetail,
         layout: DefaultLayoutClient,
     },
     {
