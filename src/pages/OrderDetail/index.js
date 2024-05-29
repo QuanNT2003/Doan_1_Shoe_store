@@ -76,7 +76,26 @@ function OrderDetail() {
     }
 
     const update = () => {
-        console.log(obj);
+        setLoading(true);
+        const fetchApi = async () => {
+            let isSuccess = true;
+
+
+            const result = await OrderServices.UpdateOrder(obj.orderId, obj)
+                .catch((err) => {
+                    console.log(err);
+                    isSuccess = false;
+                    setLoading(false);
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                });
+
+            if (isSuccess) {
+                setLoading(false);
+                setDay(new Date());
+            }
+        }
+
+        fetchApi();
     }
     return (
         <div>

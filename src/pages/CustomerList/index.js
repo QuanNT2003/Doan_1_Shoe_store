@@ -6,43 +6,6 @@ import MultiSelectComp from '~/components/MultiSelectComp';
 import { CustomerItem } from '~/components/Item';
 import * as UserServices from '~/apiServices/userServices'
 import { ToastContext } from '~/components/ToastContext';
-const rows = [
-    {
-        customerId: '123',
-        name: 'NTQ',
-        phoneNumber: '0328632492',
-        isActive: true,
-        purchasedOrder: 12,
-    },
-    {
-        customerId: '123',
-        name: 'NTQ',
-        phoneNumber: '0328632492',
-        isActive: true,
-        purchasedOrder: 12,
-    },
-    {
-        customerId: '123',
-        name: 'NTQ',
-        phoneNumber: '0328632492',
-        isActive: false,
-        purchasedOrder: 12,
-    },
-    {
-        customerId: '123',
-        name: 'NTQ',
-        phoneNumber: '0328632492',
-        isActive: true,
-        purchasedOrder: 12,
-    },
-    {
-        customerId: '123',
-        name: 'NTQ',
-        phoneNumber: '0328632492',
-        isActive: false,
-        purchasedOrder: 12,
-    },
-]
 
 const optionsTT = [
     { label: 'Đang hoạt động', value: true },

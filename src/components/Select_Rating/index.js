@@ -1,9 +1,9 @@
 import React from 'react';
 import Rating from '@mui/material/Rating';
-import CommentItem from '../Comment_Item';
 import ListComment from '../ListComment';
+import * as CommentServices from '~/apiServices/commentServices'
 function Select_Rating({
-
+    productId
 }) {
     return (
         <div>
@@ -46,7 +46,7 @@ function Select_Rating({
 
             </div>
             <hr className='my-5' />
-            <ListComment />
+            <ListComment productId={productId} />
         </div>
     );
 }

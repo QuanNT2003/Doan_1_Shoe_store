@@ -2,7 +2,7 @@ import * as request from '~/utils/request';
 
 export const getAllComment = async (params) => {
     try {
-        console.log(params)
+        // console.log(params)
         const response = await request.getMethod('api/comment/get-all?', {
             params,
             paramsSerializer: (params) => {
@@ -13,9 +13,12 @@ export const getAllComment = async (params) => {
                     if (key === 'sortBy' || key === 'orderBy') {
                         return 'sort' + '=' + params[key];
                     }
-                    if (key === 'nation') {
+                    if (key === 'star') {
+                        return key + '=' + params[key].value + '&';
+                    }
+                    if (key === 'user' || key === 'productId' || key === 'approve') {
                         let string = ''
-                        for (let item of params[key]) string += key + '=' + item + '&';
+                        for (let item of params[key]) string += key + '=' + item.value + '&';
                         return string
                     }
                 }).join('&');
@@ -72,3 +75,22 @@ export const deleteComment = async (id) => {
     }
 }
 
+export const getUser = async () => {
+    try {
+        const res = await request.getMethod('api/comment/get-user');
+        console.log(res);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+export const getProduct = async () => {
+    try {
+        const res = await request.getMethod('api/comment/get-product');
+        console.log(res);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}

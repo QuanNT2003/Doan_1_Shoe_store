@@ -32,6 +32,7 @@ import Register from "~/pages/Register";
 import Import from "~/pages/ImportPage";
 import InfoImport from "~/pages/InfoImport";
 import ImportList from "~/pages/ImportList";
+import CommentList from "~/pages/CommentList";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -227,6 +228,12 @@ const publicRoutes = [
     {
         path: '/imports',
         component: ImportList,
+        title: 'Danh sách nhập hàng',
+        layout: DefaultLayoutAdmin,
+    },
+    {
+        path: '/comments',
+        component: CommentList,
         title: 'Danh sách nhập hàng',
         layout: DefaultLayoutAdmin,
     },

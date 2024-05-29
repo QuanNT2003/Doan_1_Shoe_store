@@ -1,166 +1,194 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faSort,
     faFilter
 } from '@fortawesome/free-solid-svg-icons';
+import { ToastContext } from '~/components/ToastContext';
 import CommentItem from '../Comment_Item';
 import Pagination from '@mui/material/Pagination';
+import * as CommentServices from '~/apiServices/commentServices'
+import ModalLoading from '~/components/ModalLoading';
 const sortlist = [
     {
         name: 'Gần đây',
+        value: [
+            '',
+            ''
+        ]
     },
     {
         name: 'Đánh giá: Từ cao tới thấp',
+        value: [
+            'desc',
+            'star'
+        ]
     },
     {
         name: 'Đánh giá: Từ thấp tới cao',
+        value: [
+            'asc',
+            'star'
+        ]
     },
 ]
 const starlist = [
     {
         name: 'Tất cả',
+        value: ''
     },
     {
         name: '1 sao',
+        value: 1
     },
     {
         name: '2 sao',
+        value: 2
     },
     {
         name: '3 sao',
+        value: 3
     },
     {
         name: '4 sao',
+        value: 4
     },
     {
         name: '5 sao',
+        value: 5
     },
 ]
-const commentlist = [
-    {
-        id: 1,
-        user: {
-            name: 'Ngô Trung Quân',
-            image: '/static/images/avatar/2.jp'
-        },
-        rating: 4,
-        date: '20/04/2024',
-        content: ' Sản phẩm đóng gói cẩn thận. Nhân viên giao hàng nhiệt tình. Giao hàng nhanh đúng mẫu mang vừa chân. Có đều da giày lưới hơi mỏng hình ảnh chỉ mang tính chất minh hoạ nhận xu. Chất lượng sử dụng rồi mới biết',
-        images: [
-            {
-                url: 'https://img.lazcdn.com/g/ugc/5df44fd4f8c944af8fd37e30301c2c29_1_1666138468.915184.jpg_500x500q80.jpg_.webp'
-            },
-            {
-                url: 'https://img.lazcdn.com/g/ugc/5df44fd4f8c944af8fd37e30301c2c29_1_1666138468.915184.jpg_500x500q80.jpg_.webp'
-            },
 
-        ],
-        like: 10,
-        rep: {
-            date: '20/04/2024',
-            content: 'Cảm ơn bạn đã mua và sử dụng sản phẩm của shop. chúc bạn có trải nghiệm mua sắm tuyệt vời và luôn mạnh khoẻ, thành công trong cuộc sống.',
-            like: 10,
-        }
-    },
-    {
-        id: 1,
-        user: {
-            name: 'Ngô Trung Quân',
-            image: '/static/images/avatar/2.jp'
-        },
-        rating: 4,
-        date: '20/04/2024',
-        content: ' Sản phẩm đóng gói cẩn thận. Nhân viên giao hàng nhiệt tình. Giao hàng nhanh đúng mẫu mang vừa chân. Có đều da giày lưới hơi mỏng hình ảnh chỉ mang tính chất minh hoạ nhận xu. Chất lượng sử dụng rồi mới biết',
-        images: [
-            {
-                url: 'https://img.lazcdn.com/g/ugc/5df44fd4f8c944af8fd37e30301c2c29_1_1666138468.915184.jpg_500x500q80.jpg_.webp'
-            },
-            {
-                url: 'https://img.lazcdn.com/g/ugc/5df44fd4f8c944af8fd37e30301c2c29_1_1666138468.915184.jpg_500x500q80.jpg_.webp'
-            },
+function ListComment({ productId }) {
+    const toastContext = useContext(ToastContext);
+    const [pending, setPending] = useState(false);
+    const [rows, setRows] = useState([]);
 
-        ],
-        like: 10,
-        rep: null,
-    },
-    {
-        id: 1,
-        user: {
-            name: 'Ngô Trung Quân',
-            image: '/static/images/avatar/2.jp'
-        },
-        rating: 4,
-        date: '20/04/2024',
-        content: ' Sản phẩm đóng gói cẩn thận. Nhân viên giao hàng nhiệt tình. Giao hàng nhanh đúng mẫu mang vừa chân. Có đều da giày lưới hơi mỏng hình ảnh chỉ mang tính chất minh hoạ nhận xu. Chất lượng sử dụng rồi mới biết',
-        images: [
-
-        ],
-        like: 10,
-        rep: {
-            date: '20/04/2024',
-            content: 'Cảm ơn bạn đã mua và sử dụng sản phẩm của shop. chúc bạn có trải nghiệm mua sắm tuyệt vời và luôn mạnh khoẻ, thành công trong cuộc sống.',
-            like: 10,
-        }
-    },
-    {
-        id: 1,
-        user: {
-            name: 'Ngô Trung Quân',
-            image: '/static/images/avatar/2.jp'
-        },
-        rating: 4,
-        date: '20/04/2024',
-        content: ' Sản phẩm đóng gói cẩn thận. Nhân viên giao hàng nhiệt tình. Giao hàng nhanh đúng mẫu mang vừa chân. Có đều da giày lưới hơi mỏng hình ảnh chỉ mang tính chất minh hoạ nhận xu. Chất lượng sử dụng rồi mới biết',
-        images: [
-            {
-                url: 'https://img.lazcdn.com/g/ugc/5df44fd4f8c944af8fd37e30301c2c29_1_1666138468.915184.jpg_500x500q80.jpg_.webp'
-            },
-            {
-                url: 'https://img.lazcdn.com/g/ugc/5df44fd4f8c944af8fd37e30301c2c29_1_1666138468.915184.jpg_500x500q80.jpg_.webp'
-            },
-
-        ],
-        like: 10,
-        rep: {
-            date: '20/04/2024',
-            content: 'Cảm ơn bạn đã mua và sử dụng sản phẩm của shop. chúc bạn có trải nghiệm mua sắm tuyệt vời và luôn mạnh khoẻ, thành công trong cuộc sống.',
-            like: 10,
-        }
-    },
-    {
-        id: 1,
-        user: {
-            name: 'Ngô Trung Quân',
-            image: '/static/images/avatar/2.jp'
-        },
-        rating: 4,
-        date: '20/04/2024',
-        content: ' Sản phẩm đóng gói cẩn thận. Nhân viên giao hàng nhiệt tình. Giao hàng nhanh đúng mẫu mang vừa chân. Có đều da giày lưới hơi mỏng hình ảnh chỉ mang tính chất minh hoạ nhận xu. Chất lượng sử dụng rồi mới biết',
-        images: [
-            {
-                url: 'https://img.lazcdn.com/g/ugc/5df44fd4f8c944af8fd37e30301c2c29_1_1666138468.915184.jpg_500x500q80.jpg_.webp'
-            },
-            {
-                url: 'https://img.lazcdn.com/g/ugc/5df44fd4f8c944af8fd37e30301c2c29_1_1666138468.915184.jpg_500x500q80.jpg_.webp'
-            },
-
-        ],
-        like: 10,
-        rep: {
-            date: '20/04/2024',
-            content: 'Cảm ơn bạn đã mua và sử dụng sản phẩm của shop. chúc bạn có trải nghiệm mua sắm tuyệt vời và luôn mạnh khoẻ, thành công trong cuộc sống.',
-            like: 10,
-        }
-    },
-]
-function ListComment({ }) {
+    const [day, setDay] = useState(new Date())
+    // API PROPS
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [totalPage, setTotalPage] = useState(0);
+    const [sortBy, setSortBy] = useState('');
+    const [orderBy, setOrderBy] = useState('');
     const [sort, setSort] = useState('Gần đây')
     const [star, setStar] = useState('Tất cả')
-    const [page, setPage] = React.useState(1);
-    const handleChange = (event, value) => {
+
+    const [selectedStar, setSelectedStar] = useState([])
+    const createObjectQuery = async (
+        page,
+        limit,
+        sortBy,
+        orderBy,
+        user,
+        productId,
+        approve,
+        star
+    ) => {
+
+
+        return {
+            limit,
+            page,
+            ...(orderBy && { orderBy }),
+            ...(sortBy && { sortBy }),
+            ...(user && { user }),
+            ...(productId && { productId }),
+            ...(approve && { approve }),
+            ...(star && { star }),
+        };
+
+    }
+
+    const getList = async (obj) => {
+        setPending(true);
+
+        const response = await CommentServices.getAllComment(obj)
+            .catch((error) => {
+                setPending(false);
+
+                if (error?.response?.status === 404) {
+                    setRows([]);
+                } else {
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                }
+            });
+
+        if (response) {
+            console.log(response);
+            setPending(false);
+            setRows(response.data);
+            setTotalPage(response.totalPage);
+
+        }
+    }
+
+    useEffect(() => {
+        const fetch = async () => {
+            getList(
+                await createObjectQuery(
+                    page,
+                    limit,
+                    '',
+                    '',
+                    '',
+                    [{ value: productId }],
+                    [{ value: true }],
+
+                ));
+
+        }
+
+        fetch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    const handleChange = async (event, value) => {
         setPage(value);
+        getList(
+            await createObjectQuery(
+                value,
+                limit,
+                sortBy,
+                orderBy,
+                '',
+                [{ value: productId }],
+                [{ value: true }],
+                selectedStar
+            ));
+        setDay(new Date())
     };
+
+    const sortProcess = async (item) => {
+        setSort(item.name)
+        setSortBy(item.value[1])
+        setOrderBy(item.value[0])
+        getList(
+            await createObjectQuery(
+                page,
+                limit,
+                item.value[1],
+                item.value[0],
+                '',
+                [{ value: productId }],
+                [{ value: true }],
+                selectedStar
+            ));
+    }
+
+    const handleFiter = async (item) => {
+        setSelectedStar(item)
+        getList(
+            await createObjectQuery(
+                page,
+                limit,
+                sortBy,
+                orderBy,
+                '',
+                [{ value: productId }],
+                [{ value: true }],
+                item,
+            ));
+    }
     return (
         <div >
             <div className='md:flex border-t md:border-b min-h-[70px] items-center mb-4 pt-4 md:pt-0'>
@@ -174,7 +202,12 @@ function ListComment({ }) {
                     <div className='scale-y-0 absolute group-hover:scale-y-100 group-hover:block transition-all mt-2 duration-300 inset-y-7 z-50'>
                         <div className='min-w-[250px] min-h-[100px] bg-white rounded-md rounded-tr-[0] border shadow'>
                             {sortlist.map((item, index) => (
-                                <div key={index} className='h-[40px] flex items-center hover:bg-gray-200 w-[100%] ps-2 transition-all' onClick={(e) => setSort(item.name)}>{item.name}</div>
+                                <div key={index} className='h-[40px] flex items-center hover:bg-gray-200 w-[100%] ps-2 transition-all' onClick={(e) => {
+                                    setSort(item.name)
+                                    sortProcess(item)
+                                }
+
+                                }>{item.name}</div>
                             ))}
                         </div>
                     </div>
@@ -186,21 +219,24 @@ function ListComment({ }) {
                     <div className='scale-y-0 absolute group-hover:scale-y-100 group-hover:block transition-all mt-2 duration-300 inset-y-7 z-50'>
                         <div className='min-w-[250px] min-h-[100px] bg-white rounded-md rounded-tr-[0] border shadow'>
                             {starlist.map((item, index) => (
-                                <div key={index} className='h-[40px] flex items-center hover:bg-gray-200 w-[100%] ps-2 transition-all' onClick={(e) => setStar(item.name)}>{item.name}</div>
+                                <div key={index} className='h-[40px] flex items-center hover:bg-gray-200 w-[100%] ps-2 transition-all' onClick={(e) => {
+                                    setStar(item.name)
+                                    handleFiter(item)
+                                }}>{item.name}</div>
                             ))}
                         </div>
                     </div>
                 </div>
             </div>
             <div>
-                {commentlist.map((item, index) => (
+                {rows.map((item, index) => (
                     <div key={index}> <CommentItem comment={item} /> </div>
                 ))}
             </div>
             <div className='flex justify-end me-4'>
-                <Pagination count={10} color="primary" onChange={handleChange} />
+                <Pagination count={totalPage} color="primary" onChange={handleChange} />
             </div>
-
+            <ModalLoading open={pending} title={'Đang tải'} />
         </div>
     );
 }

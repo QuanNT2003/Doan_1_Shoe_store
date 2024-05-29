@@ -11,7 +11,8 @@ import {
     faChartSimple,
     faUser,
     faRightLeft,
-    faWarehouse
+    faWarehouse,
+    faComment
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -59,6 +60,12 @@ function SideBar() {
             title: 'Thương hiệu',
             path: '/brands',
             icon: <FontAwesomeIcon icon={faStore} className='me-4 ' />,
+
+        },
+        {
+            title: 'Bình luận',
+            path: '/comments',
+            icon: <FontAwesomeIcon icon={faComment} className='me-4 ' />,
 
         },
         {
