@@ -311,7 +311,7 @@ function CollectionPage() {
 
         fetch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [key[1]]);
 
     useEffect(() => {
 

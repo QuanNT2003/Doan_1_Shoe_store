@@ -5,6 +5,8 @@ import * as UserService from '~/apiServices/userServices';
 import { ToastContext } from '~/components/ToastContext';
 import ModalLoading from '~/components/ModalLoading';
 import { useNavigate } from 'react-router-dom';
+import Header from '~/components/layouts/DefaultLayoutClient/Header';
+import Footer from '~/components/layouts/DefaultLayoutClient/Footer';
 function Login_Client() {
     const navigate = useNavigate();
     const toastContext = useContext(ToastContext);
@@ -66,52 +68,56 @@ function Login_Client() {
         }
     }
     return (
-        <div className='flex flex-col justify-center items-center my-10 '
+        <div className='bg-[#e9ecef] flex flex-col'
         >
-
-            <div className='bg-white rounded-3xl min-h-[500px] md:w-[60%] w-[90%] p-3 shadow-2xl'>
-                <div className='flex justify-center items-center'>
-                    <img src={logo} className='w-[100px] me-3' alt='' />
-                    <h1>TQ Shop</h1>
-                </div>
-                <div className='flex justify-center items-center my-5 font-semibold text-[24px] mx-4'>
-                    Welcome to TQShop! Please login.
-                </div>
-                <div className='mx-3 my-7'>
-                    <Input
-                        placeholder="Nhập email"
-                        value={email}
-                        title="Nhập email"
-                        required
-                        error={errorEmail}
-                        onChange={(value) => onChangeEmail(value)}
-                    />
-                </div>
-                <div className='mx-3 my-7'>
-                    <Input
-                        placeholder="Nhập mật khẩu"
-                        password
-                        title="Mật khẩu"
-                        value={password}
-                        required
-                        error={errorPass}
-                        onChange={(value) => onChangePass(value)}
-                    />
-                </div>
-                <div className='flex justify-end me-5 my-7'>
-                    <div className=' cursor-pointer hover:text-cyan-600 font-semibold'>
-                        Quên mật khẩu ?
+            <Header />
+            <div className='flex justify-center items-center py-10'>
+                <div className='bg-white rounded-3xl min-h-[500px] md:w-[60%] w-[90%] p-3 shadow-2xl'>
+                    <div className='flex justify-center items-center'>
+                        <img src={logo} className='w-[100px] me-3' alt='' />
+                        <h1>TQ Shop</h1>
+                    </div>
+                    <div className='flex justify-center items-center my-5 font-semibold text-[24px] mx-4'>
+                        Welcome to TQShop! Please login.
+                    </div>
+                    <div className='mx-3 my-7'>
+                        <Input
+                            placeholder="Nhập email"
+                            value={email}
+                            title="Nhập email"
+                            required
+                            error={errorEmail}
+                            onChange={(value) => onChangeEmail(value)}
+                        />
+                    </div>
+                    <div className='mx-3 my-7'>
+                        <Input
+                            placeholder="Nhập mật khẩu"
+                            password
+                            title="Mật khẩu"
+                            value={password}
+                            required
+                            error={errorPass}
+                            onChange={(value) => onChangePass(value)}
+                        />
+                    </div>
+                    <div className='flex justify-end me-5 my-7'>
+                        <div className=' cursor-pointer hover:text-cyan-600 font-semibold'>
+                            Quên mật khẩu ?
+                        </div>
+                    </div>
+                    <div className='flex justify-center items-center gap-5'>
+                        <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => navigate('/register')} >
+                            Đăng ký
+                        </button>
+                        <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => login()}>
+                            Đăng nhập
+                        </button>
                     </div>
                 </div>
-                <div className='flex justify-center items-center gap-5'>
-                    <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => navigate('/register')} >
-                        Đăng ký
-                    </button>
-                    <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => login()}>
-                        Đăng nhập
-                    </button>
-                </div>
             </div>
+
+            <Footer />
             <ModalLoading open={loading} title={'Đang tải'} />
         </div >
     );

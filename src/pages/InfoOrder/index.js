@@ -154,6 +154,39 @@ function InfoOrder() {
 
         fetchApi();
     }
+
+    const submitPayment = async () => {
+        let payment = obj.payment
+        payment.remain = 0
+        payment.paid = payment.total
+
+
+        setLoading(true);
+        const fetchApi = async () => {
+            let isSuccess = true;
+
+            const newObj = {
+                ...obj,
+                payment: payment
+            }
+
+            const result = await OrderServices.UpdateOrder(order.id, newObj)
+                .catch((err) => {
+                    console.log(err);
+                    isSuccess = false;
+                    setLoading(false);
+                    toastContext.notify('error', 'Có lỗi xảy ra');
+                });
+
+            if (isSuccess) {
+                setLoading(false);
+                toastContext.notify('success', 'Đã cập nhật đơn hàng');
+                setUpdatePage(new Date());
+            }
+        }
+
+        fetchApi();
+    }
     return (
         <div>
             {
@@ -275,6 +308,12 @@ function InfoOrder() {
                                             </button>
                                             : <div> </div>
 
+                            }
+                            {
+                                obj.payment.remain !== 0 ?
+                                    <button className='bg-blue-500 ms-5 py-4 px-2 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => submitPayment()}>
+                                        Xác nhận đã thanh toán
+                                    </button> : (<div> </div>)
                             }
 
                         </div>

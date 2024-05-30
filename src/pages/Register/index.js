@@ -5,6 +5,8 @@ import * as UserService from '~/apiServices/userServices';
 import { ToastContext } from '~/components/ToastContext';
 import ModalLoading from '~/components/ModalLoading';
 import { useNavigate } from 'react-router-dom';
+import Header from '~/components/layouts/DefaultLayoutClient/Header';
+import Footer from '~/components/layouts/DefaultLayoutClient/Footer';
 function Register() {
     const navigate = useNavigate();
     const toastContext = useContext(ToastContext);
@@ -155,37 +157,12 @@ function Register() {
         }
     }
     return (
-        <div className='flex flex-col justify-center items-center my-10'
-        >
-            {
-                process === 0 ? (
-                    <div className='bg-white rounded-3xl min-h-[500px] md:w-[60%] w-[90%] p-3 shadow-2xl'>
-                        <div className='flex justify-center items-center'>
-                            <img src={logo} className='w-[100px] me-3' alt='' />
-                            <h1>TQ Shop</h1>
-                        </div>
-                        <div className='flex justify-center items-center my-5 font-semibold text-[24px] mx-4'>
-                            Welcome to TQShop! Please signin.
-                        </div>
-                        <div className='mx-3 my-7'>
-                            <Input
-                                placeholder="Nhập email"
-                                value={email}
-                                error={errorEmail}
-                                title="Nhập email"
-                                required
-                                onChange={(value) => onChangeEmail(value)}
-                            />
-                        </div>
-                        <div className='flex justify-center items-center'>
-                            <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => senOtp()}>
-                                Nhận mã otp
-                            </button>
-                        </div>
-                    </div>
-                ) : (
-
-                    process === 1 ? (
+        <div className='bg-[#e9ecef] flex flex-col'>
+            <Header />
+            <div className='flex flex-col justify-center items-center py-10'
+            >
+                {
+                    process === 0 ? (
                         <div className='bg-white rounded-3xl min-h-[500px] md:w-[60%] w-[90%] p-3 shadow-2xl'>
                             <div className='flex justify-center items-center'>
                                 <img src={logo} className='w-[100px] me-3' alt='' />
@@ -196,90 +173,120 @@ function Register() {
                             </div>
                             <div className='mx-3 my-7'>
                                 <Input
-                                    placeholder="Nhập otp"
-                                    value={otp}
-                                    error={errorOtp}
-                                    title="Nhập otp"
+                                    placeholder="Nhập email"
+                                    value={email}
+                                    error={errorEmail}
+                                    title="Nhập email"
                                     required
-                                    onChange={(value) => onChangeOtp(value)}
+                                    onChange={(value) => onChangeEmail(value)}
                                 />
                             </div>
-                            <div className='flex justify-center items-center gap-3'>
+                            <div className='flex justify-center items-center'>
                                 <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => senOtp()}>
-                                    Gửi lại otp
-                                </button>
-                                <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => comfirmOtp()}>
-                                    Xác nhận
+                                    Nhận mã otp
                                 </button>
                             </div>
                         </div>
                     ) : (
-                        <div className='bg-white rounded-3xl min-h-[500px] md:w-[60%] w-[90%] p-3 shadow-2xl'>
-                            <div className='flex justify-center items-center'>
-                                <img src={logo} className='w-[100px] me-3' alt='' />
-                                <h1>TQ Shop</h1>
-                            </div>
-                            <div className='flex justify-center items-center my-5 font-semibold text-[24px] mx-4'>
-                                Welcome to TQShop! Please signin.
-                            </div>
-                            <div className='mx-3 my-7'>
-                                <Input
-                                    placeholder="Nhập họ tên"
-                                    title="Họ và tên"
-                                    value={name}
-                                    required
-                                    error={errorName}
-                                    onChange={(value) => onChangeName(value)}
-                                />
-                            </div>
-                            <div className='mx-3 my-7'>
-                                <Input
-                                    placeholder="Nhập số điện thoại"
-                                    title="Số điện thoại"
-                                    value={phone}
-                                    required
-                                    error={errorPhone}
-                                    onChange={(value) => onChangePhone(value)}
-                                />
-                            </div>
-                            <div className='mx-3 my-7'>
-                                <Input
-                                    placeholder="Mật khẩu"
-                                    password
-                                    title="Nhập mật khẩu"
-                                    value={password1}
-                                    error={errorPass1}
-                                    onChange={(value) => onChangePass1(value)}
 
-                                />
+                        process === 1 ? (
+                            <div className='bg-white rounded-3xl min-h-[500px] md:w-[60%] w-[90%] p-3 shadow-2xl'>
+                                <div className='flex justify-center items-center'>
+                                    <img src={logo} className='w-[100px] me-3' alt='' />
+                                    <h1>TQ Shop</h1>
+                                </div>
+                                <div className='flex justify-center items-center my-5 font-semibold text-[24px] mx-4'>
+                                    Welcome to TQShop! Please signin.
+                                </div>
+                                <div className='mx-3 my-7'>
+                                    <Input
+                                        placeholder="Nhập otp"
+                                        value={otp}
+                                        error={errorOtp}
+                                        title="Nhập otp"
+                                        required
+                                        onChange={(value) => onChangeOtp(value)}
+                                    />
+                                </div>
+                                <div className='flex justify-center items-center gap-3'>
+                                    <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => senOtp()}>
+                                        Gửi lại otp
+                                    </button>
+                                    <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => comfirmOtp()}>
+                                        Xác nhận
+                                    </button>
+                                </div>
                             </div>
-                            <div className='mx-3 my-7'>
-                                <Input
-                                    placeholder="Nhập lại mật khẩu"
-                                    password
-                                    title="Xác nhận lại mật khẩu"
-                                    value={password2}
-                                    error={errorPass2}
-                                    onChange={(value) => onChangePass2(value)}
+                        ) : (
+                            <div className='bg-white rounded-3xl min-h-[500px] md:w-[60%] w-[90%] p-3 shadow-2xl'>
+                                <div className='flex justify-center items-center'>
+                                    <img src={logo} className='w-[100px] me-3' alt='' />
+                                    <h1>TQ Shop</h1>
+                                </div>
+                                <div className='flex justify-center items-center my-5 font-semibold text-[24px] mx-4'>
+                                    Welcome to TQShop! Please signin.
+                                </div>
+                                <div className='mx-3 my-7'>
+                                    <Input
+                                        placeholder="Nhập họ tên"
+                                        title="Họ và tên"
+                                        value={name}
+                                        required
+                                        error={errorName}
+                                        onChange={(value) => onChangeName(value)}
+                                    />
+                                </div>
+                                <div className='mx-3 my-7'>
+                                    <Input
+                                        placeholder="Nhập số điện thoại"
+                                        title="Số điện thoại"
+                                        value={phone}
+                                        required
+                                        error={errorPhone}
+                                        onChange={(value) => onChangePhone(value)}
+                                    />
+                                </div>
+                                <div className='mx-3 my-7'>
+                                    <Input
+                                        placeholder="Mật khẩu"
+                                        password
+                                        title="Nhập mật khẩu"
+                                        value={password1}
+                                        error={errorPass1}
+                                        onChange={(value) => onChangePass1(value)}
 
-                                />
-                            </div>
-                            <div className='flex justify-center items-center'>
-                                <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => SignIn()} >
-                                    Đăng ký
-                                </button>
-                            </div>
+                                    />
+                                </div>
+                                <div className='mx-3 my-7'>
+                                    <Input
+                                        placeholder="Nhập lại mật khẩu"
+                                        password
+                                        title="Xác nhận lại mật khẩu"
+                                        value={password2}
+                                        error={errorPass2}
+                                        onChange={(value) => onChangePass2(value)}
 
-                        </div>
+                                    />
+                                </div>
+                                <div className='flex justify-center items-center'>
+                                    <button className='bg-blue-500 py-4 px-3 rounded-lg min-w-[130px] text-white hover:bg-[#3a57e8] cursor-pointer' onClick={() => SignIn()} >
+                                        Đăng ký
+                                    </button>
+                                </div>
+
+                            </div>
+                        )
+
+
                     )
+                }
 
 
-                )
-            }
+                <ModalLoading open={loading} title={'Đang tải'} />
+            </div >
+            <Footer />
+        </div>
 
-
-            <ModalLoading open={loading} title={'Đang tải'} />
-        </div >
     );
 }
 

@@ -260,12 +260,12 @@ const privateRoutes = [
     {
         path: '/login',
         component: Login_Client,
-        layout: DefaultLayoutClient
+        layout: null,
     },
     {
         path: '/register',
         component: Register,
-        layout: DefaultLayoutClient
+        layout: null
     },
 
 

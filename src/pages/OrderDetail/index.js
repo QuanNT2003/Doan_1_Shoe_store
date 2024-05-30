@@ -271,7 +271,7 @@ function OrderDetail() {
                                 <div className='flex mb-2 font-semibold'>
                                     <div className='w-[50%]'>Trạng thái</div>
                                     <div className='w-[10%]'>:</div>
-                                    <div className='w-[30%]'>{obj.payment.ramain === 0 ? 'Đã thanh toán' : 'Chưa thanh toán'}</div>
+                                    <div className='w-[30%]'>{obj.payment.remain === 0 ? 'Đã thanh toán' : 'Chưa thanh toán'}</div>
                                 </div>
 
 

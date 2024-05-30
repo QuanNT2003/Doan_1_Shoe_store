@@ -80,7 +80,7 @@ function Header() {
     };
 
     const [user, setUser] = useState('')
-    const [number, setNumber] = useState(1)
+    const [number, setNumber] = useState(0)
     useEffect(() => {
         setLoading(true)
         const fetchApi = async () => {
@@ -101,6 +101,7 @@ function Header() {
 
     }, []);
     useEffect(() => {
+
     }, [day]);
     return (
         <div className=' bg-cyan-600 text-white transition-all'>
@@ -148,7 +149,7 @@ function Header() {
 
                     </div>
                     {
-                        window.localStorage.getItem("UserLogin") === 'true' ? (
+                        window.localStorage.getItem('UserLogin') === 'true' ? (
                             <div className='me-6 px-2 py-1 rounded-md cursor-pointer relative' >
                                 <div>
                                     <Button
@@ -185,11 +186,12 @@ function Header() {
                                                 setLoading(true)
                                                 window.localStorage.setItem('user', null);
                                                 window.localStorage.setItem('UserLogin', false);
+                                                setUser('')
                                                 setNumber(0)
                                                 setDay(new Date())
                                                 setLoading(false)
                                                 navigate('/login')
-                                                setUser('')
+
                                             }, 500);
 
                                             handleClose()
@@ -326,11 +328,11 @@ function Header() {
                                             setLoading(true)
                                             window.localStorage.setItem('user', null);
                                             window.localStorage.setItem('UserLogin', false);
+                                            setUser('')
                                             setNumber(0)
                                             setDay(new Date())
                                             setLoading(false)
                                             navigate('/login')
-                                            setUser('')
                                         }, 500);
 
                                         handleClose()

@@ -10,9 +10,13 @@ function Return_Collection() {
     const [data, setData] = useState([])
 
     useEffect(() => {
+        if (window.localStorage.getItem("UserLogin") === 'false') {
+            toastContext.notify('info', 'Bạn chưa đăng nhập');
+            navigate('/login')
+        }
         const fetch = async () => {
             let users = []
-            users.push({ value: JSON.parse(window.localStorage.getItem('user'))._id })
+            users.push({ value: JSON.parse(window.localStorage.getItem('user'))?._id })
             const response = await ReturnServices.getAllReturn({
                 user: users
             })

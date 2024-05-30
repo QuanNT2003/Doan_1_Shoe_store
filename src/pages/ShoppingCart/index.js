@@ -90,6 +90,10 @@ function ShoppingCart() {
     }
 
     useEffect(() => {
+        if (window.localStorage.getItem("UserLogin") === 'false') {
+            toastContext.notify('info', 'Bạn chưa đăng nhập');
+            navigate('/login')
+        }
         setUser(JSON.parse(window.localStorage.getItem('user')))
         getList()
         setLoading(false)
