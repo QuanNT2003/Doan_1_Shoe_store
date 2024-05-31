@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import ChatPlugin from '~/components/ChatPlugin';
 function defaultLayoutClient({ children }) {
     return (
         <div className=' bg-[#e9ecef] bg-no-repeat bg-cover bg-fixed' >
@@ -9,7 +10,7 @@ function defaultLayoutClient({ children }) {
                 {children}
             </div>
             <Footer />
-
+            <ChatPlugin />
         </div>
     );
 }

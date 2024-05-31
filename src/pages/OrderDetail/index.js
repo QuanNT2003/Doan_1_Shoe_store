@@ -14,8 +14,15 @@ import * as OrderProgressServices from '~/apiServices/orderProgressServices'
 import { ToastContext } from '~/components/ToastContext';
 import Comment from '~/components/Comment';
 import { format } from 'date-fns';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import PayPalPayMent from '~/components/PayPalPayment';
 const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
+const initialOptions = {
+    "clientId": "ASHs_lxigQTAUBuJyKxaYO58uuXFh7_eK6o6e4za7WveNu1-R4zmHQC1kpryHHovvK2sjuWaIIt-o_6U",
+    currency: "USD",
+    intent: "capture",
+    // "data-sdk-integration-source": "integrationbuilder_sc",
+};
 function OrderDetail() {
     const navigate = useNavigate();
     const order = useParams();
@@ -273,7 +280,17 @@ function OrderDetail() {
                                     <div className='w-[10%]'>:</div>
                                     <div className='w-[30%]'>{obj.payment.remain === 0 ? 'Đã thanh toán' : 'Chưa thanh toán'}</div>
                                 </div>
-
+                                <div className='mt-5'>
+                                    {obj.payment.remain !== 0 && obj.payment.paymentType === 'paypal' ? (
+                                        <PayPalScriptProvider options={initialOptions}>
+                                            <PayPalPayMent data={{
+                                                orderId: order.id,
+                                                cost: parseFloat(obj.payment.total * 0.000039).toFixed(2)
+                                            }} />
+                                            {/* <PayPalPayMent /> */}
+                                        </PayPalScriptProvider>
+                                    ) : (<div> </div>)}
+                                </div>
 
                             </div>
                             <ModalComp
