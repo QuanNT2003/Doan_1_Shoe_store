@@ -1,40 +1,10 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import React from "react";
 function PayPalPayMent({ data }) {
-    // const createOrder = (data) => {
-    //     // Order is created on the server and the order id is returned
-    //     return fetch("http://localhost:3001/api/paypal/create-paypal-order", {
-    //         method: "POST",
-    //         headers: {
-    //             'content-type': 'application/json'
-    //         },
-    //         // use the "body" param to optionally pass additional order information
-    //         // like product skus and quantities
-    //         body: JSON.stringify({
-    //             product: {
-    //                 description: '123',
-    //                 cost: '10.0'
-    //             }
-    //         }),
-    //     })
-    //         .then(function (res) {
-    //             return res.json();
-    //         }).then(function (res) {
-    //             return res['orderId'];
-    //         });
-    // };
-    const onApprove = (data) => {
-        // Order is captured on the server and the response is returned to the browser
-        return fetch("http://localhost:3001/api/paypal/capture-paypal-order", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                orderId: data.orderId
-            })
-        })
-            .then((response) => response.json());
+    const onApprove = (data, actions) => {
+        return actions.order.capture().then(details => {
+            alert('Transaction completed by ' + details.payer.name.given_name);
+        });
     };
     const createOrder = async (obj) => {
         try {
