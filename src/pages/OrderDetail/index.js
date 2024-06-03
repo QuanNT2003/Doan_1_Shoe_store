@@ -16,6 +16,9 @@ import Comment from '~/components/Comment';
 import { format } from 'date-fns';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import PayPalPayMent from '~/components/PayPalPayment';
+import VNPayPayment from '~/components/VNPayPayment';
+import moment from 'moment';
+
 const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 const initialOptions = {
     "clientId": "ASHs_lxigQTAUBuJyKxaYO58uuXFh7_eK6o6e4za7WveNu1-R4zmHQC1kpryHHovvK2sjuWaIIt-o_6U",
@@ -35,7 +38,7 @@ function OrderDetail() {
 
     const [openModal, setOpenModal] = useState(false);
     const [pending, setPending] = useState(false);
-
+    const now = moment()
     const handleCloseModal = () => {
         setOpenModal(false)
         setItem('')
@@ -109,9 +112,11 @@ function OrderDetail() {
                 setLoading(false);
                 setDay(new Date());
             }
+
         }
 
         fetchApi();
+
     }
 
     const cancel = () => {
@@ -198,7 +203,7 @@ function OrderDetail() {
                                                     item.comment === false && obj.status === "delivered" ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100' onClick={() => handleOpenComment(item, index)}>Viết đánh giá</button> : <div></div>
                                                 }
                                                 {
-                                                    item.exchange_return === false && obj.status === "delivered" ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100 ' onClick={() => handleOpenReturn(item, index)}>Đổi /Trả hàng</button> : <div></div>
+                                                    item.exchange_return === false && obj.status === "delivered" && now.diff(obj.updatedAt, 'days') < 7 ? <button className='border p-4 ssm:w-[30%] w-[45%] border-solid border-slate-400 rounded-md mx-2 hover:bg-slate-100 ' onClick={() => handleOpenReturn(item, index)}>Đổi /Trả hàng</button> : <div></div>
                                                 }
 
                                             </div>
@@ -289,6 +294,13 @@ function OrderDetail() {
                                             }} />
                                             {/* <PayPalPayMent /> */}
                                         </PayPalScriptProvider>
+                                    ) : (<div> </div>)}
+                                    {obj.payment.remain !== 0 && obj.payment.paymentType === 'vnpay' ? (
+                                        <VNPayPayment obj={{
+                                            orderId: obj.orderId,
+                                            amount: obj.payment.total
+
+                                        }} />
                                     ) : (<div> </div>)}
                                 </div>
 
