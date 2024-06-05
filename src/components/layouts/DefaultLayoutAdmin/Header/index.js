@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faAngleLeft,
@@ -15,10 +15,14 @@ import SideBar from '../SideBar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
-
+import { ToastContext } from '~/components/ToastContext';
 function Header({ title, back }) {
 
     const navigate = useNavigate();
+    const [day, setDay] = useState(new Date())
+    const [loading, setLoading] = useState(false);
+    const toastContext = useContext(ToastContext);
+    const [admin, setAdmin] = useState('')
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const show = Boolean(anchorEl);
@@ -33,7 +37,29 @@ function Header({ title, back }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    useEffect(() => {
+        setLoading(true)
+        const fetchApi = async () => {
+            if (window.localStorage.getItem('AdminLogin') === "true") {
+                setAdmin(JSON.parse(window.localStorage.getItem('admin')))
+            }
+            else {
+                navigate('/adminLogin')
+                toastContext.notify('error', 'Chỉ đăng nhập khi có tài khoản Admin');
+            }
+        }
+        fetchApi();
+        setDay(new Date())
+        setLoading(false)
 
+    }, [day]);
+
+    const handleLogOut = () => {
+        setAdmin('')
+        window.localStorage.setItem('admin', null);
+        window.localStorage.setItem('AdminLogin', false);
+        setDay(new Date())
+    }
     return (
         <div className='h-20 bg-white w-full flex justify-between items-center'>
             <div className='flex gap-1 ms-2 items-center'>
@@ -62,9 +88,11 @@ function Header({ title, back }) {
                         onClick={handleShow}
                     >
                         <div className='flex items-center gap-3 text-black'>
-                            <Avatar alt="Remy Sharp" src={example} />
+                            {
+                                admin === '' ? (<div> </div>) : (<Avatar alt="Remy Sharp" src={admin?.images[0]?.url ? admin?.images[0]?.url : example} />)
+                            }
 
-                            <div className='hidden sm:block'>Ngô Trung Quân</div>
+                            <div className='hidden sm:block'>{admin.name}</div>
                         </div>
                     </Button>
                     <Menu
@@ -82,7 +110,7 @@ function Header({ title, back }) {
                             <FontAwesomeIcon icon={faGear} className='me-4 ' />
                             Tài khoản
                         </MenuItem>
-                        <MenuItem onClick={handleHide} className='w-[200px] hover:bg-slate-400'>
+                        <MenuItem onClick={handleLogOut} className='w-[200px] hover:bg-slate-400'>
                             <FontAwesomeIcon icon={faArrowRightFromBracket} className='me-4' />
                             Đăng suất
                         </MenuItem>

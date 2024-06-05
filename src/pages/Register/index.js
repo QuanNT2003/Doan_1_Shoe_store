@@ -86,8 +86,14 @@ function Register() {
                 if (result) {
                     setLoading(false);
                     console.log(result)
-                    setData(result.data)
-                    setProcess(1)
+                    if (result?.message === 'The Email already exists ') {
+                        toastContext.notify('info', 'Email đã được đăng ký');
+                    }
+                    else {
+                        setData(result.data)
+                        setProcess(1)
+                    }
+
                 }
             }
 

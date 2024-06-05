@@ -35,6 +35,8 @@ import ImportList from "~/pages/ImportList";
 import CommentList from "~/pages/CommentList";
 import Return_Collection from "~/pages/ReturnCollection";
 import ReturnDetail from "~/pages/ReturnDetail";
+import YourAccount from "~/pages/YourAccount";
+import Login_Admin from "~/pages/Login_Admin";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -255,19 +257,33 @@ const privateRoutes = [
     {
         path: '/',
         component: HomePage,
-        layout: DefaultLayoutClient
+        layout: DefaultLayoutClient,
+        title: '',
     },
     {
         path: '/login',
         component: Login_Client,
         layout: null,
+        title: ''
+    },
+    {
+        path: '/adminLogin',
+        component: Login_Admin,
+        layout: null,
+        title: ''
     },
     {
         path: '/register',
         component: Register,
-        layout: null
+        layout: null,
+        title: ''
     },
-
+    {
+        path: '/your_account',
+        component: YourAccount,
+        layout: DefaultLayoutClient,
+        title: ''
+    },
 
 ];
 

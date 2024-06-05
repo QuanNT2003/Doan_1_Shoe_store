@@ -171,7 +171,7 @@ function ListComment({ productId }) {
                 '',
                 [{ value: productId }],
                 [{ value: true }],
-                selectedStar
+                selectedStar.length === 0 ? '' : selectedStar
             ));
     }
 

@@ -160,7 +160,10 @@ function Header() {
                                         onClick={handleShow}
                                     >
                                         <div className='flex items-center gap-3 text-black'>
-                                            <Avatar alt="Remy Sharp" src={example} />
+                                            {
+                                                user === '' ? (<div> </div>) : (<Avatar alt="Remy Sharp" src={user?.images[0].url ? user?.images[0].url : example} />)
+                                            }
+
 
                                             <div className='hidden sm:block text-white text-[13px]'>{user.name}</div>
                                         </div>
@@ -176,7 +179,7 @@ function Header() {
 
 
                                     >
-                                        <MenuItem className='w-[200px] hover:bg-slate-400'>
+                                        <MenuItem className='w-[200px] hover:bg-slate-400' onClick={() => navigate('/your_account')}>
                                             <FontAwesomeIcon icon={faGear} className='me-4 ' />
                                             Tài khoản
                                         </MenuItem>
@@ -307,7 +310,7 @@ function Header() {
                         window.localStorage.getItem("UserLogin") === 'true' ? (
                             <div>
                                 <NavLink
-                                    to='/login'
+                                    to='/your_account'
                                     className={({ isActive }) =>
                                         isActive ? 'active navlink' : 'navlink'
                                     }
