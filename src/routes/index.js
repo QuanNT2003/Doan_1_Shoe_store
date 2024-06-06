@@ -37,6 +37,7 @@ import Return_Collection from "~/pages/ReturnCollection";
 import ReturnDetail from "~/pages/ReturnDetail";
 import YourAccount from "~/pages/YourAccount";
 import Login_Admin from "~/pages/Login_Admin";
+import SellReport from "~/pages/AdminReport";
 import { DefaultLayoutAdmin } from "~/components/layouts";
 import { DefaultLayoutClient } from "~/components/layouts";
 const publicRoutes = [
@@ -249,6 +250,12 @@ const publicRoutes = [
         path: '/comments',
         component: CommentList,
         title: 'Danh sách nhập hàng',
+        layout: DefaultLayoutAdmin,
+    },
+    {
+        path: '/reports',
+        component: SellReport,
+        title: 'Báo cáo doanh thu',
         layout: DefaultLayoutAdmin,
     },
 ];

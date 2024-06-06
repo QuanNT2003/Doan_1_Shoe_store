@@ -76,7 +76,7 @@ function SideBar() {
         },
         {
             title: 'Báo cáo thông kê',
-            path: '/',
+            path: '/reports',
             icon: <FontAwesomeIcon icon={faChartSimple} className='me-4 ' />,
 
         }

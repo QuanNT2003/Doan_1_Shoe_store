@@ -52,7 +52,7 @@ function Header({ title, back }) {
         setDay(new Date())
         setLoading(false)
 
-    }, [day]);
+    }, []);
 
     const handleLogOut = () => {
         setAdmin('')
