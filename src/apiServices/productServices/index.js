@@ -55,6 +55,16 @@ export const getProduct = async (id) => {
     }
 }
 
+export const getRelatedProducts = async (id) => {
+    try {
+        const res = await request.getMethod('api/product/get-related-products/' + id);
+        console.log(res);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
 export const UpdateProduct = async (id, obj) => {
     try {
         const res = await request.putMethod('api/product/update/' + id, obj);

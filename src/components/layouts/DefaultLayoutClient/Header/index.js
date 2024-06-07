@@ -26,6 +26,7 @@ import Avatar from '@mui/material/Avatar';
 import ModalLoading from '~/components/ModalLoading';
 import Badge from '@mui/material/Badge';
 import * as ShoppingCartServices from '~/apiServices/productCartServices'
+import * as NotifiServices from '~/apiServices/notifiServices'
 const links = [
     {
         title: 'Trang chủ',
@@ -81,6 +82,7 @@ function Header() {
 
     const [user, setUser] = useState('')
     const [number, setNumber] = useState(0)
+    const [notifi, setNotifi] = useState([])
     useEffect(() => {
         setLoading(true)
         const fetchApi = async () => {
@@ -92,6 +94,15 @@ function Header() {
                 if (result) {
                     setNumber(result.total)
                     console.log(result);
+                }
+
+                const notifiResult = await NotifiServices.getAllNotifi({
+                    userId: JSON.parse(window.localStorage.getItem('user')).userId
+                })
+
+                if (notifiResult) {
+                    setNotifi(notifiResult.data)
+                    console.log(notifiResult);
                 }
             }
         }
@@ -130,8 +141,24 @@ function Header() {
                             <div className='flex justify-end'>
                                 <div className='triangle-up border'></div>
                             </div>
-                            <div className='min-w-[300px] min-h-[400px] bg-white rounded-md rounded-tr-[0] p-2 border '>
-                                123
+                            <div className='w-[320px] min-h-[400px] bg-white rounded-md rounded-tr-[0] p-2 border '>
+                                {
+                                    window.localStorage.getItem('UserLogin') === 'true' ? (
+                                        <div>
+                                            {
+                                                notifi.map((item, index) => (
+                                                    <div key={index} className='text-black h-[60px] border-b text-wrap text-[13px] font-medium p-1 mt-3'>
+                                                        {item.note}
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                    ) : (
+                                        <div className='flex justify-center items-center text-black transition-all'>
+                                            Bạn chưa đăng nhập
+                                        </div>
+                                    )
+                                }
                             </div>
                         </div>
                     </div>

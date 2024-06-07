@@ -89,6 +89,7 @@ function ProductPage() {
     const [obj, setObj] = useState(null);
     const [updatePage, setUpdatePage] = useState(new Date());
     const [user, setUser] = useState('')
+    const [listRelated, setListRelated] = useState([])
 
     // Add to cart
     const [sizeList, setSizeList] = useState([])
@@ -137,6 +138,10 @@ function ProductPage() {
     }
 
     const addToCart = async () => {
+        if (window.localStorage.getItem("UserLogin") !== 'true') {
+            toastContext.notify('info', 'Bạn chưa đăng nhập');
+            navigate('/login')
+        }
         const fetchApi = async () => {
             setLoading(true)
             const cartItem = {
@@ -165,6 +170,7 @@ function ProductPage() {
     useEffect(() => {
         const fetchApi = async () => {
             setLoading(true)
+            setObj(null)
             setUser(JSON.parse(window.localStorage.getItem('user')))
             const result = await ProductServices.getProduct(productID.id)
                 .catch((err) => {
@@ -195,12 +201,22 @@ function ProductPage() {
                 setColorList(data)
 
             }
+
+            const related = await ProductServices.getRelatedProducts(productID.id)
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            if (related) {
+                setListRelated(related.data)
+
+            }
         }
 
         fetchApi();
         setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [productID.id]);
 
     // Content
     const [showall, setShowAll] = useState(false)
@@ -217,6 +233,10 @@ function ProductPage() {
 
     const [listBuy, setListBuy] = useState([])
     const handleOpen = () => {
+        if (window.localStorage.getItem("UserLogin") !== 'true') {
+            toastContext.notify('info', 'Bạn chưa đăng nhập');
+            navigate('/login')
+        }
         if (version === undefined) {
             toastContext.notify('warning', 'Chưa chọn phiên bản sản phẩm');
         }
@@ -347,7 +367,7 @@ function ProductPage() {
                         <div className='bg-white m-5 mb-10 p-5 rounded-lg'>
                             <Select_Rating productId={obj.productId} />
                         </div>
-                        <ProductCarousel title={'Sản phẩm tương tự'} listProduct={listProduct} path='/products' />
+                        <ProductCarousel title={'Sản phẩm tương tự'} listProduct={listRelated} path='/' />
                         <ModalComp
                             open={openModal}
                             handleClose={handleCloseModal}

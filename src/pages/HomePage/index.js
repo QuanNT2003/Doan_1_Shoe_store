@@ -5,12 +5,14 @@ import ProductCarousel from '~/components/ProductCarousel';
 import Product_WC_item from '~/components/Product_WC_Item';
 import * as ProductServices from '~/apiServices/productServices'
 import * as CategoryServices from '~/apiServices/categoryServices';
+import * as ReportServices from '~/apiServices/reportServices'
 import { ToastContext } from '~/components/ToastContext';
 
 function HomePage() {
     const toastContext = useContext(ToastContext);
     const [listSale, setListSale] = useState([])
     const [listNew, setListNew] = useState([])
+    const [listTop, setListTop] = useState([])
     const [listJustForYou, setListJustForYou] = useState([])
     const [listCategories, setListCategories] = useState([])
     const [pendingSale, setPendingSale] = useState(false)
@@ -100,6 +102,22 @@ function HomePage() {
                     1,
                     20,
                 ), setListJustForYou, setPendingJustForYou);
+            const now = new Date();
+            const result = await ReportServices.GetTopProduct({
+                month: now.getMonth() + 1,
+                year: now.getFullYear(),
+            })
+                .catch((error) => {
+                    if (error?.response?.status === 404) {
+                        setListTop([]);
+                    } else {
+                        toastContext.notify('error', 'Có lỗi xảy ra');
+                    }
+                });
+            if (result) {
+                console.log(result);
+                setListTop(result.data)
+            }
             getCate()
         }
 
@@ -112,7 +130,7 @@ function HomePage() {
             <ProductCarousel title={'Siêu khuyến mãi'} listProduct={listSale} path='/collection/desc&discount' />
             <ProductCarousel title={'Sản phẩm mới'} listProduct={listNew} path='/collection/desc&creatAt' />
             <Categories list={listCategories} />
-            <ProductCarousel title={'Mua nhiều nhất'} listProduct={listNew} path='/collection/123' />
+            <ProductCarousel title={'Mua nhiều nhất'} listProduct={listTop} path='/' />
             <div className='bg-white m-5 mb-10 p-3 rounded-lg'>
                 <div className='mb-2 ms-3 h-[40px] flex items-center justify-between'>
                     <div className='font-bold text-[16px]'>Just for you</div>

@@ -186,7 +186,7 @@ function SellReport() {
 
             const responseTopProducts = await reportServices.GetTopProduct(
                 {
-                    month: now.getMonth(),
+                    month: now.getMonth() + 1,
                     year: now.getFullYear(),
                 }
             )

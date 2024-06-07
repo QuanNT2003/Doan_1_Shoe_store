@@ -257,38 +257,67 @@ function YourAccount() {
             setLoading(true);
             const fetchApi = async () => {
                 let isSuccess = true;
-                for (let image of imagesDelete) {
-                    const obj = {
-                        publicId: image.publicId
+                if (images.length === 0) {
+                    for (let image of imagesDelete) {
+                        const obj = {
+                            publicId: image.publicId
+                        }
+
+
+                        const result = await ImageServices.DeleteImage(obj)
+                            .catch((err) => {
+                                console.log(err);
+                            });
+                        if (result) console.log(result)
                     }
-
-
-                    const result = await ImageServices.DeleteImage(obj)
-                        .catch((err) => {
-                            console.log(err);
+                    const image = {
+                        images: files
+                    }
+                    const resultImage = await ImageServices.AddImages(image)
+                        .catch((error) => {
+                            console.log(error);
+                            toastContext.notify('error', 'Có lỗi xảy ra');
                         });
-                    if (result) console.log(result)
-                }
-                const image = {
-                    images: files
-                }
-                const resultImage = await ImageServices.AddImages(image)
-                    .catch((error) => {
-                        console.log(error);
-                        toastContext.notify('error', 'Có lỗi xảy ra');
-                    });
 
-                if (resultImage) {
-                    for (let image of resultImage.data) {
-                        submitImage.push(image)
+                    if (resultImage) {
+                        for (let image of resultImage.data) {
+                            submitImage.push(image)
+                        }
+                        const newObj = {
+                            ...obj,
+                            name: name,
+                            email: email,
+                            phone: phone,
+                            address: address,
+                            images: submitImage,
+                        }
+
+                        const result = await UserServices.UpdateUser(obj.userId, newObj)
+                            .catch((err) => {
+                                console.log(err);
+                                isSuccess = false;
+                                setLoading(false);
+                                toastContext.notify('error', 'Có lỗi xảy ra');
+                            });
+
+                        if (isSuccess) {
+                            setLoading(false);
+                            toastContext.notify('success', 'Đã cập nhật thông tin');
+                            handleCloseModalConfirm()
+                            handleCloseModalUpdate()
+                            setSubmit([])
+                            setDay(new Date());
+                        }
                     }
+
+                }
+                else {
                     const newObj = {
                         ...obj,
                         name: name,
                         email: email,
                         phone: phone,
                         address: address,
-                        images: submitImage,
                     }
 
                     const result = await UserServices.UpdateUser(obj.userId, newObj)
@@ -308,6 +337,7 @@ function YourAccount() {
                         setDay(new Date());
                     }
                 }
+
 
             }
 
