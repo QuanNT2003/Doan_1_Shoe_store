@@ -5,7 +5,11 @@ import reportWebVitals from './reportWebVitals';
 import GlobalStyles from '~/components/GlobalStyles';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastProvider } from '~/components/ToastContext';
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import { createRoot } from 'react-dom/client';
+
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
+
 root.render(
   <Router>
     <ToastProvider>
@@ -14,7 +18,6 @@ root.render(
       </GlobalStyles>
     </ToastProvider>
   </Router>
-
 );
 
 // If you want to start measuring performance in your app, pass a function
