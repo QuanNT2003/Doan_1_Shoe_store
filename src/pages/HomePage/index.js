@@ -128,8 +128,8 @@ function HomePage() {
     return (
         <div className='select-none'>
             <ProductCarousel title={'Siêu khuyến mãi'} listProduct={listSale} path='/collection/desc&discount' />
-            <ProductCarousel title={'Sản phẩm mới'} listProduct={listNew} path='/collection/desc&creatAt' />
             <Categories list={listCategories} />
+            <ProductCarousel title={'Sản phẩm mới'} listProduct={listNew} path='/collection/desc&creatAt' />
             <ProductCarousel title={'Mua nhiều nhất'} listProduct={listTop} path='/' />
             <div className='bg-white m-5 mb-10 p-3 rounded-lg'>
                 <div className='mb-2 ms-3 h-[40px] flex items-center justify-between'>

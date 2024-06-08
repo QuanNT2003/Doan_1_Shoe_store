@@ -7,11 +7,16 @@ export const getAllusers = async (params) => {
             params,
             paramsSerializer: (params) => {
                 const serializedParams = Object.keys(params).map((key) => {
-                    if (key === 'limit' || key === 'page' || key === 'search') {
+                    if (key === 'limit' || key === 'page' || key === 'name') {
                         return key + '=' + params[key];
                     }
                     if (key === 'sortBy' || key === 'orderBy') {
                         return 'sort' + '=' + params[key];
+                    }
+                    if (key === 'active') {
+                        let string = ''
+                        for (let item of params[key]) string += key + '=' + item.value + '&';
+                        return string
                     }
                 }).join('&');
 

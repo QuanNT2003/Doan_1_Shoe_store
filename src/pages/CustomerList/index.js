@@ -15,8 +15,7 @@ function CustomerList() {
     const navigate = useNavigate();
     const toastContext = useContext(ToastContext);
     const [search, setSearch] = useState('')
-    const handleSearch = async (e) => {
-        setSearch(e.target.value);
+    const handleSearch = async () => {
         setPage(1);
         getList(
             await createObjectQuery(
@@ -45,7 +44,8 @@ function CustomerList() {
         limit,
         sortBy,
         orderBy,
-        search,
+        name,
+        active
     ) => {
 
 
@@ -54,7 +54,8 @@ function CustomerList() {
             page,
             ...(orderBy && { orderBy }),
             ...(sortBy && { sortBy }),
-            ...(search && { search }),
+            ...(name && { name }),
+            ...(active && { active }),
         };
     }
 
@@ -98,6 +99,7 @@ function CustomerList() {
                 sortBy,
                 orderBy,
                 search,
+                selectedTT
             )
         );
         handleCloseFilter();
@@ -164,6 +166,7 @@ function CustomerList() {
                     placeholderSearch={'Tìm kiếm theo mã, tên khuyến mãi'}
                     search={search}
                     handleSearch={handleSearch}
+                    setSearch={setSearch}
                     // handleKeyDown={handleKeyDown}
                     filterComponent={
                         <Filter
