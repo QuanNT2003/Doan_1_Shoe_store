@@ -10,7 +10,7 @@ function defaultLayoutClient({ children }) {
                 {children}
             </div>
             <Footer />
-            <ChatPlugin />
+            {/* <ChatPlugin /> */}
         </div>
     );
 }

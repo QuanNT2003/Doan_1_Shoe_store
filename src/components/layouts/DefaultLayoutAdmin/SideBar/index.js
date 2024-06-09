@@ -69,12 +69,6 @@ function SideBar() {
 
         },
         {
-            title: 'Chat với khách hàng',
-            path: '/',
-            icon: <FontAwesomeIcon icon={faMessage} className='me-4 ' />,
-
-        },
-        {
             title: 'Báo cáo thông kê',
             path: '/reports',
             icon: <FontAwesomeIcon icon={faChartSimple} className='me-4 ' />,
