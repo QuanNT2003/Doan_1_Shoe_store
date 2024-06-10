@@ -312,7 +312,6 @@ function ProductList() {
         <div>
             <div className='frame flex'>
                 <LinkButton path='/products/add' placeholder='Thêm sản phẩm' icon={<FontAwesomeIcon icon={faPlus} />} />
-                <LinkButton path='/products/colors' placeholder='Danh sách mẫu màu' icon={<FontAwesomeIcon icon={faList} />} />
             </div>
             <div className='frame'>
                 <List
