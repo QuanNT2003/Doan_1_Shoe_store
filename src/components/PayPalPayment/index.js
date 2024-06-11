@@ -1,6 +1,8 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
-import React from "react";
+import React, { useContext } from "react";
+import { ToastContext } from '~/components/ToastContext';
 function PayPalPayMent({ data }) {
+    const toastContext = useContext(ToastContext);
     const onApprove = (data, actions) => {
         return actions.order.capture().then(details => {
             alert('Transaction completed by ' + details.payer.name.given_name);
@@ -23,7 +25,7 @@ function PayPalPayMent({ data }) {
 
             const data = await response.json();
             if (!response.ok) {
-                throw new Error(data.message || 'Something went wrong');
+                toastContext.notify('info', 'Đã thanh toán, vui lòng đợi xác nhận từ quản trị viên');
             }
             return data.id;
         } catch (error) {

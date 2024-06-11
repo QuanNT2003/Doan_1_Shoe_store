@@ -242,7 +242,7 @@ function UpdateProduct() {
             });
 
         if (response) {
-            const data = await response.data.map((cate) => ({ label: cate.name, value: cate.categoryId, obj: cate }));
+            const data = await response.data.map((cate) => ({ label: cate.brand.name, value: cate.categoryId, obj: cate.brand }));
             setOptionsSupplier(data);
         }
     }

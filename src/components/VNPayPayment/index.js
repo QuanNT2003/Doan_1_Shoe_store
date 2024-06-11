@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import ModalComp from '~/components/ModalComp';
+import { ToastContext } from '~/components/ToastContext';
 function VNPayPayment({ obj }) {
+    const toastContext = useContext(ToastContext);
     const [openModal, setOpenModal] = useState(false);
     const handleCloseModal = () => {
         setOpenModal(false)
@@ -27,6 +29,7 @@ function VNPayPayment({ obj }) {
             const data = await response.json();
             console.log(data);
             if (data.data) {
+                toastContext.notify('info', 'Đã thanh toán, vui lòng đợi xác nhận từ quản trị viên');
                 window.location.href = data.data;
             }
         } catch (error) {
