@@ -68,7 +68,7 @@ function InfoBrand() {
                                 Ảnh đại diện
                                 <hr />
                                 <div className='flex justify-center items-center mt-9'>
-                                    <img src={obj.image[0].url} className=' h-fit rounded-lg w-fit max-h-[200px]' />
+                                    <img src={obj?.image[0]?.url} className=' h-fit rounded-lg w-fit max-h-[200px]' />
                                 </div>
                             </div>
 

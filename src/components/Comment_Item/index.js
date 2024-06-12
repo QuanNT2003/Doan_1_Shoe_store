@@ -40,7 +40,7 @@ function CommentItem({ comment }) {
             {
                 comment.rep === false ? <div> </div> :
                     <div className='mb-3 min-w-[300px] pt-5 ps-5 bg-gray-100 rounded-md p-2 border'>
-                        <div className='mb-2'>{format(new Date(comment.rep_detail.day), 'dd/MM/yyyy - HH:mm')}</div>
+                        <div className='mb-2'>{format(new Date(comment.updatedAt), 'dd/MM/yyyy - HH:mm')}</div>
                         <div className='mb-10'>
                             {comment.rep_detail.note}
                         </div>

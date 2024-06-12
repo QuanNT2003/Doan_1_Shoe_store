@@ -14,7 +14,7 @@ export const BrandItem = [
                 <div
                     className='h-[50px] w-[50px] bg-no-repeat bg-center mr-[30px] bg-contain'
                     style={{
-                        backgroundImage: `url('${row.brand.image[0].url ? row.brand.image[0].url : noImage}')`,
+                        backgroundImage: `url('${row.brand?.image[0]?.url ? row.brand?.image[0]?.url : noImage}')`,
                     }}
                     data-tag="allowRowEvents"
                 ></div>

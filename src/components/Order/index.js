@@ -165,6 +165,7 @@ function Order({
                 });
 
             if (result) {
+                console.log(result);
                 setListPay(result.pay)
                 setListSale(result.sale)
                 setListShip(result.ship)
