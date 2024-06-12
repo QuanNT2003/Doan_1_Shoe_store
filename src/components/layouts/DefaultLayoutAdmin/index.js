@@ -5,7 +5,7 @@ import Header from './Header';
 
 function defaultLayoutAdmin({ children, title, back }) {
     return (
-        <div className='flex h-screen bg-[#e9ecef]'>
+        <div className='flex h-screen bg-[#e9ecef] select-none'>
             <div className='hidden bg-white sm:block w-[15%] min-w-[25vh] transition-all'>
                 <SideBar />
             </div>

@@ -120,7 +120,7 @@ function Exchange_Return({ item, update, handleCloseModal, orderId }) {
                     total: item.total
                 },
                 exchange: stype,
-                exchangeItem: stype === false ? newProduct : {},
+                exchangeItem: stype === true ? newProduct : {},
                 status: 'receiving',
                 orderId: orderId
             }

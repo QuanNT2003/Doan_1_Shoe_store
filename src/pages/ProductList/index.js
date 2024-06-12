@@ -41,7 +41,7 @@ function ProductList() {
                 selectedManufacturer,
                 selectedLSP,
                 selectedPL,
-                price
+                price[1] === 0 ? '' : price
             )
         );
 

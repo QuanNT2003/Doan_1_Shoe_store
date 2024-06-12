@@ -29,6 +29,7 @@ function VNPayPayment({ obj }) {
             const data = await response.json();
             console.log(data);
             if (data.data) {
+                console.log(data.data);
                 toastContext.notify('info', 'Đã thanh toán, vui lòng đợi xác nhận từ quản trị viên');
                 window.location.href = data.data;
             }

@@ -37,9 +37,11 @@ const topProductsOptions = {
         }
     }
 };
-
+const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 function SellReport() {
     const toastContext = useContext(ToastContext);
+    const [totalCost, setTotalCost] = useState(0)
+    const [totalRevenue, setTotalRevenue] = useState(0)
 
     const createObjectQuery = async (
         startDate,
@@ -89,6 +91,14 @@ function SellReport() {
             setRevenues(responseMoney.totalRevenue)
             setInvests(responseMoney.totalCost)
             setMoneyLabels(responseMoney.timePeriods)
+            let cost = 0
+            for (let item of responseMoney.totalCost) cost += item
+            setTotalCost(cost)
+
+            let revenue = 0
+            for (let item of responseMoney.totalRevenue) revenue += item
+            setTotalRevenue(revenue)
+
         }
 
         setLoadingMoney(false);
@@ -259,6 +269,16 @@ function SellReport() {
                         className='max-w-[200px] ml-5'
                         color="primary"
                     />}
+                </div>
+                <div className='md:flex'>
+                    <div className='md:w-[50%] flex flex-col items-center'>
+                        <div>Tổng doanh thu</div>
+                        <div className='text-[25px] font-medium text-blue-600 mt-3'>{addCommas(totalRevenue)} đ</div>
+                    </div>
+                    <div className='md:w-[50%] flex flex-col items-center'>
+                        <div>Tổng nhập hàng</div>
+                        <div className='text-[25px] font-medium text-pink-600 mt-3'>{addCommas(totalCost)} đ</div>
+                    </div>
                 </div>
                 <div className='h-[900px]'>
                     <ChartComp type={chartType.value}

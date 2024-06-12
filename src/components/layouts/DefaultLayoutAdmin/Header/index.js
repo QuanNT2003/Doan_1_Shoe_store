@@ -58,6 +58,7 @@ function Header({ title, back }) {
         setAdmin('')
         window.localStorage.setItem('admin', null);
         window.localStorage.setItem('AdminLogin', false);
+        navigate('/adminLogin')
         setDay(new Date())
     }
     return (
