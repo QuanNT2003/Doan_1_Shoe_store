@@ -38,19 +38,24 @@ function Header({ title, back }) {
     const handleClose = () => setOpen(false);
 
     useEffect(() => {
-        setLoading(true)
-        const fetchApi = async () => {
-            if (window.localStorage.getItem('AdminLogin') === "true") {
-                setAdmin(JSON.parse(window.localStorage.getItem('admin')))
+        const timer = setTimeout(() => {
+            setLoading(true)
+            const fetchApi = async () => {
+                if (window.localStorage.getItem('AdminLogin') === "true") {
+                    setAdmin(JSON.parse(window.localStorage.getItem('admin')))
+                }
+                else {
+                    navigate('/adminLogin')
+                    toastContext.notify('error', 'Chỉ đăng nhập khi có tài khoản Admin');
+                }
             }
-            else {
-                navigate('/adminLogin')
-                toastContext.notify('error', 'Chỉ đăng nhập khi có tài khoản Admin');
-            }
-        }
-        fetchApi();
-        setDay(new Date())
-        setLoading(false)
+            fetchApi();
+            setDay(new Date())
+            setLoading(false)
+        }, 5000); // 3000 milliseconds = 3 seconds
+
+        // Cleanup function để hủy timer nếu component bị unmount trước khi timer chạy
+        return () => clearTimeout(timer);
 
     }, []);
 

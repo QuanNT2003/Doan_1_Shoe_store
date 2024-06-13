@@ -289,7 +289,7 @@ function OrderDetail() {
                                     {obj.payment.remain !== 0 && obj.payment.paymentType === 'paypal' ? (
                                         <PayPalScriptProvider options={initialOptions}>
                                             <PayPalPayMent data={{
-                                                orderId: order.id,
+                                                obj: obj,
                                                 cost: parseFloat(obj.payment.total * 0.000039).toFixed(2)
                                             }} />
                                             {/* <PayPalPayMent /> */}

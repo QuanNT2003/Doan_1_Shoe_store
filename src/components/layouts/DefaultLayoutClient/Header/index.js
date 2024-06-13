@@ -27,6 +27,8 @@ import ModalLoading from '~/components/ModalLoading';
 import Badge from '@mui/material/Badge';
 import * as ShoppingCartServices from '~/apiServices/productCartServices'
 import * as NotifiServices from '~/apiServices/notifiServices'
+import moment from 'moment';
+import { format } from 'date-fns';
 const links = [
     {
         title: 'Trang chủ',
@@ -56,7 +58,7 @@ const links = [
 
 ]
 function Header() {
-
+    const now = moment()
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
     const handleOpen = () => setOpen(true);
@@ -84,31 +86,37 @@ function Header() {
     const [number, setNumber] = useState(0)
     const [notifi, setNotifi] = useState([])
     useEffect(() => {
-        setLoading(true)
-        const fetchApi = async () => {
-            setUser(JSON.parse(window.localStorage.getItem('user')))
-            if (window.localStorage.getItem('UserLogin') === "true") {
-                const result = await ShoppingCartServices.getAllCarts({
-                    user: JSON.parse(window.localStorage.getItem('user'))._id
-                })
-                if (result) {
-                    setNumber(result.total)
-                    console.log(result);
-                }
+        const timer = setTimeout(() => {
+            setLoading(true)
+            const fetchApi = async () => {
+                setUser(JSON.parse(window.localStorage.getItem('user')))
+                if (window.localStorage.getItem('UserLogin') === "true") {
+                    const result = await ShoppingCartServices.getAllCarts({
+                        user: JSON.parse(window.localStorage.getItem('user'))._id
+                    })
+                    if (result) {
+                        setNumber(result.total)
+                        console.log(result);
+                    }
 
-                const notifiResult = await NotifiServices.getAllNotifi({
-                    userId: JSON.parse(window.localStorage.getItem('user')).userId
-                })
+                    const notifiResult = await NotifiServices.getAllNotifi({
+                        userId: JSON.parse(window.localStorage.getItem('user')).userId
+                    })
 
-                if (notifiResult) {
-                    setNotifi(notifiResult.data)
-                    console.log(notifiResult);
+                    if (notifiResult) {
+                        setNotifi(notifiResult.data)
+                        console.log(notifiResult);
+                    }
                 }
             }
-        }
-        fetchApi();
-        setDay(new Date())
-        setLoading(false)
+            fetchApi();
+            setDay(new Date())
+            setLoading(false)
+        }, 3000); // 3000 milliseconds = 3 seconds
+
+        // Cleanup function để hủy timer nếu component bị unmount trước khi timer chạy
+        return () => clearTimeout(timer);
+
 
     }, []);
     useEffect(() => {
@@ -147,8 +155,10 @@ function Header() {
                                         <div>
                                             {
                                                 notifi.map((item, index) => (
-                                                    <div key={index} className='text-black h-[60px] border-b text-wrap text-[13px] font-medium p-1 mt-3'>
-                                                        {item.note}
+                                                    <div key={index} className='border-b'>
+                                                        <div className='text-black h-[70px]  text-wrap text-[13px] font-medium p-1 mt-3'>{item.note} </div>
+                                                        <div className='h-[20px] text-black text-[12px]'>{now.diff(item.createdAt, 'days') > 1 ? format(new Date(item.createdAt), 'dd MMM yyyy - HH:mm') : now.diff(item.createdAt, 'hours') + ' giờ trước'} </div>
+
                                                     </div>
                                                 ))
                                             }
@@ -162,7 +172,7 @@ function Header() {
                             </div>
                         </div>
                     </div>
-                    <div className='me-5 hover:cursor-pointer group relative '>
+                    <div className='me-5 hover:cursor-pointer group relative ' onClick={() => navigate('/shopping_cart')}>
                         <div className='flex justify-center items-center group-hover:scale-110'>
                             <Badge badgeContent={number} color="primary" className='me-4'>
                                 <FontAwesomeIcon icon={faCartShopping} className=' w-[25px] h-[25px] ' />

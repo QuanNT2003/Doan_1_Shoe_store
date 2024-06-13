@@ -167,7 +167,8 @@ function InfoOrder() {
 
             const newObj = {
                 ...obj,
-                payment: payment
+                payment: payment,
+                paymentPending: false
             }
 
             const result = await OrderServices.UpdateOrder(order.id, newObj)
@@ -213,7 +214,19 @@ function InfoOrder() {
                                                 : obj.status === 'delivered' ? 'Đã giao' : 'Đã hủy đơn'}
                                 </div>
                             </div>
+                            <div className='mx-3'>
+                                {
+                                    obj.paymentPending && obj.paymentPending === true ? (
+                                        <div className='flex justify-center items-center rounded-[20px] py-[5px] px-[10px] h-9 text-[15px] bg-[#ecfdf3] text-[#027948]'>
+                                            Khách hàng đã thanh toán
+                                        </div>) : (
+                                        <div>
+
+                                        </div>)
+                                }
+                            </div>
                         </div>
+
                         <div className='frame'>
                             Thông tin khách hàng
                             <hr />
