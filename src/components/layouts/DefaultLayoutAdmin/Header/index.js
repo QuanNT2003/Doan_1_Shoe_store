@@ -41,7 +41,7 @@ function Header({ title, back }) {
         const timer = setTimeout(() => {
             setLoading(true)
             const fetchApi = async () => {
-                if (window.localStorage.getItem('AdminLogin') === "true") {
+                if (window.localStorage.getItem('role') === "admin") {
                     setAdmin(JSON.parse(window.localStorage.getItem('admin')))
                 }
                 else {
@@ -52,7 +52,7 @@ function Header({ title, back }) {
             fetchApi();
             setDay(new Date())
             setLoading(false)
-        }, 5000); // 3000 milliseconds = 3 seconds
+        }, 500); // 3000 milliseconds = 3 seconds
 
         // Cleanup function để hủy timer nếu component bị unmount trước khi timer chạy
         return () => clearTimeout(timer);
@@ -62,7 +62,9 @@ function Header({ title, back }) {
     const handleLogOut = () => {
         setAdmin('')
         window.localStorage.setItem('admin', null);
-        window.localStorage.setItem('AdminLogin', false);
+        window.localStorage.setItem('role', null);
+        window.localStorage.setItem('access_token', null);
+        window.localStorage.setItem('refresh_token', null);
         navigate('/adminLogin')
         setDay(new Date())
     }

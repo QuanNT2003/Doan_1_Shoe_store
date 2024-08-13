@@ -90,7 +90,7 @@ function Header() {
             setLoading(true)
             const fetchApi = async () => {
                 setUser(JSON.parse(window.localStorage.getItem('user')))
-                if (window.localStorage.getItem('UserLogin') === "true") {
+                if (window.localStorage.getItem('role') === "user") {
                     const result = await ShoppingCartServices.getAllCarts({
                         user: JSON.parse(window.localStorage.getItem('user'))._id
                     })
@@ -151,7 +151,7 @@ function Header() {
                             </div>
                             <div className='w-[320px] min-h-[400px] bg-white rounded-md rounded-tr-[0] p-2 border '>
                                 {
-                                    window.localStorage.getItem('UserLogin') === 'true' ? (
+                                    window.localStorage.getItem('role') === 'user' ? (
                                         <div>
                                             {
                                                 notifi.map((item, index) => (
@@ -186,7 +186,7 @@ function Header() {
 
                     </div>
                     {
-                        window.localStorage.getItem('UserLogin') === 'true' ? (
+                        window.localStorage.getItem('role') === 'user' ? (
                             <div className='me-6 px-2 py-1 rounded-md cursor-pointer relative' >
                                 <div>
                                     <Button
@@ -225,7 +225,9 @@ function Header() {
                                             setTimeout(() => {
                                                 setLoading(true)
                                                 window.localStorage.setItem('user', null);
-                                                window.localStorage.setItem('UserLogin', false);
+                                                window.localStorage.setItem('role', null);
+                                                window.localStorage.setItem('access_token', null);
+                                                window.localStorage.setItem('refresh_token', null);
                                                 setUser('')
                                                 setNumber(0)
                                                 setDay(new Date())
@@ -344,7 +346,7 @@ function Header() {
                         <div className='pe-2 text-[18px]'>Thông báo</div>
                     </NavLink>
                     {
-                        window.localStorage.getItem("UserLogin") === 'true' ? (
+                        window.localStorage.getItem("role") === 'user' ? (
                             <div>
                                 <NavLink
                                     to='/your_account'
@@ -367,7 +369,9 @@ function Header() {
                                         setTimeout(() => {
                                             setLoading(true)
                                             window.localStorage.setItem('user', null);
-                                            window.localStorage.setItem('UserLogin', false);
+                                            window.localStorage.setItem('role', null);
+                                            window.localStorage.setItem('access_token', null);
+                                            window.localStorage.setItem('refresh_token', null);
                                             setUser('')
                                             setNumber(0)
                                             setDay(new Date())

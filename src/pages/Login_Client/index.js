@@ -57,7 +57,9 @@ function Login_Client() {
                     if (result.data.active === false) toastContext.notify('error', 'Tài khoản đã bị khóa');
                     else {
                         window.localStorage.setItem('user', JSON.stringify(result.data));
-                        window.localStorage.setItem('UserLogin', true);
+                        window.localStorage.setItem('access_token', JSON.stringify(result.access_token));
+                        window.localStorage.setItem('refresh_token', JSON.stringify(result.refresh_token));
+                        window.localStorage.setItem('role', "user");
                         toastContext.notify('success', 'Đăng nhập thành công');
                         navigate('/');
                     }

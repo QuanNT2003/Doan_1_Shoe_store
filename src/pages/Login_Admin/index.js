@@ -53,7 +53,9 @@ function Login_Admin() {
                     if (result.data.active === false) toastContext.notify('error', 'Tài khoản đã bị khóa');
                     else {
                         window.localStorage.setItem('admin', JSON.stringify(result.data));
-                        window.localStorage.setItem('AdminLogin', true);
+                        window.localStorage.setItem('access_token', JSON.stringify(result.access_token));
+                        window.localStorage.setItem('refresh_token', JSON.stringify(result.refresh_token));
+                        window.localStorage.setItem('role', "admin");
                         toastContext.notify('success', 'Đăng nhập thành công');
                         navigate('/products');
                     }
