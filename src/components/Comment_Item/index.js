@@ -11,7 +11,7 @@ function CommentItem({ comment }) {
     return (
         <div className='border-solid border-b-[1px] mb-3'>
             <div className='flex items-center mb-3'>
-                <Avatar alt="Travis Howard" src={comment.user.images[0].url} className='me-3' />
+                <Avatar alt="Travis Howard" src={comment.user?.images[0]?.url} className='me-3' />
                 <div>{comment.user.name}</div>
             </div>
             <div className='flex items-center justify-between mb-3'>

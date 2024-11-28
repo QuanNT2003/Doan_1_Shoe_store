@@ -98,8 +98,6 @@ function OrderDetail() {
         setLoading(true);
         const fetchApi = async () => {
             let isSuccess = true;
-
-
             const result = await OrderServices.UpdateOrder(obj.orderId, obj)
                 .catch((err) => {
                     console.log(err);
