@@ -81,7 +81,7 @@ function Comment({ item, handleCloseModal, update }) {
                     note: desc,
                     productId: item.product.productId,
                     user: JSON.parse(window.localStorage.getItem('user')),
-                    star: star,
+                    rating: star,
                     like: 0
 
                 }

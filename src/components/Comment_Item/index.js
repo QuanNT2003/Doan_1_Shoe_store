@@ -15,7 +15,7 @@ function CommentItem({ comment }) {
                 <div>{comment.user.name}</div>
             </div>
             <div className='flex items-center justify-between mb-3'>
-                <Rating value={comment.star} readOnly size='small' />
+                <Rating value={comment.rating} readOnly size='small' />
                 <div className='me-4'>{format(new Date(comment.createdAt), 'dd/MM/yyyy - HH:mm')}</div>
             </div>
             <div className='mb-3'>
