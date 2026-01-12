@@ -1,12 +1,12 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: process.env.REACT_APP_BASE_URL,
 });
 
 const getToken = async () => {
   let token = await window.localStorage.getItem("access_token");
-  if (token.startsWith('"') && token.endsWith('"')) {
+  if (token && token.startsWith('"') && token.endsWith('"')) {
     token = token.slice(1, -1); // Loại bỏ dấu ngoặc kép bao quanh nếu có
   }
   return token;
